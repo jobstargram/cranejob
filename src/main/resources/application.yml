@@ -1,1 +1,13 @@
-spring.application.name=crane-job
+server:
+  port: 8080
+
+spring:
+  application:
+    name: crane
+
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
