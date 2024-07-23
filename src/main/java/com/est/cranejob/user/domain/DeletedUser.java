@@ -14,12 +14,12 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "deletedUsers")
+@Table(name = "deleted_users")
 public class DeletedUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "deleted_user_id")
-    private Long deletedUserId;
+    private Long id;
 
     // 회원 탈퇴 유저
     @OneToOne(fetch = FetchType.LAZY)
