@@ -15,16 +15,17 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Table(name = "users")
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users")
+@Builder
 public class User {
 
     @Id
@@ -32,24 +33,24 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(nullable = false, unique = true, name = "email")
+    @Column(name = "email")
     private String email;
 
-    @Column(nullable = false, name = "user_name")
+    @Column(name = "user_name")
     private String userName;
 
     // 비밀번호 15자 초과 x
-    @Column(nullable = false, length = 15, name = "password")
+    @Column(name = "password")
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, name = "user_status")
+    @Column(name = "user_status")
     private UserStatus userStatus;
 
-    @Column(nullable = false, updatable = false, name = "created_at")
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(nullable = false, name = "updated_at")
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     // 연관 관계
