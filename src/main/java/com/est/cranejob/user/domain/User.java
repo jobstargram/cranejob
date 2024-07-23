@@ -1,16 +1,23 @@
 package com.est.cranejob.user.domain;
 
-import com.est.cranejob.comment.domain.Comment;
-import com.est.cranejob.post.domain.Announcement;
 import com.est.cranejob.post.domain.Post;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import java.time.LocalDateTime;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -20,7 +27,6 @@ import java.util.List;
 @Table(name = "users")
 public class User {
 
-    // 필드
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -33,7 +39,7 @@ public class User {
     private String userName;
 
     // 비밀번호 15자 초과 x
-    @Column(nullable = false, length = 15,name = "password")
+    @Column(nullable = false, length = 15, name = "password")
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -43,7 +49,7 @@ public class User {
     @Column(nullable = false, updatable = false, name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(nullable = false, name = "update_at")
+    @Column(nullable = false, name = "updated_at")
     private LocalDateTime updatedAt;
 
     // 연관 관계
@@ -64,15 +70,15 @@ public class User {
     private List<UserPenalty> adminPenaltyList;
 
     // 게시글 리스트
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Post> postList;
-
-    // 공지 사항 리스트
-    @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY)
-    private List<Announcement> announcementList;
-
-    // 댓글 리스트
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Comment> commentList;
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//    private List<Post> postList;
+//
+//    // 공지 사항 리스트
+//    @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY)
+//    private List<Announcement> announcementList;
+//
+//    // 댓글 리스트
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//    private List<Comment> commentList;
 }
 
