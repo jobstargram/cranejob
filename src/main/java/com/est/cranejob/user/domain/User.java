@@ -4,6 +4,8 @@ import com.est.cranejob.announcement.domain.Announcement;
 import com.est.cranejob.comment.domain.Comment;
 import com.est.cranejob.post.domain.Post;
 import com.est.cranejob.user.util.BaseEntity;
+import com.est.cranejob.user.util.Role;
+import com.est.cranejob.user.util.UserStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -36,11 +38,13 @@ public class User extends BaseEntity {
     @Column(name = "nickname")
     private String nickname;
 
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "user_status")
-    private String userStatus;
+    private UserStatus userStatus;
 
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
-    private String role;
+    private Role role;
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
