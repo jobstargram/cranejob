@@ -1,7 +1,8 @@
-package com.est.cranejob.user.dto;
+package com.est.cranejob.user.dto.request;
 
 import com.est.cranejob.user.domain.User;
-import com.est.cranejob.user.domain.UserStatus;
+import com.est.cranejob.user.util.Role;
+import com.est.cranejob.user.util.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,19 +14,21 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreateUser {
+public class CreateUserRequest {
 
 	private String username;
 	private String password;
-	private String name;
+	private String nickname;
+	private UserStatus userStatus;
+	private Role role;
 
 	public User toEntity() {
 		return User.builder()
-			.email(username)
+			.username(username)
 			.password(password)
-			.userName(name)
+			.nickname(nickname)
 			.userStatus(UserStatus.ACTIVE)
+			.role(Role.USER)
 			.build();
 	}
-
 }
