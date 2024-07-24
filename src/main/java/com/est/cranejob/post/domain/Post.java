@@ -39,7 +39,7 @@ public class Post extends BaseEntity {
 	private List<Comment> comments = new ArrayList<>();
 
 	@Column(name = "is_deleted")
-	private Boolean isDeleted = false;
+	private boolean isDeleted = false;
 
 	@Column(name = "deleted_at")
 	private LocalDateTime deletedAt;

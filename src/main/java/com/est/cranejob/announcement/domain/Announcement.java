@@ -35,7 +35,7 @@ public class Announcement extends BaseEntity {
 	private User user;
 
 	@Column(name = "is_deleted")
-	private Boolean isDeleted = false;
+	private boolean isDeleted = false;
 
 	@Column(name = "deleted_at")
 	private LocalDateTime deletedAt;
