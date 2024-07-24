@@ -1,4 +1,4 @@
-package com.est.cranejob.user.domain;
+package com.est.cranejob.user.util;
 
 public enum UserStatus {
     // 활동 가능, 정지, 삭제

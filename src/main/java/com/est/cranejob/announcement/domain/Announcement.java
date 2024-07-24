@@ -1,24 +1,22 @@
-package com.est.cranejob.post.domain;
+package com.est.cranejob.announcement.domain;
 
-import com.est.cranejob.comment.domain.Comment;
 import com.est.cranejob.user.domain.User;
 import com.est.cranejob.user.util.BaseEntity;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "posts")
+@Table(name = "announcements")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Post extends BaseEntity {
+public class Announcement extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +26,7 @@ public class Post extends BaseEntity {
 	@Column(name = "title")
 	private String title;
 
+	@Lob
 	@Column(name = "content")
 	private String content;
 
@@ -35,20 +34,11 @@ public class Post extends BaseEntity {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Comment> comments = new ArrayList<>();
-
 	@Column(name = "is_deleted")
 	private Boolean isDeleted = false;
 
 	@Column(name = "deleted_at")
 	private LocalDateTime deletedAt;
-
-	// 연관관계 편의 메소드
-	public void addComment(Comment comment) {
-		comments.add(comment);
-		comment.setPost(this);
-	}
 
 	public void setUser(User user) {
 		this.user = user;

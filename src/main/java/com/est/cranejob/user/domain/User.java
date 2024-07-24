@@ -1,24 +1,18 @@
 package com.est.cranejob.user.domain;
 
+import com.est.cranejob.announcement.domain.Announcement;
+import com.est.cranejob.comment.domain.Comment;
 import com.est.cranejob.post.domain.Post;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import com.est.cranejob.user.util.BaseEntity;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "users")
@@ -26,60 +20,54 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User {
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "username")
+    private String username;
 
-    @Column(name = "user_name")
-    private String userName;
-
-    // 비밀번호 15자 초과 x
     @Column(name = "password")
     private String password;
 
-    @Enumerated(EnumType.STRING)
+    @Column(name = "nickname")
+    private String nickname;
+
     @Column(name = "user_status")
-    private UserStatus userStatus;
+    private String userStatus;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @Column(name = "role")
+    private String role;
 
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 
-    // 연관 관계
-    // 유저의 권한 정보
-    @OneToOne(mappedBy = "user")
-    private Role role;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
 
-    // 회원 탈퇴한 유저
-    @OneToOne(mappedBy = "user")
-    private DeletedUser deletedUser;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
 
-    // 제재 관련 리스트
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<UserPenalty> userPenaltyList;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Announcement> announcements = new ArrayList<>();
 
-    // 제재를 가한 관리자 리스트
-    @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY)
-    private List<UserPenalty> adminPenaltyList;
+    // 연관관계 편의 메소드
+    public void addPost(Post post) {
+        posts.add(post);
+        post.setUser(this);
+    }
 
-    // 게시글 리스트
-//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-//    private List<Post> postList;
-//
-//    // 공지 사항 리스트
-//    @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY)
-//    private List<Announcement> announcementList;
-//
-//    // 댓글 리스트
-//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-//    private List<Comment> commentList;
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        comment.setUser(this);
+    }
+
+    public void addAnnouncement(Announcement announcement) {
+        announcements.add(announcement);
+        announcement.setUser(this);
+    }
 }
 
