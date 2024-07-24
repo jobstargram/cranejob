@@ -34,7 +34,7 @@ public class Post {
     private List<Comment> postCommentList;
 
     @Column(name = "post_title")
-    private String title;
+    private String postTitle;
 
     @Lob
     @Column(name = "post_content")

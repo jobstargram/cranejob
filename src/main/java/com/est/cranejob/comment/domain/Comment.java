@@ -32,7 +32,7 @@ public class Comment {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    @Column(name = "comment-content")
+    @Column(name = "comment_content")
     private String commentContent;
 
     @Column(name = "is_deleted")
