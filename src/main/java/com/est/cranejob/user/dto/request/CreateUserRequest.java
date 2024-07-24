@@ -3,6 +3,8 @@ package com.est.cranejob.user.dto.request;
 import com.est.cranejob.user.domain.User;
 import com.est.cranejob.user.util.Role;
 import com.est.cranejob.user.util.UserStatus;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
