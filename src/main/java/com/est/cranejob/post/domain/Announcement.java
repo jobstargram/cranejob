@@ -28,11 +28,11 @@ public class Announcement {
     private User admin;
 
     @Column(name = "announce_title")
-    private String title;
+    private String announceTitle;
 
     @Lob
     @Column(name = "announce_content")
-    private String content;
+    private String announceContent;
 
     @Column(name = "create_at")
     private LocalDateTime createdAt;
