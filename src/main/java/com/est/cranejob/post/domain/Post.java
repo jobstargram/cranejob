@@ -2,53 +2,55 @@ package com.est.cranejob.post.domain;
 
 import com.est.cranejob.comment.domain.Comment;
 import com.est.cranejob.user.domain.User;
+import com.est.cranejob.user.util.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "posts")
-public class Post {
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Post extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
-    private Long postId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long id;
 
-    // 게시글 작성자
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+	@Column(name = "title")
+	private String title;
 
-    // 게시글의 댓글 리스트
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
-    private List<Comment> postCommentList;
+	@Column(name = "content")
+	private String content;
 
-    @Column(name = "post_title")
-    private String postTitle;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private User user;
 
-    @Lob
-    @Column(name = "post_content")
-    private String postContent;
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Comment> comments = new ArrayList<>();
 
-    @Column(name = "is_deleted")
-    private boolean isDeleted;
+	@Column(name = "is_deleted")
+	private boolean isDeleted = false;
 
-    @Column(name = "deleted_at")
-    private LocalDateTime deletedAt;
+	@Column(name = "deleted_at")
+	private LocalDateTime deletedAt;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+	// 연관관계 편의 메소드
+	public void addComment(Comment comment) {
+		comments.add(comment);
+		comment.setPost(this);
+	}
 
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

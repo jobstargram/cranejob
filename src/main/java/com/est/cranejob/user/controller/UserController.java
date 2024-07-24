@@ -1,14 +1,17 @@
 package com.est.cranejob.user.controller;
 
-import com.est.cranejob.user.dto.CreateUser;
-import com.est.cranejob.user.dto.LoginUser;
+import com.est.cranejob.user.dto.request.CreateUserRequest;
 import com.est.cranejob.user.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,7 +27,7 @@ public class UserController {
 	}
 
 	@PostMapping("/user/login")
-	public String userLogin(LoginUser loginUser) {
+	public String userLogin() {
 
 		return "redirect:/";
 	}
@@ -35,9 +38,9 @@ public class UserController {
 	}
 
 	@PostMapping("/user/signup")
-	public String userSignUp(CreateUser createUser) {
-		createUser.setPassword(passwordEncoder.encode(createUser.getPassword()));
-		userService.createUser(createUser);
+	public String userSignUp(CreateUserRequest createUserRequest) {
+		createUserRequest.setPassword(passwordEncoder.encode(createUserRequest.getPassword()));
+		userService.createUser(createUserRequest);
 
 		return "redirect:/";
 	}
@@ -46,4 +49,16 @@ public class UserController {
 	public String userEditForm() {
 		return "/user/edit";
 	}
+
+	@GetMapping("/user/logout")
+	public String userLogout(HttpServletRequest request, HttpServletResponse response) {
+		Authentication authentication = SecurityContextHolder.getContextHolderStrategy().getContext().getAuthentication();
+
+		if (authentication != null) {
+			new SecurityContextLogoutHandler().logout(request, response, authentication);
+		}
+
+		return "redirect:/";
+	}
+
 }

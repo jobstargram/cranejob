@@ -1,6 +1,5 @@
-package com.est.cranejob.comment.domain;
+package com.est.cranejob.announcement.domain;
 
-import com.est.cranejob.post.domain.Post;
 import com.est.cranejob.user.domain.User;
 import com.est.cranejob.user.util.BaseEntity;
 import lombok.Getter;
@@ -12,17 +11,20 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "comments")
+@Table(name = "announcements")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Comment extends BaseEntity {
+public class Announcement extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
+
+	@Column(name = "title")
+	private String title;
 
 	@Lob
 	@Column(name = "content")
@@ -32,21 +34,13 @@ public class Comment extends BaseEntity {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "post_id")
-	private Post post;
-
 	@Column(name = "is_deleted")
-	private Boolean isDeleted = false;
+	private boolean isDeleted = false;
 
 	@Column(name = "deleted_at")
 	private LocalDateTime deletedAt;
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public void setPost(Post post) {
-		this.post = post;
 	}
 }
