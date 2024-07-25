@@ -12,6 +12,11 @@ spring:
     mode: HTML
     encoding: UTF-8
 
+  mvc:
+    hidden-method:
+      filter:
+        enabled: true
+
   datasource:
     url: ${LOCAL_DB_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver

@@ -18,11 +18,18 @@ public class UpdateUserRequest {
             , message = "현재 비밀번호를 입력해 주세요.")
     private String password;
 
-    @NotBlank(message = "비밀번호는 빈칸을 입력할 수 없습니다.")
-    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$"
-            , message = "변경할 비밀번호를 입력해 주세요.")
-    private String newPassword;
+//    @NotBlank(message = "비밀번호는 빈칸을 입력할 수 없습니다.")
+//    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$"
+//            , message = "변경할 비밀번호를 입력해 주세요.")
+//    private String newPassword;
 
     @NotBlank(message = "이름은 빈칸을 입력할 수 없습니다.")
-    private String userName;
+    private String nickname;
+
+	public User toEntity() {
+		return User.builder()
+			.password(password)
+			.nickname(nickname)
+			.build();
+	}
 }

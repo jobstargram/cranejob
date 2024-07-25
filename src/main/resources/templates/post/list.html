@@ -35,11 +35,23 @@
 				<li class="nav-item" sec:authorize="isAuthenticated()">
 					<a class="nav-link" th:text="|로그인: ${#authentication.principal.username}|">로그인 사용자 이름</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/user/logout" sec:authorize="isAuthenticated()">Logout</a>
+				
+				<li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
+					<a class="nav-link" href="/user/logout">Logout</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/user/edit" sec:authorize="isAuthenticated()">개인정보수정</a>
+				<li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
+					<a class="nav-link" href="/user/edit">내 정보 수정</a>
+				</li>
+				
+				
+				<li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+					<a class="nav-link" href="/admin/logout">Logout</a>
+				</li>
+				<li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+					<a class="nav-link" href="/admin/edit">내 정보 수정</a>
+				</li>
+				<li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+					<a class="nav-link" href="/admin/user-list">회원 정보 수정</a>
 				</li>
 			</ul>
 		</div>

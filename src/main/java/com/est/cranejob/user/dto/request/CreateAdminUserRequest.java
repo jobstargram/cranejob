@@ -16,7 +16,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreateUserRequest {
+public class CreateAdminUserRequest {
 
 	// RFC 5322 이메일 정규식
 	@Pattern(regexp = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$", message = "아이디는 이메일 형태로 입력해주세요.")
@@ -40,7 +40,7 @@ public class CreateUserRequest {
 			.password(password)
 			.nickname(nickname)
 			.userStatus(UserStatus.ACTIVE)
-			.role(Role.USER)
+			.role(Role.ADMIN)
 			.build();
 	}
 }
