@@ -73,5 +73,10 @@ public class User extends BaseEntity {
         announcements.add(announcement);
         announcement.setUser(this);
     }
+
+    public void updateUser(String password, String nickname) {
+        this.password = password;
+        this.nickname = nickname;
+    }
 }
 
