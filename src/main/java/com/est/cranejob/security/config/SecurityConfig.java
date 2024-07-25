@@ -20,11 +20,13 @@ public class SecurityConfig {
 		http.authorizeHttpRequests(auth -> auth
 				.requestMatchers("/css/**", "/images/**", "/js/**", "/favicon.*", "/*/icon-*")
 				.permitAll()
-				.requestMatchers("/", "/user/signup").permitAll()
+				.requestMatchers("/", "/user/signup", "/admin/signup").permitAll()
 				.anyRequest().authenticated()
 			)
 			.formLogin(form -> form
 				.loginPage("/user/login").permitAll())
+			.formLogin(form -> form
+				.loginPage("/admin/login").permitAll())
 			.authenticationProvider(authenticationProvider);
 
 		return http.build();
