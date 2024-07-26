@@ -11,7 +11,10 @@ import java.io.Serializable;
  * 공지사항 생성을 요청하는 DTO<br>
  * DTO for {@link com.est.cranejob.announcement.domain.Announcement}
  */
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class CreateAnnouncementRequest implements Serializable{
 

@@ -10,7 +10,10 @@ import java.io.Serializable;
 /**
  * DTO for {@link com.est.cranejob.announcement.domain.Announcement}
  */
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class UpdateAnnouncementRequest implements Serializable {
     @NotNull(message = "공지사항의 제목은 빈 값이 들어갈 수 없습니다.")
