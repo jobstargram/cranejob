@@ -1,7 +1,6 @@
 package com.est.cranejob.user.controller;
 
 import com.est.cranejob.user.dto.request.CreateUserRequest;
-import com.est.cranejob.user.dto.request.LoginUserRequest;
 import com.est.cranejob.user.dto.request.UpdateUserRequest;
 import com.est.cranejob.user.dto.response.UserResponse;
 import com.est.cranejob.user.service.UserService;
@@ -50,15 +49,11 @@ public class UserController {
 
 		UserResponse userResponse = userService.findByUsername(username);
 
-		model.addAttribute("userResponse", userResponse);
+		model.addAttribute("updateUserRequest", UpdateUserRequest.toResponseDto(userResponse));
 
 		return "/user/edit";
 	}
 
-	@PostMapping("/user/login")
-	public String userLogin() {
-		return "redirect:/";
-	}
 
 	@PostMapping("/user/signup")
 	public String userSignUp(@Valid CreateUserRequest createUserRequest, BindingResult bindingResult) {
@@ -79,9 +74,13 @@ public class UserController {
 	}
 
 	@PutMapping("/user/edit")
-	public String userEdit(UpdateUserRequest updateUserRequest) {
+	public String userEdit(@Valid UpdateUserRequest updateUserRequest, BindingResult bindingResult) {
 		UserResponse principal = (UserResponse) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = principal.getUsername();
+
+		if (bindingResult.hasErrors()) {
+			return "/user/edit";
+		}
 
 		updateUserRequest.setPassword(passwordEncoder.encode(updateUserRequest.getPassword()));
 		userService.updateUser(username, updateUserRequest);
