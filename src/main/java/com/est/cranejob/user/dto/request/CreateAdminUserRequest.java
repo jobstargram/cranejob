@@ -34,6 +34,9 @@ public class CreateAdminUserRequest {
 	private UserStatus userStatus;
 	private Role role;
 
+	@NotBlank(message = "발급받은 코드를 반드시 입력해야 합니다.")
+	private String code;
+
 	public User toEntity() {
 		return User.builder()
 			.username(username)
