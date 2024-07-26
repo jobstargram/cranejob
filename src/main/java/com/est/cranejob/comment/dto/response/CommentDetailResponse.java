@@ -1,5 +1,6 @@
 package com.est.cranejob.comment.dto.response;
 
+import com.est.cranejob.comment.domain.Comment;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -24,7 +25,21 @@ public class CommentDetailResponse implements Serializable {
     private LocalDateTime updatedAt;
     private Boolean isDeleted;
     private LocalDateTime deletedAt;
-    private Long userId;
-    private String userNickname;
-    private Long postId;
+    private Long user;
+    private String nickname;
+    private Long post;
+
+    public static CommentDetailResponse toDTO(Comment comment) {
+        return CommentDetailResponse.builder()
+                .id(comment.getId())
+                .content(comment.getContent())
+                .createdAt(comment.getCreatedAt())
+                .updatedAt(comment.getUpdatedAt())
+                .isDeleted(comment.getIsDeleted())
+                .deletedAt(comment.getDeletedAt())
+                .user(comment.getUser().getId())
+                .nickname(comment.getUser().getNickname())
+                .post(comment.getPost().getId())
+                .build();
+    }
 }
