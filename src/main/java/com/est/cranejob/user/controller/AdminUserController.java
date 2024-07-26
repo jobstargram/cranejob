@@ -30,12 +30,6 @@ public class AdminUserController {
 		return "/admin/edit";
 	}
 
-
-	@PostMapping("/admin/login")
-	public String adminLogin() {
-		return "redirect:/";
-	}
-
 	@PostMapping("/admin/signup")
 	public String adminSignUp(CreateAdminUserRequest createAdminUserRequest) {
 		createAdminUserRequest.setPassword(passwordEncoder.encode(createAdminUserRequest.getPassword()));

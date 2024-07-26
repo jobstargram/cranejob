@@ -55,10 +55,6 @@ public class UserController {
 		return "/user/edit";
 	}
 
-	@PostMapping("/user/login")
-	public String userLogin() {
-		return "redirect:/";
-	}
 
 	@PostMapping("/user/signup")
 	public String userSignUp(@Valid CreateUserRequest createUserRequest, BindingResult bindingResult) {
