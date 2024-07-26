@@ -3,8 +3,7 @@ package com.est.cranejob.comment.dto.request;
 import com.est.cranejob.comment.domain.Comment;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -13,7 +12,10 @@ import java.io.Serializable;
  * DTO for {@link com.est.cranejob.comment.domain.Comment}
  */
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class CreateCommentRequest implements Serializable {
 

@@ -1,5 +1,6 @@
 package com.est.cranejob.comment.dto.response;
 
+import com.est.cranejob.comment.domain.Comment;
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,5 +17,13 @@ public class CommentResponse implements Serializable {
 
     private String content; // 댓글 내용
     private LocalDateTime createdAt; // 댓글 작성일
-    private String userNickname;
+    private String nickname;
+
+    public static CommentResponse toDTO(Comment comment) {
+        return CommentResponse.builder()
+                .content(comment.getContent())
+                .createdAt(comment.getCreatedAt())
+                .nickname(comment.getUser().getNickname())
+                .build();
+    }
 }
