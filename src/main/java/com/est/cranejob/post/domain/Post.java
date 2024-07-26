@@ -50,6 +50,12 @@ public class Post extends BaseEntity {
 		comment.setPost(this);
 	}
 
+	// 게시글 업데이트
+	public void updatePost(String title, String content) {
+		this.title = title;
+		this.content = content;
+	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}
