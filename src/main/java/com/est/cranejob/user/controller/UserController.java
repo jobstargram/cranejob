@@ -1,7 +1,6 @@
 package com.est.cranejob.user.controller;
 
 import com.est.cranejob.user.dto.request.CreateUserRequest;
-import com.est.cranejob.user.dto.request.LoginUserRequest;
 import com.est.cranejob.user.dto.request.UpdateUserRequest;
 import com.est.cranejob.user.dto.response.UserResponse;
 import com.est.cranejob.user.service.UserService;
