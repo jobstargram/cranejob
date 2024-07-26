@@ -1,9 +1,12 @@
 package com.est.cranejob.user.controller;
 
 import com.est.cranejob.user.dto.request.CreateAdminUserRequest;
+import com.est.cranejob.user.dto.request.UpdateAdminUserRequest;
+import com.est.cranejob.user.dto.response.UserResponse;
 import com.est.cranejob.user.service.AdminUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @Controller
 @RequiredArgsConstructor
@@ -32,7 +36,15 @@ public class AdminUserController {
 	}
 
 	@GetMapping("/admin/edit")
-	public String adminEditForm() {
+	public String adminEditForm(Model model) {
+		// 현재 로그인한 사용자 정보 가져오기
+		// 왜 UserDetails로 안받고, UserResponse로 받을 수 있는거지?
+		UserResponse principal = (UserResponse) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = principal.getUsername();
+
+		UserResponse userResponse = adminUserService.findByUsername(username);
+
+		model.addAttribute("updateAdminUserRequest", UpdateAdminUserRequest.toResponseDto(userResponse));
 		return "/admin/edit";
 	}
 
@@ -58,8 +70,20 @@ public class AdminUserController {
 		return "/admin/login";
 	}
 
-	@PostMapping("/admin/edit")
-	public String adminEdit() {
-		return "/admin/edit";
+	@PutMapping("/admin/edit")
+	public String adminEdit(@Valid UpdateAdminUserRequest updateAdminUserRequest, BindingResult bindingResult) {
+
+		UserResponse principal = (UserResponse) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = principal.getUsername();
+
+		if (bindingResult.hasErrors()) {
+			return "/admin/edit";
+		}
+
+		updateAdminUserRequest.setPassword(passwordEncoder.encode(updateAdminUserRequest.getPassword()));
+		adminUserService.updateUser(username, updateAdminUserRequest);
+
+
+		return "redirect:/";
 	}
 }

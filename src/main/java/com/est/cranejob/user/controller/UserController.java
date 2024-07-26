@@ -49,7 +49,7 @@ public class UserController {
 
 		UserResponse userResponse = userService.findByUsername(username);
 
-		model.addAttribute("userResponse", userResponse);
+		model.addAttribute("updateUserRequest", UpdateUserRequest.toResponseDto(userResponse));
 
 		return "/user/edit";
 	}
@@ -74,9 +74,13 @@ public class UserController {
 	}
 
 	@PutMapping("/user/edit")
-	public String userEdit(UpdateUserRequest updateUserRequest) {
+	public String userEdit(@Valid UpdateUserRequest updateUserRequest, BindingResult bindingResult) {
 		UserResponse principal = (UserResponse) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = principal.getUsername();
+
+		if (bindingResult.hasErrors()) {
+			return "/user/edit";
+		}
 
 		updateUserRequest.setPassword(passwordEncoder.encode(updateUserRequest.getPassword()));
 		userService.updateUser(username, updateUserRequest);
