@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <link href="../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<style>
+    .layout {
+        width: 1000px;
+        margin: 0 auto;
+        margin-top: 40px;
+    }
+</style>
+<body>
+<!-- 게시글 작성 폼-->
+<h1>새 글 작성</h1>
+<form th:action="@{/post/form}" th:object="${createPostRequest}" th:method="post">
+    <div>
+        <label for="title">제목</label>
+        <input type="text" id="title" th:field="*{title}" />
+    </div>
+    <div>
+        <label for="content">내용</label>
+        <textarea id="content" th:field="*{content}"></textarea>
+    </div>
+    <button type="submit">저장</button>
+</form>
+<a href="/post/list">목록으로 돌아가기</a>
+
+</body>
+</html>
