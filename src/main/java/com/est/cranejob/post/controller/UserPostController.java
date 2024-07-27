@@ -7,6 +7,7 @@ import com.est.cranejob.post.dto.response.PostUserDetailResponse;
 import com.est.cranejob.post.service.PostService;
 import com.est.cranejob.user.domain.User;
 import com.est.cranejob.user.dto.response.UserResponse;
+import com.est.cranejob.user.repository.UserRepository;
 import com.est.cranejob.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ import java.util.List;
 public class UserPostController {
 
     private final PostService postService;
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     // 게시글 목록 조회
     @GetMapping("/post/list")
@@ -54,42 +55,33 @@ public class UserPostController {
     public String createPost(@Valid @ModelAttribute CreatePostRequest createPostRequest,
                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            bindingResult.getFieldErrors().forEach(error ->
-                    log.error("Validation error on field {}: {}", error.getField(), error.getDefaultMessage()));
-            return "post/form";
+            log.error("Validation errors: {}", bindingResult.getAllErrors());
+            return "post/form"; // 오류가 있을 경우 원래 폼으로 돌아가게 설정
         }
 
-        UserResponse userResponse;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated() || authentication.getPrincipal() == null) {
+            log.warn("User not authenticated. Redirecting to login page.");
+            return "redirect:/user/login";  // 로그인 상태가 아니면 로그인 페이지로 리다이렉트
+        }
+
+        String username = authentication.getName();
+        log.debug("Creating post for user: {}", username);
+
+        User user;
         try {
-            userResponse = getAuthenticatedUser();
+            user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + username));
+            log.debug("User found: {}", user);
         } catch (UsernameNotFoundException ex) {
             log.error("로그인된 사용자를 찾을 수 없습니다: {}", ex.getMessage());
             return "redirect:/user/login";
         }
 
-        // UserResponse를 User 엔티티로 변환
-        User user = userResponse.toEntity();
         postService.createPost(createPostRequest, user);
         log.debug("Post created successfully.");
 
         return "redirect:/post/list";
-    }
-
-    // 현재 인증된 사용자 정보를 가져오는 메서드
-    private UserResponse getAuthenticatedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        // 인증 정보가 없거나, 인증되지 않았거나, principal이 null인 경우
-        if (authentication == null || !authentication.isAuthenticated() || authentication.getPrincipal() == null) {
-            log.warn("User not authenticated.");
-            throw new UsernameNotFoundException("User not authenticated.");
-        }
-
-        String username = authentication.getName();
-        log.debug("Fetching user by username: {}", username);
-
-        // UserService를 통해 사용자 정보 조회
-        return userService.findByUsername(username);
     }
 
 
