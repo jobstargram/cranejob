@@ -10,6 +10,7 @@ import com.est.cranejob.user.dto.response.UserResponse;
 import com.est.cranejob.user.repository.UserRepository;
 import com.est.cranejob.user.service.UserService;
 import jakarta.validation.Valid;
+import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -65,13 +66,13 @@ public class UserPostController {
             return "redirect:/user/login";  // 로그인 상태가 아니면 로그인 페이지로 리다이렉트
         }
 
-        String username = authentication.getName();
-        log.debug("Creating post for user: {}", username);
+        UserResponse principal = (UserResponse) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        log.debug("Creating post for user: {}", principal.getUsername());
 
         User user;
         try {
-            user = userRepository.findByUsername(username)
-                    .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + username));
+            user = userRepository.findByUsername( principal.getUsername())
+                    .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " +  principal.getUsername()));
             log.debug("User found: {}", user);
         } catch (UsernameNotFoundException ex) {
             log.error("로그인된 사용자를 찾을 수 없습니다: {}", ex.getMessage());
