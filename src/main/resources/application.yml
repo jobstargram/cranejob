@@ -4,6 +4,7 @@ server:
 SARAMIN:
   ApiKey: OGvfdhi5liDBRnhwW4RoyjDFs1wG6RzZGF8oGPrCSaIGQ1pC #API 키
   Job_Mid_Cd: 2 #직무 관련 코드 (IT)
+  Count: 9 #job 엘리먼트 개수
 
 spring:
   application:

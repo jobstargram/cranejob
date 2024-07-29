@@ -19,10 +19,10 @@ public class RecruitService {
         this.httpEx = new HttpURLConnectionEx();
     }
 
-    public List<RecruitInfo> callApi(String apiKey, String job_mid_cd){
+    public List<RecruitInfo> callApi(String apiKey, String job_mid_cd, String count){
         List<RecruitInfo> recruitInfoList = new ArrayList<>();
 
-        String requestUrl = "https://oapi.saramin.co.kr/job-search?access-key=" + apiKey + "&job_mid_cd=" + job_mid_cd;
+        String requestUrl = "https://oapi.saramin.co.kr/job-search?access-key=" + apiKey + "&job_mid_cd=" + job_mid_cd + "&count=" + count;
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
