@@ -73,7 +73,11 @@
 		</div>
 	</div>
 	
-	<form th:action="@{/user/login}" method="post">
+	<div th:if="${param.error}">
+		<p style="color: red;">일반 사용자 계정으로는 관리자 페이지에 로그인하실 수 없습니다.</p>
+	</div>
+	
+	<form th:action="@{/admin/login}" method="post">
 		<label for="username">아이디</label>
 		<input type="text" id="username" name="username" class="form-control" placeholder="아이디를 입력해주세요">
 		

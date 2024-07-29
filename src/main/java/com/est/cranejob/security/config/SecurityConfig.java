@@ -7,6 +7,8 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @EnableWebSecurity
 @Configuration
@@ -16,20 +18,54 @@ public class SecurityConfig {
 	private final AuthenticationProvider authenticationProvider;
 
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests(auth -> auth
-				.requestMatchers("/css/**", "/images/**", "/js/**", "/favicon.*", "/*/icon-*")
-				.permitAll()
-				.requestMatchers("/", "/user/signup", "/admin/signup").permitAll()
+	public SecurityFilterChain userSecurityFilterChain(HttpSecurity http) throws Exception {
+		http
+			.securityMatcher("/", "/user/**", "/user/login", "/user/signup")
+			.authorizeHttpRequests(authorize -> authorize
+				.requestMatchers("/css/**", "/images/**", "/js/**", "/favicon.*", "/*/icon-*").permitAll()
+				.requestMatchers("/", "/user/login", "/user/signup", "/post/list").permitAll()
+				.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
 				.anyRequest().authenticated()
 			)
 			.formLogin(form -> form
-				.loginPage("/user/login").permitAll())
-			.formLogin(form -> form
-				.loginPage("/admin/login").permitAll())
+				.loginPage("/user/login")
+				.loginProcessingUrl("/user/login")  // 사용자 로그인 처리 URL
+				.defaultSuccessUrl("/", true)
+				.permitAll()
+			)
+			.logout(logout -> logout
+				.logoutUrl("/user/logout")
+				.logoutSuccessUrl("/")
+				.permitAll()
+			)
 			.authenticationProvider(authenticationProvider);
 
 		return http.build();
 	}
 
+	@Bean
+	public SecurityFilterChain adminSecurityFilterChain(HttpSecurity http) throws Exception {
+		http
+			.securityMatcher("/","/admin/**", "/admin/login", "/admin/signup")
+			.authorizeHttpRequests(authorize -> authorize
+				.requestMatchers("/css/**", "/images/**", "/js/**", "/favicon.*", "/*/icon-*").permitAll()
+				.requestMatchers("/", "/admin/login", "/admin/signup").permitAll()
+				.requestMatchers("/admin/**").hasRole("ADMIN")
+				.anyRequest().authenticated()
+			)
+			.formLogin(form -> form
+				.loginPage("/admin/login")
+				.loginProcessingUrl("/admin/login")  // 관리자 로그인 처리 URL
+				.defaultSuccessUrl("/", true)
+				.permitAll()
+			)
+			.logout(logout -> logout
+				.logoutUrl("/admin/logout")
+				.logoutSuccessUrl("/")
+				.permitAll()
+			)
+			.authenticationProvider(authenticationProvider);
+
+		return http.build();
+	}
 }
