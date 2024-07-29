@@ -4,10 +4,14 @@ import com.est.cranejob.user.dto.request.CreateAdminUserRequest;
 import com.est.cranejob.user.dto.request.UpdateAdminUserRequest;
 import com.est.cranejob.user.dto.response.UserResponse;
 import com.est.cranejob.user.service.AdminUserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -83,6 +87,17 @@ public class AdminUserController {
 		updateAdminUserRequest.setPassword(passwordEncoder.encode(updateAdminUserRequest.getPassword()));
 		adminUserService.updateUser(username, updateAdminUserRequest);
 
+
+		return "redirect:/";
+	}
+
+	@GetMapping("/admin/logout")
+	public String adminLogout(HttpServletRequest request, HttpServletResponse response) {
+		Authentication authentication = SecurityContextHolder.getContextHolderStrategy().getContext().getAuthentication();
+
+		if (authentication != null) {
+			new SecurityContextLogoutHandler().logout(request, response, authentication);
+		}
 
 		return "redirect:/";
 	}
