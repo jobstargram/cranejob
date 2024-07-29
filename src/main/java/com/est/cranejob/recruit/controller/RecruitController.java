@@ -15,22 +15,20 @@ import java.util.List;
 @Controller
 @RequestMapping("/recruit")
 public class RecruitController {
-    @Autowired
+
     RecruitService recruitService;
 
-    @Value("${SARAMIN.ApiKey}")
-    String apiKey;
-    @Value("${SARAMIN.Job_Mid_Cd}")
-    String job_mid_cd; //job_mid_cd
+    @Autowired
+    public RecruitController(RecruitService recruitService) {
+        this.recruitService = recruitService;
+    }
+
+
 
     @GetMapping
     public String recruit(Model model) {
 
-        List<RecruitInfo> info = recruitService.callApi(apiKey,job_mid_cd);
-        System.out.println(info.get(0));
-        System.out.println(info.get(1));
-        System.out.println(info.get(2));
-        model.addAttribute("RecruitInfo",info);
+        //model.addAttribute("RecruitInfo",info);
         return "recruit/recruit-list";
     }
 
