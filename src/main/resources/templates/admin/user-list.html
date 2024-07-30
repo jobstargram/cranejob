@@ -1,10 +1,281 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Title</title>
-</head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>회원 정보 리스트</title>
+	<link rel="stylesheet" href="style_ul.css">
+	<!-- <link href="../css/style_userlist.css" th:href="@{/css/style_userlist.css}" rel="stylesheet"> -->
 <body>
-
+<nav>
+	<div class="left-menu">
+		<a href="#"><img src="image/cranejob-logo.png" alt="CraneJob-logo" width="60"></a>
+		<a href="#" id="logo">CraneJob</a>
+		<ul>
+			<li><a href="#">채용공고</a></li>
+			<li><a href="#">게시판</a></li>
+		</ul>
+	</div>
+	<div class="right-menu">
+		<ul>
+			<li><a href="#">로그아웃</a></li>
+			<li><a href="#">회원 정보 수정</a></li>
+			<li><a href="#">내 정보 수정</a></li>
+			<li>로그인 : 관리자님</li>
+		</ul>
+	</div>
+</nav>
+<div class="container">
+	<h1>회원 정보 리스트</h1>
+	<div class="search-container">
+		<form th:action="@{/search}" method="get">
+			<input type="text" name="query" placeholder="유저를 입력해주세요" required>
+			<button type="submit">검색</button>
+		</form>
+	</div>
+	<table>
+		<thead>
+		<tr>
+			<th>NO</th>
+			<th>회원 아이디</th>
+			<th>회원 이름</th>
+			<th>가입 일시</th>
+			<th>수정 일시</th>
+			<th>권한</th>
+			<th>정지 유무</th>
+			<th>정지 일자</th>
+			<th>관리자 수정 일자</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td>1</td>
+			<td>test1@test.com</td>
+			<td>유저1</td>
+			<td>2024-07-31</td>
+			<td>2024-07-31</td>
+			<td>관리자</td>
+			<td>비활성화</td>
+			<td> </td>
+			<td> </td>
+			<td>
+				<button th:onclick="'location.href=\'' + @{/users/edit/{id}(id=${user.id})} + '\''">수정</button>
+			</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>test1@test.com</td>
+			<td>유저2</td>
+			<td>2024-07-31</td>
+			<td>2024-07-31</td>
+			<td>사용자</td>
+			<td>비활성화</td>
+			<td> </td>
+			<td> </td>
+			<td>
+				<button th:onclick="'location.href=\'' + @{/users/edit/{id}(id=${user.id})} + '\''">수정</button>
+			</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>test1@test.com</td>
+			<td>유저3</td>
+			<td>2024-07-31</td>
+			<td>2024-07-31</td>
+			<td>회사</td>
+			<td>비활성화</td>
+			<td> </td>
+			<td> </td>
+			<td>
+				<button th:onclick="'location.href=\'' + @{/users/edit/{id}(id=${user.id})} + '\''">수정</button>
+			</td>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td>test1@test.com</td>
+			<td>유저4</td>
+			<td>2024-07-31</td>
+			<td>2024-07-31</td>
+			<td>사용자</td>
+			<td>비활성화</td>
+			<td> </td>
+			<td> </td>
+			<td>
+				<button th:onclick="'location.href=\'' + @{/users/edit/{id}(id=${user.id})} + '\''">수정</button>
+			</td>
+		</tr>
+		<tr>
+			<td>5</td>
+			<td>test1@test.com</td>
+			<td>유저5</td>
+			<td>2024-07-31</td>
+			<td>2024-07-31</td>
+			<td>사용자</td>
+			<td>비활성화</td>
+			<td> </td>
+			<td> </td>
+			<td>
+				<button th:onclick="'location.href=\'' + @{/users/edit/{id}(id=${user.id})} + '\''">수정</button>
+			</td>
+		</tr>
+		<tr>
+			<td>6</td>
+			<td>test1@test.com</td>
+			<td>유저6</td>
+			<td>2024-07-31</td>
+			<td>2024-07-31</td>
+			<td>사용자</td>
+			<td>비활성화</td>
+			<td> </td>
+			<td> </td>
+			<td>
+				<button th:onclick="'location.href=\'' + @{/users/edit/{id}(id=${user.id})} + '\''">수정</button>
+			</td>
+		</tr>
+		<tr>
+			<td>7</td>
+			<td>test1@test.com</td>
+			<td>유저7</td>
+			<td>2024-07-31</td>
+			<td>2024-07-31</td>
+			<td>사용자</td>
+			<td>비활성화</td>
+			<td> </td>
+			<td> </td>
+			<td>
+				<button th:onclick="'location.href=\'' + @{/users/edit/{id}(id=${user.id})} + '\''">수정</button>
+			</td>
+		</tr>
+		<tr>
+			<td>8</td>
+			<td>test1@test.com</td>
+			<td>유저8</td>
+			<td>2024-07-31</td>
+			<td>2024-07-31</td>
+			<td>회사</td>
+			<td>비활성화</td>
+			<td> </td>
+			<td> </td>
+			<td>
+				<button th:onclick="'location.href=\'' + @{/users/edit/{id}(id=${user.id})} + '\''">수정</button>
+			</td>
+		</tr>
+		<tr>
+			<td>9</td>
+			<td>test1@test.com</td>
+			<td>유저9</td>
+			<td>2024-07-31</td>
+			<td>2024-07-31</td>
+			<td>사용자</td>
+			<td>활성화</td>
+			<td>2024-07-31</td>
+			<td>2024-07-31</td>
+			<td>
+				<button th:onclick="'location.href=\'' + @{/users/edit/{id}(id=${user.id})} + '\''">수정</button>
+			</td>
+		</tr>
+		<tr>
+			<td>10</td>
+			<td>test1@test.com</td>
+			<td>유저10</td>
+			<td>2024-07-31</td>
+			<td>2024-07-31</td>
+			<td>사용자</td>
+			<td>비활성화</td>
+			<td> </td>
+			<td> </td>
+			<td>
+				<button th:onclick="'location.href=\'' + @{/users/edit/{id}(id=${user.id})} + '\''">수정</button>
+			</td>
+		</tr>
+		<tr>
+			<td>11</td>
+			<td>test1@test.com</td>
+			<td>유저11</td>
+			<td>2024-07-31</td>
+			<td>2024-07-31</td>
+			<td>사용자</td>
+			<td>비활성화</td>
+			<td> </td>
+			<td> </td>
+			<td>
+				<button th:onclick="'location.href=\'' + @{/users/edit/{id}(id=${user.id})} + '\''">수정</button>
+			</td>
+		</tr>
+		<tr>
+			<td>12</td>
+			<td>test1@test.com</td>
+			<td>유저12</td>
+			<td>2024-07-31</td>
+			<td>2024-07-31</td>
+			<td>회사</td>
+			<td>비활성화</td>
+			<td> </td>
+			<td> </td>
+			<td>
+				<button th:onclick="'location.href=\'' + @{/users/edit/{id}(id=${user.id})} + '\''">수정</button>
+			</td>
+		</tr>
+		<tr>
+			<td>13</td>
+			<td>test1@test.com</td>
+			<td>유저13</td>
+			<td>2024-07-31</td>
+			<td>2024-07-31</td>
+			<td>사용자</td>
+			<td>비활성화</td>
+			<td> </td>
+			<td> </td>
+			<td>
+				<button th:onclick="'location.href=\'' + @{/users/edit/{id}(id=${user.id})} + '\''">수정</button>
+			</td>
+		</tr>
+		<tr>
+			<td>14</td>
+			<td>test1@test.com</td>
+			<td>유저14</td>
+			<td>2024-07-31</td>
+			<td>2024-07-31</td>
+			<td>사용자</td>
+			<td>활성화</td>
+			<td>2024-07-31</td>
+			<td>2024-07-31</td>
+			<td>
+				<button th:onclick="'location.href=\'' + @{/users/edit/{id}(id=${user.id})} + '\''">수정</button>
+			</td>
+		</tr>
+		<tr>
+			<td>15</td>
+			<td>test1@test.com</td>
+			<td>유저15</td>
+			<td>2024-07-31</td>
+			<td>2024-07-31</td>
+			<td>사용자</td>
+			<td>비활성화</td>
+			<td> </td>
+			<td> </td>
+			<td>
+				<button th:onclick="'location.href=\'' + @{/users/edit/{id}(id=${user.id})} + '\''">수정</button>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+	<div class="paging">
+		<a href="#">«</a>
+		<a href="#">&#8249;</a>
+		<a href="#">1</a>
+		<a href="#">2</a>
+		<a href="#">3</a>
+		<a href="#">4</a>
+		<a href="#">5</a>
+		<a href="#">6</a>
+		<a href="#">7</a>
+		<a href="#">8</a>
+		<a href="#">9</a>
+		<a href="#">10</a>
+		<a href="#">&#8250;</a>
+		<a href="#">»</a>
+	</div>
+</div>
 </body>
 </html>
