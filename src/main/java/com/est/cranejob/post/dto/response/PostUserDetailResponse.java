@@ -22,6 +22,7 @@ public class PostUserDetailResponse implements Serializable {
     private String content; // 게시글 내용
     private List<CommentResponse> commentResponses; // 게시글에 작성된 댓글
     private String nickname; // 게시글 작성자
+    private String username; // 게시글 작성자 확인
 
     public static PostUserDetailResponse toDTO(Post post){
         List<CommentResponse> commentResponseList = post.getComments().stream().map(CommentResponse::toDTO)
@@ -32,6 +33,7 @@ public class PostUserDetailResponse implements Serializable {
                 .content(post.getContent())
                 .commentResponses(commentResponseList)
                 .nickname(post.getUser().getNickname())
+                .username(post.getUser().getUsername())
                 .build();
     }
 

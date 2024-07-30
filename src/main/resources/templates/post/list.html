@@ -96,8 +96,8 @@
 		</thead>
 		<tbody align="center">
 		<tr th:each="post : ${postSummaryResponseList}">
-			<td class="text-start"><a th:href="@{/post/{id}(id=${post.id})}" th:text="${post.id}">게시글 제목</a></td>
-			<td class="text-start"><a th:href="@{/post/{id}(id=${post.id})}" th:text="${post.title}">게시글 제목</a></td>
+			<td class="text-start"><a th:href="@{/post/detail/{id}(id=${post.id})}" th:text="${post.id}">게시글 제목</a></td>
+			<td class="text-start"><a th:href="@{/post/detail/{id}(id=${post.id})}" th:text="${post.title}">게시글 제목</a></td>
 			<td class="text-start" th:text="${post.nickname}">작성자</td>
 			<td class="text-start" th:text="${post.createdAt}">작성일</td>
 		</tr>
