@@ -20,7 +20,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain userSecurityFilterChain(HttpSecurity http) throws Exception {
 		http
-			.securityMatcher("/", "/user/**", "/user/login", "/user/signup", "/post/list")
+			.securityMatcher("/", "/user/**", "/user/login", "/user/signup", "/post/**")
 			.authorizeHttpRequests(authorize -> authorize
 				.requestMatchers("/css/**", "/images/**", "/js/**", "/favicon.*", "/*/icon-*").permitAll()
 				.requestMatchers("/", "/user/login", "/user/signup", "/post/list").permitAll()
@@ -46,7 +46,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain adminSecurityFilterChain(HttpSecurity http) throws Exception {
 		http
-			.securityMatcher("/","/admin/**", "/admin/login", "/admin/signup", "/post/list")
+			.securityMatcher("/","/admin/**", "/admin/login", "/admin/signup", "/post/**")
 			.authorizeHttpRequests(authorize -> authorize
 				.requestMatchers("/css/**", "/images/**", "/js/**", "/favicon.*", "/*/icon-*").permitAll()
 				.requestMatchers("/", "/admin/login", "/admin/signup").permitAll()
