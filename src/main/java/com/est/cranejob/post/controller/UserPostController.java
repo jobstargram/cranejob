@@ -42,14 +42,15 @@ public class UserPostController {
 
     // 게시글 목록 조회
     @GetMapping("/post/list")
-    public String listPosts(@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, Model model) {
+    public String listPosts(@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @RequestParam("keyword") Optional<String> keyword, Model model) {
         log.debug("Fetching list of posts.");
 
         // 페이징 처리
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
+        String searchKeyword = keyword.orElse("");
 
-        Page<PostSummaryResponse> postSummaryResponseList = postService.getPaginatedPosts(PageRequest.of(currentPage - 1, pageSize));
+        Page<PostSummaryResponse> postSummaryResponseList = postService.getPaginatedPosts(PageRequest.of(currentPage - 1, pageSize), searchKeyword);
 
         model.addAttribute("postSummaryResponseList", postSummaryResponseList);
 

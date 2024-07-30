@@ -2,12 +2,9 @@ package com.est.cranejob.post.service;
 
 import com.est.cranejob.post.domain.Post;
 import com.est.cranejob.post.dto.request.CreatePostRequest;
-import com.est.cranejob.post.dto.request.UpdatePostRequest;
 import com.est.cranejob.post.dto.response.PostSummaryResponse;
-import com.est.cranejob.post.dto.response.PostUserDetailResponse;
 import com.est.cranejob.post.repository.PostRepository;
 import com.est.cranejob.user.domain.User;
-import com.est.cranejob.user.dto.response.UserResponse;
 import java.util.Collections;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -68,14 +65,14 @@ public class PostService {
         log.debug("Post updated and saved successfully.");
     }*/
 
-    public Page<PostSummaryResponse> getPaginatedPosts(Pageable pageable) {
+    public Page<PostSummaryResponse> getPaginatedPosts(Pageable pageable, String keyword) {
         // 페이지네이션 기본 정보 설정
         int pageSize = pageable.getPageSize(); // 한 페이지당 항목 수
         int currentPage = pageable.getPageNumber(); // 현재 페이지 번호 (0부터 시작)
         int startItem = currentPage * pageSize; // 현재 페이지의 시작 항목 인덱스
 
         // 모든 게시글 데이터를 가져와 DTO로 변환
-        List<PostSummaryResponse> postList = postRepository.findAll().stream()
+        List<PostSummaryResponse> postList = postRepository.findPostByKeyword(keyword).stream()
             .map(PostSummaryResponse::toDTO) // 각 게시글을 PostSummaryResponse DTO로 변환
             .collect(Collectors.toList()); // 변환된 DTO를 리스트로 수집
 
