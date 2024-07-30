@@ -46,7 +46,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain adminSecurityFilterChain(HttpSecurity http) throws Exception {
 		http
-			.securityMatcher("/","/admin/**", "/admin/login", "/admin/signup", "/post/**")
+			.securityMatcher("/","/admin/**", "/admin/login", "/admin/signup", "admin/users/**", "/post/**")
 			.authorizeHttpRequests(authorize -> authorize
 				.requestMatchers("/css/**", "/images/**", "/js/**", "/favicon.*", "/*/icon-*").permitAll()
 				.requestMatchers("/", "/admin/login", "/admin/signup").permitAll()

@@ -49,6 +49,9 @@ public class User extends BaseEntity {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    @Column(name = "suspended_at")
+    private LocalDateTime suspendedAt;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
 
@@ -77,6 +80,15 @@ public class User extends BaseEntity {
     public void updateUser(String password, String nickname) {
         this.password = password;
         this.nickname = nickname;
+    }
+
+    public void updateRoleAndStatus(Role role, UserStatus userStatus) {
+        this.role = role;
+        this.userStatus = userStatus;
+
+        if (userStatus == UserStatus.SUSPENDED) {
+            this.suspendedAt = LocalDateTime.now();
+        }
     }
 }
 
