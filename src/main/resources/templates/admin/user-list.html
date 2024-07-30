@@ -102,14 +102,14 @@
 		</thead>
 		<tbody align="center">
 		<tr th:each="user : ${userResponses}">
-			<td class="text-start"><a th:href="@{/admin/users/{id}(id=${user.username})}" th:text="${user.userId}">회원 고유 번호</a></td>
-			<td class="text-start"><a th:href="@{/admin/users/{id}(id=${user.username})}" th:text="${user.username}">회원 아이디</a></td>
+			<td class="text-start"><a th:href="@{/admin/users/{username}(username=${user.username})}" th:text="${user.userId}">회원 고유 번호</a></td>
+			<td class="text-start"><a th:href="@{/admin/users/{username}(username=${user.username})}" th:text="${user.username}">회원 아이디</a></td>
 			<td class="text-start" th:text="${user.nickname}">회원 닉네임</td>
 			<td class="text-start" th:text="${user.role}">역할</td>
 			<td class="text-start" th:text="${user.createdAt}">가입 일시</td>
 			<td class="text-start" th:text="${user.updatedAt}">수정 일시</td>
 			<td class="text-start" th:text="${user.userStatus}">회원 상태</td>
-			<td class="text-start" th:text="${user.userStatus == 'SUSPENDED' ? 'Y' : 'N'}">정지 유무</td>
+			<td class="text-start" th:text="${user.userStatus.toString() == 'SUSPENDED' ? 'Y' : 'N'}">정지 유무</td>
 			<td class="text-start" th:text="${user.suspendedAt}">정지 일시</td>
 			<td class="text-start" th:text="${user.deletedAt}">탈퇴 일시</td>
 		</tr>

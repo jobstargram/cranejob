@@ -22,11 +22,12 @@ public class UserResponse {
 	private String password;
 	private String nickname;
 	private UserStatus userStatus;
+	private Role role;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	private LocalDateTime suspendedAt;
 	private LocalDateTime deletedAt;
-	private Role role;
+
 
 	public static UserResponse toDto(User user) {
 		return UserResponse.builder()
@@ -38,6 +39,7 @@ public class UserResponse {
 			.role(user.getRole())
 			.createdAt(user.getCreatedAt())
 			.updatedAt(user.getUpdatedAt())
+			.suspendedAt(user.getSuspendedAt())
 			.deletedAt(user.getDeletedAt())
 			.build();
 	}
