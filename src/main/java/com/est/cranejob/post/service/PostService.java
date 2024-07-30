@@ -4,7 +4,9 @@ import com.est.cranejob.announcement.domain.Announcement;
 import com.est.cranejob.announcement.repository.AnnouncementRepository;
 import com.est.cranejob.post.domain.Post;
 import com.est.cranejob.post.dto.request.CreatePostRequest;
+import com.est.cranejob.post.dto.request.UpdatePostRequest;
 import com.est.cranejob.post.dto.response.PostSummaryResponse;
+import com.est.cranejob.post.dto.response.PostUserDetailResponse;
 import com.est.cranejob.post.repository.PostRepository;
 import com.est.cranejob.user.domain.User;
 import java.util.ArrayList;
@@ -50,7 +52,6 @@ public class PostService {
                 .toList();
     }
 
-    /*// 사용자용 게시글 상세 정보를 조회하여 PostUserDetailResponse로 반환
     @Transactional(readOnly = true)
     public PostUserDetailResponse findPostById(Long id){
         log.debug("Update post details for ID: {}", id);
@@ -68,7 +69,7 @@ public class PostService {
         post.updatePost(updatePostRequest.getTitle(), updatePostRequest.getContent());
         postRepository.save(post);
         log.debug("Post updated and saved successfully.");
-    }*/
+    }
 
     public Page<PostSummaryResponse> getPaginatedPosts(Pageable pageable, String keyword) {
         // 페이지네이션 기본 정보 설정
