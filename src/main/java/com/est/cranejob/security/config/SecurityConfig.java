@@ -20,7 +20,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain userSecurityFilterChain(HttpSecurity http) throws Exception {
 		http
-			.securityMatcher("/", "/user/**", "/user/login", "/user/signup")
+			.securityMatcher("/", "/user/**", "/user/login", "/user/signup", "/post/**")
 			.authorizeHttpRequests(authorize -> authorize
 				.requestMatchers("/css/**", "/images/**", "/js/**", "/favicon.*", "/*/icon-*").permitAll()
 				.requestMatchers("/", "/user/login", "/user/signup", "/post/list").permitAll()
@@ -30,12 +30,12 @@ public class SecurityConfig {
 			.formLogin(form -> form
 				.loginPage("/user/login")
 				.loginProcessingUrl("/user/login")  // 사용자 로그인 처리 URL
-				.defaultSuccessUrl("/", true)
+				.defaultSuccessUrl("/post/list", true)
 				.permitAll()
 			)
 			.logout(logout -> logout
 				.logoutUrl("/user/logout")
-				.logoutSuccessUrl("/")
+				.logoutSuccessUrl("/post/list")
 				.permitAll()
 			)
 			.authenticationProvider(authenticationProvider);
@@ -46,7 +46,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain adminSecurityFilterChain(HttpSecurity http) throws Exception {
 		http
-			.securityMatcher("/","/admin/**", "/admin/login", "/admin/signup")
+			.securityMatcher("/","/admin/**", "/admin/login", "/admin/signup", "/post/**")
 			.authorizeHttpRequests(authorize -> authorize
 				.requestMatchers("/css/**", "/images/**", "/js/**", "/favicon.*", "/*/icon-*").permitAll()
 				.requestMatchers("/", "/admin/login", "/admin/signup").permitAll()
@@ -56,12 +56,12 @@ public class SecurityConfig {
 			.formLogin(form -> form
 				.loginPage("/admin/login")
 				.loginProcessingUrl("/admin/login")  // 관리자 로그인 처리 URL
-				.defaultSuccessUrl("/", true)
+				.defaultSuccessUrl("/post/list", true)
 				.permitAll()
 			)
 			.logout(logout -> logout
 				.logoutUrl("/admin/logout")
-				.logoutSuccessUrl("/")
+				.logoutSuccessUrl("/post/list")
 				.permitAll()
 			)
 			.authenticationProvider(authenticationProvider);
