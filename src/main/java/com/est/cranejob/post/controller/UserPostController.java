@@ -11,8 +11,13 @@ import com.est.cranejob.user.repository.UserRepository;
 import com.est.cranejob.user.service.UserService;
 import jakarta.validation.Valid;
 import java.security.Principal;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,6 +30,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @Controller
@@ -36,10 +42,26 @@ public class UserPostController {
 
     // 게시글 목록 조회
     @GetMapping("/post/list")
-    public String listPosts(Model model) {
+    public String listPosts(@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, Model model) {
         log.debug("Fetching list of posts.");
-        List<PostSummaryResponse> postSummaryResponseList = postService.findAllPost();
+
+        // 페이징 처리
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(10);
+
+        Page<PostSummaryResponse> postSummaryResponseList = postService.getPaginatedPosts(PageRequest.of(currentPage - 1, pageSize));
+
         model.addAttribute("postSummaryResponseList", postSummaryResponseList);
+
+        int totalPages = postSummaryResponseList.getTotalPages();
+
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                .boxed()
+                .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
         return "post/list";
     }
 

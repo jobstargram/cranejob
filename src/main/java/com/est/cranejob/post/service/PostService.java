@@ -8,8 +8,14 @@ import com.est.cranejob.post.dto.response.PostUserDetailResponse;
 import com.est.cranejob.post.repository.PostRepository;
 import com.est.cranejob.user.domain.User;
 import com.est.cranejob.user.dto.response.UserResponse;
+import java.util.Collections;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,5 +67,31 @@ public class PostService {
         postRepository.save(post);
         log.debug("Post updated and saved successfully.");
     }*/
+
+    public Page<PostSummaryResponse> getPaginatedPosts(Pageable pageable) {
+        // 페이지네이션 기본 정보 설정
+        int pageSize = pageable.getPageSize(); // 한 페이지당 항목 수
+        int currentPage = pageable.getPageNumber(); // 현재 페이지 번호 (0부터 시작)
+        int startItem = currentPage * pageSize; // 현재 페이지의 시작 항목 인덱스
+
+        // 모든 게시글 데이터를 가져와 DTO로 변환
+        List<PostSummaryResponse> postList = postRepository.findAll().stream()
+            .map(PostSummaryResponse::toDTO) // 각 게시글을 PostSummaryResponse DTO로 변환
+            .collect(Collectors.toList()); // 변환된 DTO를 리스트로 수집
+
+        List<PostSummaryResponse> postPageList;
+
+        // 현재 페이지의 시작 인덱스가 전체 리스트 크기보다 큰 경우 빈 리스트 반환
+        if (postList.size() < startItem) {
+            postPageList = Collections.emptyList();
+        } else {
+            // 현재 페이지에 해당하는 서브리스트 생성
+            int toIndex = Math.min(startItem + pageSize, postList.size());
+            postPageList = postList.subList(startItem, toIndex);
+        }
+
+        // 페이지네이션 결과를 PageImpl 객체로 반환
+        return new PageImpl<>(postPageList, PageRequest.of(currentPage, pageSize), postList.size());
+    }
 
 }
