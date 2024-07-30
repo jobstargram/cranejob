@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 상세</title>
+    <style>
+    </style>
+</head>
+<body>
+<h1>게시글 상세</h1>
+<table>
+    <tr>
+        <th>제목</th>
+        <td th:text="${postUserDetailResponse.title}"></td>
+    </tr>
+    <tr>
+        <th>내용</th>
+        <td th:text="${postUserDetailResponse.content}"></td>
+    </tr>
+    <tr>
+        <th>작성자</th>
+        <td th:text="${postUserDetailResponse.getNickname()}"></td>
+    </tr>
+    <!--<tr>
+        <th>작성일</th>
+        <td th:text="${#dates.format(postUserDetailResponse.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+    </tr>
+    <tr>
+        <th>수정일</th>
+        <td th:text="${#dates.format(postUserDetailResponse.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+    </tr>-->
+</table>
+
+<div class="action-buttons">
+    <a href="#" th:href="@{/post/edit/{id}(id=${postUserDetailResponse.id})}">수정하기</a>
+    <form th:action="@{/post/delete/{id}(id=${postUserDetailResponse.id})}" method="post">
+        <button type="submit">삭제하기</button>
+    </form>
+    <a href="/post/list">목록으로 돌아가기</a>
+</div>
+</body>
+</html>
