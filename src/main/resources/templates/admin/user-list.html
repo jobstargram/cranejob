@@ -1,10 +1,163 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
 	<meta charset="UTF-8">
-	<title>Title</title>
+	<link href="../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 </head>
+<style>
+	table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+	th, td {
+		border: 1px solid #ddd;
+		padding: 8px;
+	}
+	th {
+		background-color: #f2f2f2;
+	}
+	tr:hover {
+		background-color: #f5f5f5;
+	}
+	
+	.layout {
+		width: 1500px;
+		margin: 0 auto;
+		margin-top: 40px;
+	}
+</style>
 <body>
+<!-- 네비게이션 바 위치 -->
+<nav class="navbar navbar-expand-lg bg-light">
+	
+	<div class="container-fluid">
+		<a class="navbar-brand" href="/post/list">게시판</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav ms-auto">
+				
+				<!-- 세션이 존재하지 않을 경우 로그인, 회원가입 버튼만 활성화 -->
+				<li class="nav-item">
+					<a class="nav-link" href="/user/login" sec:authorize="isAnonymous()">Login</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/user/signup" sec:authorize="isAnonymous()">Join</a>
+				</li>
+				
+				<!-- 세션이 존재할 경우 로그아웃, 개인정보수정 버튼으로 대체 -->
+				<li class="nav-item" sec:authorize="isAuthenticated()">
+					<a class="nav-link" th:text="|로그인: ${#authentication.principal.nickname}|">로그인 사용자 이름</a>
+				</li>
+				
+				<li class="nav-item" sec:authorize="isAuthenticated()">
+					<a class="nav-link" href="/user/logout">Logout</a>
+				</li>
+				
+				<li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
+					<a class="nav-link" href="/user/edit">내 정보 수정</a>
+				</li>
+				
+				<li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+					<a class="nav-link" href="/admin/edit">내 정보 수정</a>
+				</li>
+				<li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+					<a class="nav-link" href="/admin/user-list">회원 정보 수정</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="layout">
+	
+	<h2 align="center">유저 내역 리스트</h2>
+	
+	<div style="width: 300px" class="input-group mx-auto mb-3">
+		<form class="row gx-2" th:action="@{/admin/users}" method="get">
+			<div class="col-auto">
+				<input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="keyword" />
+			</div>
+			<div class="col-auto">
+				<button type="submit" class="btn btn-outline-primary">search</button>
+			</div>
+		</form>
+	</div>
+	
+	<table class="table">
+		<thead class="table-light">
+		<tr>
+			<th>NO</th>
+			<th>회원 아이디</th>
+			<th>회원 닉네임</th>
+			<th>역할</th>
+			<th>가입 일시</th>
+			<th>수정 일시</th>
+			<th>회원 상태</th>
+			<th>정지 유무</th>
+			<th>정지 일시</th>
+			<th>탈퇴 일시</th>
+		</tr>
+		</thead>
+		<tbody align="center">
+		<tr th:each="user : ${userResponses}">
+			<td class="text-start"><a th:href="@{/admin/users/{id}(id=${user.username})}" th:text="${user.userId}">회원 고유 번호</a></td>
+			<td class="text-start"><a th:href="@{/admin/users/{id}(id=${user.username})}" th:text="${user.username}">회원 아이디</a></td>
+			<td class="text-start" th:text="${user.nickname}">회원 닉네임</td>
+			<td class="text-start" th:text="${user.role}">역할</td>
+			<td class="text-start" th:text="${user.createdAt}">가입 일시</td>
+			<td class="text-start" th:text="${user.updatedAt}">수정 일시</td>
+			<td class="text-start" th:text="${user.userStatus}">회원 상태</td>
+			<td class="text-start" th:text="${user.userStatus == 'SUSPENDED' ? 'Y' : 'N'}">정지 유무</td>
+			<td class="text-start" th:text="${user.suspendedAt}">정지 일시</td>
+			<td class="text-start" th:text="${user.deletedAt}">탈퇴 일시</td>
+		</tr>
+		</tbody>
+	</table>
+	
+	<nav aria-label="Page navigation">
+		<!--표에 사용될 변수값 초기화 -->
+		<ul class="pagination justify-content-center" th:with="start=${T(java.lang.Math).floor(userResponses.number / 10) * 10 + 1}, last=(${start + 9 < userResponses.totalPages ? start + 9 : userResponses.totalPages})">
+			<th:block th:with="
+            firstAddr=@{/admin/users(page=1)},
+            prevAddr=@{/admin/users(page=${userResponses.number})},
+            nextAddr=@{/admin/users(page=${userResponses.number + 2})},
+            lastAddr=@{/admin/users(page=${userResponses.totalPages})}">
+				<li class="page-item">
+					<a class="page-link" th:href="${firstAddr}" aria-label="First">
+						<span aria-hidden="true"> << </span>
+					</a>
+				</li>
+				<!-- 이전 페이지로 가기 버튼 -->
+				<li class="page-item" th:class="${userResponses.first} ? 'disabled'">
+					<a class="page-link" th:href="${userResponses.first} ? '#' :${prevAddr}"
+					   aria-label="Previous">
+						<span aria-hidden="true">&lt;</span>
+					</a>
+				</li>
+				<!--1,2,3,4,.. 등 페이지-->
+				<li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
+				    th:class="${page == userResponses.number + 1} ? 'active'">
+					<a class="page-link" th:text="${page}" th:href="@{/admin/users(page=${page})}"></a>
+				</li>
+				<!--다음 페이지로 -->
+				<li class="page-item" th:class="${userResponses.last} ? 'disabled'">
+					<a class="page-link" th:href="${userResponses.last} ? '#' : ${nextAddr}"
+					   aria-label="Next">
+						<span aria-hidden="true">&gt;</span>
+					</a>
+				</li>
+				<!--맨 마지막 페이지로 이동 -->
+				<li class="page-item">
+					<a class="page-link" th:href="${lastAddr}" aria-label="Last">
+						<span aria-hidden="true"> >> </span>
+					</a>
+				</li>
+			</th:block>
+		</ul>
+	</nav>
+</div>
 
 </body>
 </html>

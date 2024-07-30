@@ -46,6 +46,9 @@ public class User extends BaseEntity {
     @Column(name = "role")
     private Role role;
 
+    @Column(name = "suspended_at")
+    private LocalDateTime suspendedAt;
+
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
