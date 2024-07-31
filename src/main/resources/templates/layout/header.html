@@ -86,6 +86,9 @@
                 <li class="nav-items" sec:authorize="hasRole('ROLE_USER')">
                     <a class="nav-links" href="/user/edit">내 정보 수정</a>
                 </li>
+	            <li class="nav-items" sec:authorize="hasRole('ROLE_ADMIN')">
+		            <a class="nav-links" href="/announcement/form">공지사항 작성하기</a>
+	            </li>
                 <li class="nav-items" sec:authorize="hasRole('ROLE_ADMIN')">
                     <a class="nav-links" href="/admin/edit">내 정보 수정</a>
                 </li>
