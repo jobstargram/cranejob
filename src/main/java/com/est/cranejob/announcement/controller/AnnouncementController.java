@@ -4,6 +4,7 @@ import com.est.cranejob.announcement.dto.AdminUpdateUserRequest;
 import com.est.cranejob.announcement.dto.request.CreateAnnouncementRequest;
 import com.est.cranejob.announcement.dto.request.UpdateAnnouncementRequest;
 import com.est.cranejob.announcement.dto.response.AnnouncementDetailResponse;
+import com.est.cranejob.announcement.dto.response.AnnouncementResponse;
 import com.est.cranejob.announcement.service.AnnouncementService;
 import com.est.cranejob.user.dto.response.UserResponse;
 import jakarta.validation.Valid;
@@ -14,10 +15,13 @@ import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -31,14 +35,52 @@ public class AnnouncementController {
 
 	private final AnnouncementService announcementService;
 
-	@GetMapping("/announcement/form")
+	@GetMapping("/announcements")
+	public String getAnnouncements(@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @RequestParam("keyword") Optional<String> keyword, Model model) {
+
+		int currentPage = page.orElse(1);
+		int pageSize = size.orElse(10);
+		String searchKeyword = keyword.orElse("");
+
+		Page<AnnouncementResponse> announcementResponses = announcementService.getPaginatedUsers(
+			PageRequest.of(currentPage - 1, pageSize), searchKeyword);
+
+		model.addAttribute("announcementResponses", announcementResponses);
+
+		int totalPages = announcementResponses.getTotalPages();
+
+		if (totalPages > 0) {
+			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+				.boxed()
+				.collect(Collectors.toList());
+			model.addAttribute("pageNumbers", pageNumbers);
+		}
+
+		return "/announcement/list";
+	}
+
+	@PostMapping("/announcements")
+	public String createAnnouncement(@Valid CreateAnnouncementRequest createAnnouncementRequest, BindingResult bindingResult) {
+
+		if (bindingResult.hasErrors()) {
+			return "/announcement/form";
+		}
+
+		UserResponse principal = (UserResponse) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		announcementService.createAnnouncement(createAnnouncementRequest, principal);
+
+		return "redirect:/";
+	}
+
+
+	@GetMapping("/announcements/form")
 	public String createAnnouncementForm(Model model) {
 		model.addAttribute("createAnnouncementRequest", new CreateAnnouncementRequest());
 
 		return "/announcement/form";
 	}
 
-	@GetMapping("/announcement/edit/{id}")
+	@GetMapping("/announcements/{id}")
 	public String updateAnnouncementForm(@PathVariable Long id, Model model) {
 		UserResponse principal = (UserResponse) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = principal.getUsername();
@@ -55,7 +97,7 @@ public class AnnouncementController {
 		return "/announcement/edit";
 	}
 
-	@PatchMapping("/announcement/edit/{id}")
+	@PatchMapping("/announcements/{id}")
 	public String updateAnnouncement(@PathVariable Long id, @Valid UpdateAnnouncementRequest updateAnnouncementRequest, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
@@ -64,24 +106,16 @@ public class AnnouncementController {
 
 		announcementService.updateAnnouncement(id, updateAnnouncementRequest.getTitle(), updateAnnouncementRequest.getContent());
 
-
-		return "/announcement/edit";
+		return "redirect:/announcements";
 	}
 
-	@PostMapping("/announcement/form")
-	public String createAnnouncement(@Valid CreateAnnouncementRequest createAnnouncementRequest, BindingResult bindingResult) {
+	@DeleteMapping("/announcements/{id}")
+	public ResponseEntity<Void> deleteAnnouncement(@PathVariable Long id) {
 
-		if (bindingResult.hasErrors()) {
-			return "/announcement/form";
-		}
+		announcementService.deleteAnnouncement(id);
 
-		UserResponse principal = (UserResponse) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-		announcementService.createAnnouncement(createAnnouncementRequest, principal);
-
-		return "redirect:/";
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
 
 
 }

@@ -1,6 +1,7 @@
 package com.est.cranejob.announcement.dto.response;
 
 import com.est.cranejob.announcement.domain.Announcement;
+import com.est.cranejob.user.domain.User;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -17,15 +18,27 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class AnnouncementResponse implements Serializable {
-    private Long id; // 공지사항 id
-    private String title; // 공지사항 제목
-    private LocalDateTime createdAt; // 공지사항 생성일
+
+    private Long id;
+    private String title;
+    private String content;
+    private User user;
+    private boolean isDeleted;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
+
 
     public static AnnouncementResponse toDTO(Announcement announcement){
         return AnnouncementResponse.builder()
-                .id(announcement.getId())
-                .title(announcement.getTitle())
-                .createdAt(announcement.getCreatedAt())
-                .build();
+            .id(announcement.getId())
+            .title(announcement.getTitle())
+            .content(announcement.getContent())
+            .user(announcement.getUser())
+            .isDeleted(announcement.isDeleted())
+            .createdAt(announcement.getCreatedAt())
+            .updatedAt(announcement.getUpdatedAt())
+            .deletedAt(announcement.getDeletedAt())
+            .build();
     }
 }
