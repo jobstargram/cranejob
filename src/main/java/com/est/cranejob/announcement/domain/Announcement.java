@@ -48,4 +48,9 @@ public class Announcement extends BaseEntity {
 		this.title = title;
 		this.content = content;
 	}
+
+	public void delete() {
+		this.isDeleted = true;
+		this.deletedAt = LocalDateTime.now();
+	}
 }

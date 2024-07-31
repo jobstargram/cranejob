@@ -87,4 +87,12 @@ public class AnnouncementService {
 
 	}
 
+	public void deleteAnnouncement(Long id) {
+		Announcement announcement = announcementRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
+
+		announcement.delete();
+
+		announcementRepository.save(announcement);
+	}
 }
