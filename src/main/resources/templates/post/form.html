@@ -12,6 +12,7 @@
     }
 </style>
 <body>
+<div th:replace="/layout/header.html :: header"></div>
 <!-- 게시글 작성 폼-->
 <h1>새 글 작성</h1>
 <form th:action="@{/post/form}" th:object="${createPostRequest}" th:method="post">

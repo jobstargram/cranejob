@@ -7,7 +7,6 @@
 		.container {
 			max-width: 560px;
 		}
-		
 		.field-error {
 			border-color: #dc3545;
 			color: #dc3545;
@@ -15,11 +14,11 @@
 	</style>
 </head>
 <body>
+<div th:replace="/layout/header.html :: header"></div>
 <div class="container">
 	<div class="py-5 text-center">
 		<h2>사용자 정보 수정</h2>
-	</div>
-	
+	</div>	
 	<h4 class="mb-3">수정할 정보 입력</h4>
 	
 	<!--th:action 값이 없으면 그냥 action만 동작, 즉 action 속성은 지금 없어도 됨-->
@@ -44,7 +43,6 @@
 				<option value="ADMIN" th:selected="${adminUpdateUserRequest.role == 'ADMIN'}">Admin</option>
 			</select>
 		</div>
-		
 		<div>
 			<label for="userStatus">상태</label>
 			<select id="userStatus" name="userStatus" th:field="*{userStatus}" class="form-control">
@@ -53,7 +51,6 @@
 				<option value="DELETED" th:selected="${adminUpdateUserRequest.userStatus == 'DELETED'}">DELETED</option>
 			</select>
 		</div>
-		
 		<hr class="my-4">
 		<div class="row">
 			<div class="col">
@@ -63,7 +60,6 @@
 				<button class="w-100 btn btn-secondary btn-lg" onclick="location.href='items.html'" th:onclick="|location.href='@{/admin/users}'|" type="button">취소</button>
 			</div>
 		</div>
-		
 <!--		<hr class="my-2">-->
 <!--		<div class="row">-->
 <!--			<div class="col">-->
