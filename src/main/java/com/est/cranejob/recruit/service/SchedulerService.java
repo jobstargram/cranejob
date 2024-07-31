@@ -32,7 +32,7 @@ public class SchedulerService {
     //매일 밤11시 실행
     //@Scheduled(cron = "0 0 23 * * *")
     //5초마다 실행 test용
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 600000)
     public void run(){
 
         System.out.println("hello");

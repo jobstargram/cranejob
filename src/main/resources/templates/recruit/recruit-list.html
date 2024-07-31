@@ -192,8 +192,12 @@
 				<h1 class="fw-light">채용 공고 게시판</h1>
 				<p class="lead text-body-secondary">IT 관련 채용 공고를 제공합니다</p>
 				<p>
-					<a href="#" class="btn btn-primary my-2">الدعوة الرئيسية للعمل</a>
-					<a href="#" class="btn btn-secondary my-2">عمل ثانوي</a>
+					<a href="#" class="btn btn-primary my-2">뒤로</a>
+					<a href="#" class="btn btn-secondary my-2">앞으로</a>
+<!--					<a th:href="@{/recruit(page=${currentPage - 1}, size=${pageSize})}" class="btn btn-primary my-2"-->
+<!--					   th:if="${currentPage > 1}">뒤로</a>-->
+<!--					<a th:href="@{/recruit(page=${currentPage + 1}, size=${pageSize})}" class="btn btn-secondary my-2"-->
+<!--					   th:if="${currentPage < totalPages}">앞으로</a>-->
 				</p>
 			</div>
 		</div>
@@ -204,7 +208,7 @@
 
 			<ul class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 no_dot">
 <!--				<ul>-->
-				<li th:each="info : ${RecruitInfo}" class="col">
+				<li th:each="info : ${recruitList}" class="col">
 					<div class="card shadow-sm">
 						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>
 						<div class="card-body">
@@ -218,129 +222,90 @@
 							</div>
 						</div>
 					</div>
+
 				</li>
-<!--				<li class="col">-->
-<!--					<div class="card shadow-sm">-->
-<!--						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>-->
-<!--						<div class="card-body">-->
-<!--							<p th:text="${info.getCompanyName()}" class="card-text">회사이름</p>-->
-<!--							<p th:test="${info.getTitle()}" class="card-text">타이틀</p>-->
-<!--							<div class="d-flex justify-content-between align-items-center">-->
-<!--								<div class="btn-group">-->
-<!--									<button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>-->
-<!--								</div>-->
-<!--								<small class="text-body-secondary">9 دقائق</small>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</li>-->
-<!--				<li class="col">-->
-<!--					<div class="card shadow-sm">-->
-<!--						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>-->
-<!--						<div class="card-body">-->
-<!--							<p class="card-text">회사 이름</p>-->
-<!--							<p class="card-text">타이틀</p>-->
-<!--							<div class="d-flex justify-content-between align-items-center">-->
-<!--								<div class="btn-group">-->
-<!--									<button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>-->
-<!--								</div>-->
-<!--								<small class="text-body-secondary">9 دقائق</small>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</li>-->
 
-<!--				<li class="col">-->
-<!--					<div class="card shadow-sm">-->
-<!--						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>-->
-<!--						<div class="card-body">-->
-<!--							<p class="card-text">회사 이름</p>-->
-<!--							<p class="card-text">타이틀</p>-->
-<!--							<div class="d-flex justify-content-between align-items-center">-->
-<!--								<div class="btn-group">-->
-<!--									<button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>-->
-<!--								</div>-->
-<!--								<small class="text-body-secondary">9 دقائق</small>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</li>-->
-<!--				<li class="col">-->
-<!--					<div class="card shadow-sm">-->
-<!--						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>-->
-<!--						<div class="card-body">-->
-<!--							<p class="card-text">회사 이름</p>-->
-<!--							<p class="card-text">타이틀</p>-->
-<!--							<div class="d-flex justify-content-between align-items-center">-->
-<!--								<div class="btn-group">-->
-<!--									<button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>-->
-<!--								</div>-->
-<!--								<small class="text-body-secondary">9 دقائق</small>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</li>-->
-<!--				<li class="col">-->
-<!--					<div class="card shadow-sm">-->
-<!--						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>-->
-<!--						<div class="card-body">-->
-<!--							<p class="card-text">회사 이름</p>-->
-<!--							<p class="card-text">타이틀</p>-->
-<!--							<div class="d-flex justify-content-between align-items-center">-->
-<!--								<div class="btn-group">-->
-<!--									<button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>-->
-<!--								</div>-->
-<!--								<small class="text-body-secondary">9 دقائق</small>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</li>-->
 
-<!--				<li class="col">-->
-<!--					<div class="card shadow-sm">-->
-<!--						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>-->
-<!--						<div class="card-body">-->
-<!--							<p class="card-text">회사 이름</p>-->
-<!--							<p class="card-text">타이틀</p>-->
-<!--							<div class="d-flex justify-content-between align-items-center">-->
-<!--								<div class="btn-group">-->
-<!--									<button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>-->
-<!--								</div>-->
-<!--								<small class="text-body-secondary">9 دقائق</small>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</li>-->
-<!--				<li class="col">-->
-<!--					<div class="card shadow-sm">-->
-<!--						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>-->
-<!--						<div class="card-body">-->
-<!--							<p class="card-text">회사 이름</p>-->
-<!--							<p class="card-text">타이틀</p>-->
-<!--							<div class="d-flex justify-content-between align-items-center">-->
-<!--								<div class="btn-group">-->
-<!--									<button type="button" class="btn btn-sm btn-outline-secondary">상세 보기</button>-->
-<!--								</div>-->
-<!--								<small class="text-body-secondary">9 دقائق</small>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</li>-->
-<!--					<li class="card shadow-sm">-->
-<!--						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>-->
-<!--						<div class="card-body">-->
-<!--							<p class="card-text">회사 이름</p>-->
-<!--							<p class="card-text">타이틀</p>-->
-<!--							<div class="d-flex justify-content-between align-items-center">-->
-<!--								<div class="btn-group">-->
-<!--									<button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>-->
-<!--								</div>-->
-<!--								<small class="text-body-secondary">9 دقائق</small>-->
-<!--							</div>-->
-<!--						</div>-->
+			</ul>
+<!--			&lt;!&ndash; 페이지네이션 &ndash;&gt;-->
+<!--			<nav aria-label="Page navigation">-->
+<!--				<ul class="pagination justify-content-center">-->
+<!--					&lt;!&ndash; 10페이지 단위로 뒤로 가는 버튼 (10 이하의 페이지면 첫 페이지로 이동) &ndash;&gt;-->
+<!--					<li class="page-item" th:classappend="${currentPage <= 10} ? 'disabled'">-->
+<!--						<a class="page-link" th:href="@{/recruit(page=${currentPage > 10 ? (currentPage - 10) : 1}, size=${pageSize})}" aria-label="Previous 10 or First">-->
+<!--							<span aria-hidden="true">&laquo;</span>-->
+<!--						</a>-->
+<!--					</li>-->
+<!--					&lt;!&ndash; 이전 버튼 &ndash;&gt;-->
+<!--					<li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">-->
+<!--						<a class="page-link" th:href="@{/recruit(page=${currentPage - 1}, size=${pageSize})}" aria-label="Previous">-->
+<!--							<span aria-hidden="true">&lsaquo;</span>-->
+<!--						</a>-->
+<!--					</li>-->
+<!--					&lt;!&ndash; 페이지 번호 &ndash;&gt;-->
+<!--					<li class="page-item" th:each="pageNumber : ${pageNumbers}" th:classappend="${pageNumber == currentPage} ? 'active'">-->
+<!--						<a class="page-link" th:href="@{/recruit(page=${pageNumber}, size=${pageSize})}" th:text="${pageNumber}">1</a>-->
+<!--					</li>-->
+<!--					&lt;!&ndash; 다음 버튼 &ndash;&gt;-->
+<!--					<li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">-->
+<!--						<a class="page-link" th:href="@{/recruit(page=${currentPage + 1}, size=${pageSize})}" aria-label="Next">-->
+<!--							<span aria-hidden="true">&rsaquo;</span>-->
+<!--						</a>-->
+<!--					</li>-->
+<!--					&lt;!&ndash; 10페이지 단위로 앞으로 가는 버튼 (마지막 페이지를 초과하면 마지막 페이지로 이동) &ndash;&gt;-->
+<!--					<li class="page-item" th:classappend="${currentPage + 10 > totalPages} ? 'disabled'">-->
+<!--						<a class="page-link" th:href="@{/recruit(page=${Math.min(currentPage + 10, totalPages)}, size=${pageSize})}" aria-label="Next 10 or Last">-->
+<!--							<span aria-hidden="true">&raquo;</span>-->
+<!--						</a>-->
 <!--					</li>-->
 <!--				</ul>-->
-			</ul>
+<!--			</nav>-->
+
+			<!-- 페이지네이션 -->
+			<nav aria-label="Page navigation">
+				<ul class="pagination justify-content-center">
+					<!-- 첫 페이지로 가는 버튼 -->
+					<li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+						<a class="page-link" th:href="@{/recruit(page=1, size=${pageSize})}" aria-label="First">
+							<span aria-hidden="true">&laquo;&laquo;</span>
+						</a>
+					</li>
+					<!-- 10페이지 단위로 뒤로 가는 버튼 -->
+					<li class="page-item" th:classappend="${currentPage <= 10} ? 'disabled'">
+						<a class="page-link" th:href="@{/recruit(page=${startPage - 10}, size=${pageSize})}" aria-label="Previous 10">
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<!-- 이전 버튼 -->
+					<li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+						<a class="page-link" th:href="@{/recruit(page=${currentPage - 1}, size=${pageSize})}" aria-label="Previous">
+							<span aria-hidden="true">&lsaquo;</span>
+						</a>
+					</li>
+					<!-- 페이지 번호 -->
+					<li class="page-item" th:each="pageNumber : ${pageNumbers}" th:classappend="${pageNumber == currentPage} ? 'active'">
+						<a class="page-link" th:href="@{/recruit(page=${pageNumber}, size=${pageSize})}" th:text="${pageNumber}">1</a>
+					</li>
+					<!-- 다음 버튼 -->
+					<li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+						<a class="page-link" th:href="@{/recruit(page=${currentPage + 1}, size=${pageSize})}" aria-label="Next">
+							<span aria-hidden="true">&rsaquo;</span>
+						</a>
+					</li>
+					<!-- 10페이지 단위로 앞으로 가는 버튼 -->
+					<li class="page-item" th:classappend="${endPage + 1 > totalPages} ? 'disabled'">
+						<a class="page-link" th:href="@{/recruit(page=${endPage + 1}, size=${pageSize})}" aria-label="Next 10">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+					<!-- 마지막 페이지로 가는 버튼 -->
+					<li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+						<a class="page-link" th:href="@{/recruit(page=${totalPages}, size=${pageSize})}" aria-label="Last">
+							<span aria-hidden="true">&raquo;&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
 		</div>
 	</div>
 
