@@ -20,7 +20,7 @@
 	
 	<h4 class="mb-3">공지사항 게시글 입력</h4>
 	
-	<form th:action="@{/announcement/form}" th:object="${createAnnouncementRequest}" th:method="post">
+	<form th:action="@{/announcements}" th:object="${createAnnouncementRequest}" th:method="post">
 		<div class="mb-3">
 			<label for="exampleFormControlInput1" class="form-label" th:text="제목">제목</label>
 			<input type="text" class="form-control" name="title" th:field="*{title}" id="exampleFormControlInput1">

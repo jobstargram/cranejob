@@ -18,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -65,14 +64,27 @@ public class AnnouncementService {
 		return AnnouncementDetailResponse.toDTO(announcement);
 	}
 
-//	@Transactional
-//	public void suspendUser(String username) {
-//		User user = userRepository.findByUsername(username)
-//			.orElseThrow(
-//				() -> new UsernameNotFoundException("No user found with username:" + username));
-//
-//		user.updateStatus(UserStatus.SUSPENDED);
-//
-//		userRepository.save(user);
-//	}
+	public Page<AnnouncementResponse> getPaginatedUsers(PageRequest pageable, String keyword) {
+
+		int pageSize = pageable.getPageSize();
+		int currentPage = pageable.getPageNumber();
+		int startItem = currentPage * pageSize;
+
+		List<AnnouncementResponse> announcements = announcementRepository.findAnnouncementByKeyword(keyword).stream()
+			.map(AnnouncementResponse::toDTO)
+			.collect(Collectors.toList());
+
+		List<AnnouncementResponse> announcementPageList;
+
+		if (announcements.size() < startItem) {
+			announcementPageList = Collections.emptyList();
+		} else {
+			int toIndex = Math.min(startItem + pageSize, announcements.size());
+			announcementPageList = announcements.subList(startItem, toIndex);
+		}
+
+		return new PageImpl<>(announcementPageList, PageRequest.of(currentPage, pageSize), announcements.size());
+
+	}
+
 }
