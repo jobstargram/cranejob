@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <link href="../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<style>
+    .layout {
+        width: 1000px;
+        margin: 0 auto;
+        margin-top: 40px;
+    }
+</style>
+<body>
+<div th:replace="/layout/header.html :: header"></div>
+<!-- 게시글 수정 폼-->
+<div class="layout">
+    <h1>게시글 수정</h1>
+    <form th:action="@{/post/edit/{id}(id=${postUserDetailResponse.id})}" method="post">
+        <!-- 이 숨겨진 필드를 추가하여 메서드를 PUT으로 설정 -->
+        <input type="hidden" name="_method" value="put"/>
+        <div>
+            <label for="title">제목</label>
+            <input type="text" id="title" th:field="*{updatePostRequest.title}" class="form-control"/>
+        </div>
+        <div>
+            <label for="content">내용</label>
+            <textarea id="content" th:field="*{updatePostRequest.content}" class="form-control" rows="10"></textarea>
+        </div>
+        <div style="margin-top: 20px;">
+            <button type="submit" class="btn btn-primary">저장</button>
+            <a href="/post/list" class="btn btn-secondary">취소</a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
