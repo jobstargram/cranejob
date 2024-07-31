@@ -34,41 +34,6 @@ public class RecruitController {
     @GetMapping
     public String recruit(@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @RequestParam("keyword") Optional<String> keyword, Model model) {
 
-//        int currentPage = page.orElse(1); //현재 페이지 값이 있으면 리턴 없으면 1
-//        int pageSize = size.orElse(9); // 페이지사이즈가 있으면 리턴 없으면 8
-//
-//        Page<RecruitInfo> recruitList =recruitService.recruitPaged(PageRequest.of(currentPage, pageSize));
-//
-//        model.addAttribute("currentPage", currentPage);
-//        model.addAttribute("pageSize", pageSize);
-//        model.addAttribute("recruitList", recruitList);
-//
-//        int totalPages = recruitList.getTotalPages();
-//        model.addAttribute("totalPages", totalPages);
-//
-//        //System.out.println(recruitList.getContent());
-//
-////        if (totalPages > 0){
-////            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-////                    .boxed()
-////                    .collect(Collectors.toList());
-////            model.addAttribute("pageNumbers", pageNumbers);
-////        }
-//        //페이지 그룹 계산
-//        int pageGroupSize = 10;
-//        int currentPageGroup = (currentPage - 1) / pageGroupSize + 1;
-//        int startPage = (currentPageGroup - 1) * pageGroupSize + 1;
-//        int endPage = Math.min(currentPageGroup * pageGroupSize, totalPages);
-//
-//        List<Integer> pageNumbers = IntStream.rangeClosed(startPage, endPage)
-//                .boxed()
-//                .collect(Collectors.toList());
-//        System.out.println(pageNumbers);
-//        model.addAttribute("pageNumbers", pageNumbers);
-//        model.addAttribute("startPage", startPage);
-//        model.addAttribute("endPage", endPage);
-
-
 
         // 페이징 처리
         int currentPage = page.orElse(1);
@@ -88,8 +53,6 @@ public class RecruitController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
-
-
 
         return "recruit/recruit-list";
     }
