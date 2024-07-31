@@ -103,7 +103,7 @@ public class AnnouncementController {
 
 		announcementService.updateAnnouncement(id, updateAnnouncementRequest.getTitle(), updateAnnouncementRequest.getContent());
 
-		return "/announcement/edit";
+		return "redirect:/announcements";
 	}
 
 
