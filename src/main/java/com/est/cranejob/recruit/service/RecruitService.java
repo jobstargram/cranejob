@@ -66,15 +66,26 @@ public class RecruitService {
         }
     }
 
-    public Page<RecruitInfo> recruitPaged(Pageable pageable){
+    public Page<RecruitInfo> getRecruitPaged(Pageable pageable, String keyword){
 
         int pageSize = pageable.getPageSize(); //한페이지의 사이즈
         int currentPage = pageable.getPageNumber(); // 현재 페이지 넘버
         int startIndex = currentPage * pageSize; // 아이템의 페이지 시작 인덱스
 
-        List<RecruitInfo> recruitList = recruitRepository.findAll().stream()
-                .map(RecruitInfo::fromEntity)
-                .collect(Collectors.toList());
+        List<RecruitInfo> recruitList = null;
+        //검색어가 없을때
+        if("".equals(keyword)){
+            recruitList = recruitRepository.findAll().stream()
+                    .map(RecruitInfo::fromEntity)
+                    .collect(Collectors.toList());
+
+        }else{//검색어가 있을때 모두 출력
+            recruitList = recruitRepository.findByTitleOrCompanyName(keyword).stream()
+                    .map(RecruitInfo::fromEntity)
+                    .collect(Collectors.toList());
+        }
+
+
 
         List<RecruitInfo> recruitPageList;
 
