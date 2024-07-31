@@ -29,46 +29,6 @@ public class AnnouncementService {
 	private final UserRepository userRepository;
 	private final AnnouncementRepository announcementRepository;
 
-	public Page<UserResponse> getPaginatedUsers(Pageable pageable, String keyword) {
-
-		int pageSize = pageable.getPageSize();
-		int currentPage = pageable.getPageNumber();
-		int startItem = currentPage * pageSize;
-
-		List<UserResponse> userList = userRepository.findUserByKeyword(keyword).stream()
-			.map(UserResponse::toDto)
-			.collect(Collectors.toList());
-
-
-		List<UserResponse> userPageList;
-
-		if (userList.size() < startItem) {
-			userPageList = Collections.emptyList();
-		} else {
-			int toIndex = Math.min(startItem + pageSize, userList.size());
-			userPageList = userList.subList(startItem, toIndex);
-		}
-
-		return new PageImpl<>(userPageList, PageRequest.of(currentPage, pageSize), userList.size());
-	}
-
-	public UserResponse findUserByUsername(String username) {
-		return userRepository.findByUsername(username)
-			.map(UserResponse::toDto) // User가 존재할 경우 UserResponse로 변환
-			.orElse(new UserResponse()); // User가 존재하지 않을 경우 빈 UserResponse 반환
-	}
-
-	@Transactional
-	public void updateUserRole(String username, Role role, UserStatus userStatus) {
-		User user = userRepository.findByUsername(username)
-			.orElseThrow(
-				() -> new UsernameNotFoundException("No user found with username:" + username));
-
-		user.updateRoleAndStatus(role, userStatus);
-
-		userRepository.save(user);
-	}
-
 	@Transactional
 	public void createAnnouncement(CreateAnnouncementRequest createAnnouncementRequest, UserResponse userResponse) {
 		User user = userRepository.findByUsername(userResponse.getUsername())

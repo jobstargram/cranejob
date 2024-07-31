@@ -82,45 +82,6 @@ public class AnnouncementController {
 		return "redirect:/";
 	}
 
-	// 공지사항에 대한 CRUD 로직 들어가야함
-	@GetMapping("/admin/users")
-	public String userList(@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @RequestParam("keyword") Optional<String> keyword, Model model) {
 
-		int currentPage = page.orElse(1);
-		int pageSize = size.orElse(10);
-		String searchKeyword = keyword.orElse("");
-
-		Page<UserResponse> userResponses = announcementService.getPaginatedUsers(PageRequest.of(currentPage - 1, pageSize), searchKeyword);
-
-		model.addAttribute("userResponses", userResponses);
-
-		int totalPages = userResponses.getTotalPages();
-
-		if (totalPages > 0) {
-			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-				.boxed()
-				.collect(Collectors.toList());
-			model.addAttribute("pageNumbers", pageNumbers);
-		}
-
-		return "/admin/user-list";
-	}
-
-	@GetMapping("/admin/users/{username}")
-	public String userDetails(@PathVariable String username, Model model) {
-
-		UserResponse userResponse = announcementService.findUserByUsername(username);
-
-		model.addAttribute("adminUpdateUserRequest", AdminUpdateUserRequest.toResponseDto(userResponse));
-
-		return "/admin/user-info";
-	}
-
-	@PostMapping("/admin/users/edit")
-	public String updateUserRole(@ModelAttribute AdminUpdateUserRequest adminUpdateUserRequest) {
-		announcementService.updateUserRole(adminUpdateUserRequest.getUsername(), adminUpdateUserRequest.getRole(), adminUpdateUserRequest.getUserStatus());
-
-		return "redirect:/admin/users";
-	}
 
 }
