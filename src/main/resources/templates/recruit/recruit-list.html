@@ -1,5 +1,5 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko" dir="rtl" data-bs-theme="auto">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko" dir="ltr" data-bs-theme="auto">
 <head><script src="/assets/js/color-modes.js"></script>
 
 	<meta charset="utf-8">
@@ -100,6 +100,7 @@
 
 </head>
 <body>
+
 <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
 	<symbol id="check2" viewBox="0 0 16 16">
 		<path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
@@ -192,12 +193,16 @@
 				<h1 class="fw-light">채용 공고 게시판</h1>
 				<p class="lead text-body-secondary">IT 관련 채용 공고를 제공합니다</p>
 				<p>
-					<a href="#" class="btn btn-primary my-2">뒤로</a>
-					<a href="#" class="btn btn-secondary my-2">앞으로</a>
-<!--					<a th:href="@{/recruit(page=${currentPage - 1}, size=${pageSize})}" class="btn btn-primary my-2"-->
-<!--					   th:if="${currentPage > 1}">뒤로</a>-->
-<!--					<a th:href="@{/recruit(page=${currentPage + 1}, size=${pageSize})}" class="btn btn-secondary my-2"-->
-<!--					   th:if="${currentPage < totalPages}">앞으로</a>-->
+<!--					<a href="#" class="btn btn-primary my-2">뒤로</a>-->
+<!--					<a href="#" class="btn btn-secondary my-2">앞으로</a>-->
+				<form class="row gx-2" th:action="@{/recruit}" method="get">
+					<div class="col-auto">
+						<input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="keyword" />
+					</div>
+					<div class="col-auto">
+						<button type="submit" class="btn btn-outline-primary">search</button>
+					</div>
+				</form>
 				</p>
 			</div>
 		</div>
@@ -222,88 +227,48 @@
 							</div>
 						</div>
 					</div>
-
 				</li>
-
-
 			</ul>
-<!--			&lt;!&ndash; 페이지네이션 &ndash;&gt;-->
-<!--			<nav aria-label="Page navigation">-->
-<!--				<ul class="pagination justify-content-center">-->
-<!--					&lt;!&ndash; 10페이지 단위로 뒤로 가는 버튼 (10 이하의 페이지면 첫 페이지로 이동) &ndash;&gt;-->
-<!--					<li class="page-item" th:classappend="${currentPage <= 10} ? 'disabled'">-->
-<!--						<a class="page-link" th:href="@{/recruit(page=${currentPage > 10 ? (currentPage - 10) : 1}, size=${pageSize})}" aria-label="Previous 10 or First">-->
-<!--							<span aria-hidden="true">&laquo;</span>-->
-<!--						</a>-->
-<!--					</li>-->
-<!--					&lt;!&ndash; 이전 버튼 &ndash;&gt;-->
-<!--					<li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">-->
-<!--						<a class="page-link" th:href="@{/recruit(page=${currentPage - 1}, size=${pageSize})}" aria-label="Previous">-->
-<!--							<span aria-hidden="true">&lsaquo;</span>-->
-<!--						</a>-->
-<!--					</li>-->
-<!--					&lt;!&ndash; 페이지 번호 &ndash;&gt;-->
-<!--					<li class="page-item" th:each="pageNumber : ${pageNumbers}" th:classappend="${pageNumber == currentPage} ? 'active'">-->
-<!--						<a class="page-link" th:href="@{/recruit(page=${pageNumber}, size=${pageSize})}" th:text="${pageNumber}">1</a>-->
-<!--					</li>-->
-<!--					&lt;!&ndash; 다음 버튼 &ndash;&gt;-->
-<!--					<li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">-->
-<!--						<a class="page-link" th:href="@{/recruit(page=${currentPage + 1}, size=${pageSize})}" aria-label="Next">-->
-<!--							<span aria-hidden="true">&rsaquo;</span>-->
-<!--						</a>-->
-<!--					</li>-->
-<!--					&lt;!&ndash; 10페이지 단위로 앞으로 가는 버튼 (마지막 페이지를 초과하면 마지막 페이지로 이동) &ndash;&gt;-->
-<!--					<li class="page-item" th:classappend="${currentPage + 10 > totalPages} ? 'disabled'">-->
-<!--						<a class="page-link" th:href="@{/recruit(page=${Math.min(currentPage + 10, totalPages)}, size=${pageSize})}" aria-label="Next 10 or Last">-->
-<!--							<span aria-hidden="true">&raquo;</span>-->
-<!--						</a>-->
-<!--					</li>-->
-<!--				</ul>-->
-<!--			</nav>-->
 
-			<!-- 페이지네이션 -->
 			<nav aria-label="Page navigation">
-				<ul class="pagination justify-content-center">
-					<!-- 첫 페이지로 가는 버튼 -->
-					<li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
-						<a class="page-link" th:href="@{/recruit(page=1, size=${pageSize})}" aria-label="First">
-							<span aria-hidden="true">&laquo;&laquo;</span>
-						</a>
-					</li>
-					<!-- 10페이지 단위로 뒤로 가는 버튼 -->
-					<li class="page-item" th:classappend="${currentPage <= 10} ? 'disabled'">
-						<a class="page-link" th:href="@{/recruit(page=${startPage - 10}, size=${pageSize})}" aria-label="Previous 10">
-							<span aria-hidden="true">&laquo;</span>
-						</a>
-					</li>
-					<!-- 이전 버튼 -->
-					<li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
-						<a class="page-link" th:href="@{/recruit(page=${currentPage - 1}, size=${pageSize})}" aria-label="Previous">
-							<span aria-hidden="true">&lsaquo;</span>
-						</a>
-					</li>
-					<!-- 페이지 번호 -->
-					<li class="page-item" th:each="pageNumber : ${pageNumbers}" th:classappend="${pageNumber == currentPage} ? 'active'">
-						<a class="page-link" th:href="@{/recruit(page=${pageNumber}, size=${pageSize})}" th:text="${pageNumber}">1</a>
-					</li>
-					<!-- 다음 버튼 -->
-					<li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
-						<a class="page-link" th:href="@{/recruit(page=${currentPage + 1}, size=${pageSize})}" aria-label="Next">
-							<span aria-hidden="true">&rsaquo;</span>
-						</a>
-					</li>
-					<!-- 10페이지 단위로 앞으로 가는 버튼 -->
-					<li class="page-item" th:classappend="${endPage + 1 > totalPages} ? 'disabled'">
-						<a class="page-link" th:href="@{/recruit(page=${endPage + 1}, size=${pageSize})}" aria-label="Next 10">
-							<span aria-hidden="true">&raquo;</span>
-						</a>
-					</li>
-					<!-- 마지막 페이지로 가는 버튼 -->
-					<li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
-						<a class="page-link" th:href="@{/recruit(page=${totalPages}, size=${pageSize})}" aria-label="Last">
-							<span aria-hidden="true">&raquo;&raquo;</span>
-						</a>
-					</li>
+				<!--표에 사용될 변수값 초기화 -->
+				<ul class="pagination justify-content-center" th:with="start=${T(java.lang.Math).floor(recruitList.number / 10) * 10 + 1}, last=(${start + 9 < recruitList.totalPages ? start + 9 : recruitList.totalPages})">
+					<th:block th:with="
+            firstAddr=@{/recruit(page=1)},
+            prevAddr=@{/recruit(page=${recruitList.number})},
+            nextAddr=@{/recruit(page=${recruitList.number + 2})},
+            lastAddr=@{/recruit(page=${recruitList.totalPages})}">
+						<li class="page-item">
+							<a class="page-link" th:href="${firstAddr}" aria-label="First">
+								<span aria-hidden="true"> << </span>
+							</a>
+						</li>
+						<!-- 이전 페이지로 가기 버튼 -->
+						<li class="page-item" th:class="${recruitList.first} ? 'disabled'">
+							<a class="page-link" th:href="${recruitList.first} ? '#' :${prevAddr}"
+							   aria-label="Previous">
+								<span aria-hidden="true">&lt;</span>
+							</a>
+						</li>
+						<!--1,2,3,4,.. 등 페이지-->
+						<li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
+							th:class="${page == recruitList.number + 1} ? 'active'">
+							<a class="page-link" th:text="${page}" th:href="@{/recruit(page=${page})}"></a>
+						</li>
+						<!--다음 페이지로 -->
+						<li class="page-item" th:class="${recruitList.last} ? 'disabled'">
+							<a class="page-link" th:href="${recruitList.last} ? '#' : ${nextAddr}"
+							   aria-label="Next">
+								<span aria-hidden="true">&gt;</span>
+							</a>
+						</li>
+						<!--맨 마지막 페이지로 이동 -->
+						<li class="page-item">
+							<a class="page-link" th:href="${lastAddr}" aria-label="Last">
+								<span aria-hidden="true"> >> </span>
+							</a>
+						</li>
+					</th:block>
 				</ul>
 			</nav>
 		</div>
@@ -312,6 +277,7 @@
 </main>
 
 <footer class="text-body-secondary py-5">
+
 	<div class="container">
 		<p class="float-end mb-1">
 			<a href="#">عد إلى الأعلى</a>
