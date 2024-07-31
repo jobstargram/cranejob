@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-	@Query("select p from Post p where p.title like %?1% or p.user.nickname like %?1%")
+	@Query("select p from Post p where (p.title like %?1% or p.user.nickname like %?1%) and p.isDeleted = false")
 	List<Post> findPostByKeyword(String keyword);
 
 }

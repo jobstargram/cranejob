@@ -55,6 +55,10 @@ public class Post extends BaseEntity {
 		this.title = title;
 		this.content = content;
 	}
+	public void deletedPost(){
+		this.isDeleted = true;
+		this.deletedAt = LocalDateTime.now();
+	}
 
 	public void setUser(User user) {
 		this.user = user;
