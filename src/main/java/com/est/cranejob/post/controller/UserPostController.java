@@ -155,5 +155,32 @@ public class UserPostController {
 
         return "redirect:/post/list";
     }
+    // 삭제 요청
+    @PostMapping("/post/delete/{id}")
+    public String deletePost(@PathVariable Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated() || authentication.getPrincipal() == null) {
+            log.warn("User not authenticated. Redirecting to login page.");
+            return "redirect:/user/login";
+        }
+
+        UserResponse principal = (UserResponse) authentication.getPrincipal();
+        log.debug("Requesting user for deletePost: {}", principal.getUsername());
+
+        User requestingUser = userRepository.findByUsername(principal.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + principal.getUsername()));
+
+        try {
+            postService.deletePost(id, requestingUser);
+            log.debug("Post logically deleted successfully. ID: {}", id);
+            return "redirect:/post/list";
+        } catch (SecurityException e) {
+            log.warn("User does not have permission to delete the post. Redirecting to post list.");
+            return "redirect:/post/list?error=noPermission";
+        } catch (IllegalArgumentException e) {
+            log.warn("Post not found or invalid post ID. Redirecting to post list.");
+            return "redirect:/post/list?error=postNotFound";
+        }
+    }
 
 }
