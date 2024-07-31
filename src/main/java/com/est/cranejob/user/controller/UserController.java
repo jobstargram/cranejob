@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,8 +19,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
@@ -86,6 +91,20 @@ public class UserController {
 		userService.updateUser(username, updateUserRequest);
 
 		return "redirect:/";
+	}
+
+	@PatchMapping("/user/delete/{username}")
+	@ResponseBody
+	public ResponseEntity<Void> userDelete(@PathVariable String username, HttpServletRequest request, HttpServletResponse response) {
+		userService.deleteUser(username);
+
+		// 로그아웃 처리
+		Authentication authentication = SecurityContextHolder.getContextHolderStrategy().getContext().getAuthentication();
+		if (authentication != null) {
+			new SecurityContextLogoutHandler().logout(request, response, authentication);
+		}
+
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 

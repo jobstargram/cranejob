@@ -44,4 +44,13 @@ public class UserService {
 
 		return user.isEmpty();
 	}
+
+	public void deleteUser(String username) {
+		User user = userRepository.findByUsername(username)
+			.orElseThrow(() -> new UsernameNotFoundException("No user found with username:" + username));
+
+		user.deleteUser();
+
+		userRepository.save(user);
+	}
 }

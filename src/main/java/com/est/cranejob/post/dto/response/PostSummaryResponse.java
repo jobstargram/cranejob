@@ -1,5 +1,6 @@
 package com.est.cranejob.post.dto.response;
 
+import com.est.cranejob.announcement.domain.Announcement;
 import com.est.cranejob.post.domain.Post;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -30,5 +31,14 @@ public class PostSummaryResponse implements Serializable {
                 .createdAt(post.getCreatedAt())
                 .nickname(post.getUser().getNickname())
                 .build();
+    }
+
+    public static PostSummaryResponse fromAnnouncement(Announcement announcement) {
+        return PostSummaryResponse.builder()
+            .id(announcement.getId())
+            .title(announcement.getTitle())
+            .createdAt(announcement.getCreatedAt())
+            .nickname(announcement.getUser().getNickname())
+            .build();
     }
 }

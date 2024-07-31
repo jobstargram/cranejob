@@ -11,18 +11,20 @@ import com.est.cranejob.user.repository.UserRepository;
 import com.est.cranejob.user.service.UserService;
 import jakarta.validation.Valid;
 import java.security.Principal;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,10 +38,27 @@ public class UserPostController {
 
     // 게시글 목록 조회
     @GetMapping("/post/list")
-    public String listPosts(Model model) {
+    public String listPosts(@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @RequestParam("keyword") Optional<String> keyword, Model model) {
         log.debug("Fetching list of posts.");
-        List<PostSummaryResponse> postSummaryResponseList = postService.findAllPost();
+
+        // 페이징 처리
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(10);
+        String searchKeyword = keyword.orElse("");
+
+        Page<PostSummaryResponse> postSummaryResponseList = postService.getPaginatedPosts(PageRequest.of(currentPage - 1, pageSize), searchKeyword);
+
         model.addAttribute("postSummaryResponseList", postSummaryResponseList);
+
+        int totalPages = postSummaryResponseList.getTotalPages();
+
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                .boxed()
+                .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
         return "post/list";
     }
 
@@ -85,10 +104,8 @@ public class UserPostController {
         return "redirect:/post/list";
     }
 
-
-
-    /* 게시글 상세
-    @GetMapping("/post/{id}")
+    // 게시글 상세
+    @GetMapping("/post/detail/{id}")
     public String postDetail(@PathVariable("id") Long id, Model model) {
         log.debug("Fetching details for post ID: {}", id);
         PostUserDetailResponse postUserDetailResponse = postService.findPostById(id);
@@ -97,18 +114,33 @@ public class UserPostController {
     }
 
     // 게시글 수정 폼
-    @GetMapping("/posts/edit/{id}")
+    @GetMapping("/post/edit/{id}")
     public String editPostForm(@PathVariable Long id, Model model) {
         log.debug("Fetching post for edit with ID: {}", id);
         PostUserDetailResponse postUserDetailResponse = postService.findPostById(id);
         model.addAttribute("postUserDetailResponse", postUserDetailResponse);
         model.addAttribute("updatePostRequest", new UpdatePostRequest(
                 postUserDetailResponse.getTitle(), postUserDetailResponse.getContent()));
+        // 현재 로그인한 사용자 확인
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated() || authentication.getPrincipal() == null) {
+            log.warn("User not authenticated. Redirecting to login page.");
+            return "redirect:/user/login";
+        }
+
+        UserResponse principal = (UserResponse) authentication.getPrincipal();
+        String currentUsername = principal.getUsername();
+
+        if (!postUserDetailResponse.getUsername().equals(currentUsername)) {
+            log.error("User is not the author of the post. Access denied.");
+            return "redirect:/post/list"; // 또는 에러 페이지로 리다이렉트
+        }
+
         return "post/edit";
     }
 
     // 게시글 수정 처리
-    @PostMapping("/post/edit/{id}")
+    @PutMapping("/post/edit/{id}")
     public String updatePost(@PathVariable("id") Long id,
                              @Valid @ModelAttribute UpdatePostRequest updatePostRequest,
                              BindingResult bindingResult) {
@@ -122,5 +154,6 @@ public class UserPostController {
         log.debug("Post updated successfully.");
 
         return "redirect:/post/list";
-    }*/
+    }
+
 }

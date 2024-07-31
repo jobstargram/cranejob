@@ -2,21 +2,29 @@ package com.est.cranejob.recruit.service;
 
 import com.est.cranejob.recruit.domain.Recruit;
 import com.est.cranejob.recruit.dto.RecruitInfo;
+import com.est.cranejob.recruit.repository.RecruitRepository;
 import com.google.gson.Gson;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+
+
 
 @Service
 public class RecruitService {
 
     private final HttpURLConnectionEx httpEx;
+    private final RecruitRepository recruitRepository;
 
-    public RecruitService(){
+    //api 호출 관련 로직
+    public RecruitService(RecruitRepository recruitRepository){
         this.httpEx = new HttpURLConnectionEx();
+        this.recruitRepository = recruitRepository;
     }
 
     public List<RecruitInfo> callApi(String apiKey, String job_mid_cd, String count){
@@ -56,6 +64,40 @@ public class RecruitService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public Page<RecruitInfo> getRecruitPaged(Pageable pageable, String keyword){
+
+        int pageSize = pageable.getPageSize(); //한페이지의 사이즈
+        int currentPage = pageable.getPageNumber(); // 현재 페이지 넘버
+        int startIndex = currentPage * pageSize; // 아이템의 페이지 시작 인덱스
+
+        List<RecruitInfo> recruitList = null;
+        //검색어가 없을때
+        if("".equals(keyword)){
+            recruitList = recruitRepository.findAll().stream()
+                    .map(RecruitInfo::fromEntity)
+                    .collect(Collectors.toList());
+
+        }else{//검색어가 있을때 모두 출력
+            recruitList = recruitRepository.findByTitleOrCompanyName(keyword).stream()
+                    .map(RecruitInfo::fromEntity)
+                    .collect(Collectors.toList());
+        }
+
+
+
+        List<RecruitInfo> recruitPageList;
+
+        if (recruitList.size() < startIndex){
+            recruitPageList = Collections.emptyList();
+        }else{
+            int toIndex = Math.min(startIndex + pageSize, recruitList.size()); //마지막 페이지 조심
+            recruitPageList = recruitList.subList(startIndex, toIndex);
+        }
+
+        return new PageImpl<>(recruitPageList,  PageRequest.of(currentPage, pageSize), recruitList.size());
+
     }
 }
 

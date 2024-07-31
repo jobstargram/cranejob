@@ -1,5 +1,5 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko" dir="rtl" data-bs-theme="auto">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko" dir="ltr" data-bs-theme="auto">
 <head><script src="/assets/js/color-modes.js"></script>
 
 	<meta charset="utf-8">
@@ -100,6 +100,7 @@
 
 </head>
 <body>
+
 <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
 	<symbol id="check2" viewBox="0 0 16 16">
 		<path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
@@ -192,8 +193,16 @@
 				<h1 class="fw-light">채용 공고 게시판</h1>
 				<p class="lead text-body-secondary">IT 관련 채용 공고를 제공합니다</p>
 				<p>
-					<a href="#" class="btn btn-primary my-2">الدعوة الرئيسية للعمل</a>
-					<a href="#" class="btn btn-secondary my-2">عمل ثانوي</a>
+<!--					<a href="#" class="btn btn-primary my-2">뒤로</a>-->
+<!--					<a href="#" class="btn btn-secondary my-2">앞으로</a>-->
+				<form class="row gx-2" th:action="@{/recruit}" method="get">
+					<div class="col-auto">
+						<input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="keyword" />
+					</div>
+					<div class="col-auto">
+						<button type="submit" class="btn btn-outline-primary">search</button>
+					</div>
+				</form>
 				</p>
 			</div>
 		</div>
@@ -204,7 +213,7 @@
 
 			<ul class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 no_dot">
 <!--				<ul>-->
-				<li th:each="info : ${RecruitInfo}" class="col">
+				<li th:each="info : ${recruitList}" class="col">
 					<div class="card shadow-sm">
 						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>
 						<div class="card-body">
@@ -219,134 +228,56 @@
 						</div>
 					</div>
 				</li>
-<!--				<li class="col">-->
-<!--					<div class="card shadow-sm">-->
-<!--						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>-->
-<!--						<div class="card-body">-->
-<!--							<p th:text="${info.getCompanyName()}" class="card-text">회사이름</p>-->
-<!--							<p th:test="${info.getTitle()}" class="card-text">타이틀</p>-->
-<!--							<div class="d-flex justify-content-between align-items-center">-->
-<!--								<div class="btn-group">-->
-<!--									<button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>-->
-<!--								</div>-->
-<!--								<small class="text-body-secondary">9 دقائق</small>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</li>-->
-<!--				<li class="col">-->
-<!--					<div class="card shadow-sm">-->
-<!--						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>-->
-<!--						<div class="card-body">-->
-<!--							<p class="card-text">회사 이름</p>-->
-<!--							<p class="card-text">타이틀</p>-->
-<!--							<div class="d-flex justify-content-between align-items-center">-->
-<!--								<div class="btn-group">-->
-<!--									<button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>-->
-<!--								</div>-->
-<!--								<small class="text-body-secondary">9 دقائق</small>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</li>-->
-
-<!--				<li class="col">-->
-<!--					<div class="card shadow-sm">-->
-<!--						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>-->
-<!--						<div class="card-body">-->
-<!--							<p class="card-text">회사 이름</p>-->
-<!--							<p class="card-text">타이틀</p>-->
-<!--							<div class="d-flex justify-content-between align-items-center">-->
-<!--								<div class="btn-group">-->
-<!--									<button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>-->
-<!--								</div>-->
-<!--								<small class="text-body-secondary">9 دقائق</small>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</li>-->
-<!--				<li class="col">-->
-<!--					<div class="card shadow-sm">-->
-<!--						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>-->
-<!--						<div class="card-body">-->
-<!--							<p class="card-text">회사 이름</p>-->
-<!--							<p class="card-text">타이틀</p>-->
-<!--							<div class="d-flex justify-content-between align-items-center">-->
-<!--								<div class="btn-group">-->
-<!--									<button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>-->
-<!--								</div>-->
-<!--								<small class="text-body-secondary">9 دقائق</small>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</li>-->
-<!--				<li class="col">-->
-<!--					<div class="card shadow-sm">-->
-<!--						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>-->
-<!--						<div class="card-body">-->
-<!--							<p class="card-text">회사 이름</p>-->
-<!--							<p class="card-text">타이틀</p>-->
-<!--							<div class="d-flex justify-content-between align-items-center">-->
-<!--								<div class="btn-group">-->
-<!--									<button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>-->
-<!--								</div>-->
-<!--								<small class="text-body-secondary">9 دقائق</small>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</li>-->
-
-<!--				<li class="col">-->
-<!--					<div class="card shadow-sm">-->
-<!--						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>-->
-<!--						<div class="card-body">-->
-<!--							<p class="card-text">회사 이름</p>-->
-<!--							<p class="card-text">타이틀</p>-->
-<!--							<div class="d-flex justify-content-between align-items-center">-->
-<!--								<div class="btn-group">-->
-<!--									<button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>-->
-<!--								</div>-->
-<!--								<small class="text-body-secondary">9 دقائق</small>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</li>-->
-<!--				<li class="col">-->
-<!--					<div class="card shadow-sm">-->
-<!--						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>-->
-<!--						<div class="card-body">-->
-<!--							<p class="card-text">회사 이름</p>-->
-<!--							<p class="card-text">타이틀</p>-->
-<!--							<div class="d-flex justify-content-between align-items-center">-->
-<!--								<div class="btn-group">-->
-<!--									<button type="button" class="btn btn-sm btn-outline-secondary">상세 보기</button>-->
-<!--								</div>-->
-<!--								<small class="text-body-secondary">9 دقائق</small>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</li>-->
-<!--					<li class="card shadow-sm">-->
-<!--						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>-->
-<!--						<div class="card-body">-->
-<!--							<p class="card-text">회사 이름</p>-->
-<!--							<p class="card-text">타이틀</p>-->
-<!--							<div class="d-flex justify-content-between align-items-center">-->
-<!--								<div class="btn-group">-->
-<!--									<button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>-->
-<!--								</div>-->
-<!--								<small class="text-body-secondary">9 دقائق</small>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</li>-->
-<!--				</ul>-->
 			</ul>
+
+			<nav aria-label="Page navigation">
+				<!--표에 사용될 변수값 초기화 -->
+				<ul class="pagination justify-content-center" th:with="start=${T(java.lang.Math).floor(recruitList.number / 10) * 10 + 1}, last=(${start + 9 < recruitList.totalPages ? start + 9 : recruitList.totalPages})">
+					<th:block th:with="
+            firstAddr=@{/recruit(page=1)},
+            prevAddr=@{/recruit(page=${recruitList.number})},
+            nextAddr=@{/recruit(page=${recruitList.number + 2})},
+            lastAddr=@{/recruit(page=${recruitList.totalPages})}">
+						<li class="page-item">
+							<a class="page-link" th:href="${firstAddr}" aria-label="First">
+								<span aria-hidden="true"> << </span>
+							</a>
+						</li>
+						<!-- 이전 페이지로 가기 버튼 -->
+						<li class="page-item" th:class="${recruitList.first} ? 'disabled'">
+							<a class="page-link" th:href="${recruitList.first} ? '#' :${prevAddr}"
+							   aria-label="Previous">
+								<span aria-hidden="true">&lt;</span>
+							</a>
+						</li>
+						<!--1,2,3,4,.. 등 페이지-->
+						<li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
+							th:class="${page == recruitList.number + 1} ? 'active'">
+							<a class="page-link" th:text="${page}" th:href="@{/recruit(page=${page})}"></a>
+						</li>
+						<!--다음 페이지로 -->
+						<li class="page-item" th:class="${recruitList.last} ? 'disabled'">
+							<a class="page-link" th:href="${recruitList.last} ? '#' : ${nextAddr}"
+							   aria-label="Next">
+								<span aria-hidden="true">&gt;</span>
+							</a>
+						</li>
+						<!--맨 마지막 페이지로 이동 -->
+						<li class="page-item">
+							<a class="page-link" th:href="${lastAddr}" aria-label="Last">
+								<span aria-hidden="true"> >> </span>
+							</a>
+						</li>
+					</th:block>
+				</ul>
+			</nav>
 		</div>
 	</div>
 
 </main>
 
 <footer class="text-body-secondary py-5">
+
 	<div class="container">
 		<p class="float-end mb-1">
 			<a href="#">عد إلى الأعلى</a>
