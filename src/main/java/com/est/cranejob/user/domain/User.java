@@ -90,5 +90,10 @@ public class User extends BaseEntity {
             this.suspendedAt = LocalDateTime.now();
         }
     }
+
+    public void deleteUser() {
+        this.userStatus = UserStatus.DELETED;
+        this.deletedAt = LocalDateTime.now();
+    }
 }
 
