@@ -31,15 +31,12 @@ public class SchedulerService {
 
     //매일 밤11시 실행
     @Scheduled(cron = "0 0 23 * * *")
-    //5초마다 실행 test용
-    //@Scheduled(fixedRate = 50000)
     public void run(){
-
-    //기존 정보 삭제
+        //기존 정보 삭제
         recruitRepository.deleteAllInBatch();
-    //api 채용 정보 가져오기
+        //api 채용 정보 가져오기
         List<RecruitInfo> info = recruitService.callApi(apiKey,job_mid_cd,count);
-    //db에 저장하기
+        //db에 저장하기
         for (RecruitInfo infoTemp : info) {
             Recruit recruit = infoTemp.toEntity();
             recruitRepository.save(recruit);

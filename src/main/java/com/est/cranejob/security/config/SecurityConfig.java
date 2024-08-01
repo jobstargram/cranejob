@@ -20,10 +20,10 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain userSecurityFilterChain(HttpSecurity http) throws Exception {
 		http
-			.securityMatcher("/", "/user/**", "/user/login", "/user/signup", "/post/**")
+			.securityMatcher("/", "/user/**", "/user/login", "/user/signup", "/post/**", "/recruit/**")
 			.authorizeHttpRequests(authorize -> authorize
 				.requestMatchers("/css/**", "/images/**", "/js/**", "/favicon.*", "/*/icon-*").permitAll()
-				.requestMatchers("/", "/user/login", "/user/signup", "/post/list","/post/detail/**").permitAll()
+				.requestMatchers("/", "/user/login", "/user/signup", "/post/list","/post/detail/**", "/recruit/**").permitAll()
 				.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
 				.anyRequest().authenticated()
 			)
@@ -46,10 +46,10 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain adminSecurityFilterChain(HttpSecurity http) throws Exception {
 		http
-			.securityMatcher("/","/admin/**", "/admin/login", "/admin/signup", "admin/users/**", "/post/**", "/announcements/**")
+			.securityMatcher("/","/admin/**", "/admin/login", "/admin/signup", "admin/users/**", "/post/**", "/announcements/**", "/recruit/**")
 			.authorizeHttpRequests(authorize -> authorize
 				.requestMatchers("/css/**", "/images/**", "/js/**", "/favicon.*", "/*/icon-*").permitAll()
-				.requestMatchers("/", "/admin/login", "/admin/signup").permitAll()
+				.requestMatchers("/", "/admin/login", "/admin/signup", "/recruit/**").permitAll()
 				.requestMatchers("/admin/**").hasRole("ADMIN")
 				.anyRequest().authenticated()
 			)
