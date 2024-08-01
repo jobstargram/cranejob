@@ -32,7 +32,7 @@ public class SchedulerService {
     //매일 밤11시 실행
     @Scheduled(cron = "0 0 23 * * *")
     //5초마다 실행 test용
-    @Scheduled(cron = "0 0 23 * * *")
+    //@Scheduled(fixedRate = 50000)
     public void run(){
 
     //기존 정보 삭제
