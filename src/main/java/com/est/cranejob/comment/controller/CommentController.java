@@ -73,10 +73,9 @@ public class CommentController {
         return ResponseEntity.ok(CommentResponse.toDTO(comment));
     }
 
-    // 댓글 수정
     @PutMapping("/comment/{commentId}")
     public ResponseEntity<CommentResponse> updateComment(@PathVariable("commentId") Long commentId,
-                                                         @Valid @RequestBody CreateCommentRequest updateRequest) {
+                                                         @Valid @RequestBody UpdateCommentRequest updateRequest) {
         // 현재 로그인한 사용자 확인
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated() || !(authentication.getPrincipal() instanceof UserDetails)) {
@@ -92,7 +91,7 @@ public class CommentController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); // 수정 권한이 없는 경우
         }
 
-//        comment.setContent(updateRequest.getContent());
+        comment.updateComment(updateRequest.getContent());
         Comment updatedComment = commentService.updateComment(commentId, comment);
         return ResponseEntity.ok(CommentResponse.toDTO(updatedComment));
     }
