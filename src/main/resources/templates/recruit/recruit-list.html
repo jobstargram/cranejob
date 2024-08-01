@@ -102,48 +102,7 @@
 <body>
 
 <header>
-	<nav class="navbar navbar-expand-lg bg-light">
-
-		<div class="container-fluid">
-			<a class="navbar-brand" href="/post/list">채용 게시판</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav ms-auto">
-
-					<!-- 세션이 존재하지 않을 경우 로그인, 회원가입 버튼만 활성화 -->
-					<li class="nav-item">
-						<a class="nav-link" href="/user/login" sec:authorize="isAnonymous()">Login</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/user/signup" sec:authorize="isAnonymous()">Join</a>
-					</li>
-
-					<!-- 세션이 존재할 경우 로그아웃, 개인정보수정 버튼으로 대체 -->
-					<li class="nav-item" sec:authorize="isAuthenticated()">
-						<a class="nav-link" th:text="|로그인: ${#authentication.principal.nickname}|">로그인 사용자 이름</a>
-					</li>
-
-					<li class="nav-item" sec:authorize="isAuthenticated()">
-						<a class="nav-link" href="/user/logout">Logout</a>
-					</li>
-
-					<li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
-						<a class="nav-link" href="/user/edit">내 정보 수정</a>
-					</li>
-
-					<li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-						<a class="nav-link" href="/admin/edit">내 정보 수정</a>
-					</li>
-					<li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-						<a class="nav-link" href="/admin/users">회원 정보 수정</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+	<div th:replace="~{/layout/header.html :: header}"></div>
 
 </header>
 <!--<svg xmlns="http://www.w3.org/2000/svg" class="d-none">-->
@@ -232,7 +191,7 @@
 
 <main>
 
-	<section class="py-5 text-center container">
+	<section class="py-5 text-center container" style="background-color: rgba(78, 148, 245, 0.2);">
 		<div class="row py-lg-5">
 			<div class="col-lg-6 col-md-8 mx-auto">
 				<h1 class="fw-light">채용 공고 게시판</h1>
@@ -269,7 +228,7 @@
 								<div class="btn-group">
 									<a th:href="${info.url}" class="btn btn-sm btn-outline-secondary">상세보기</a>
 								</div>
-								<small class="text-body-secondary">9 دقائق</small>
+<!--								<small class="text-body-secondary">9 دقائق</small>-->
 							</div>
 						</div>
 					</div>
@@ -322,16 +281,16 @@
 
 </main>
 
-<footer class="text-body-secondary py-5">
+<!--<footer class="text-body-secondary py-5">-->
 
-	<div class="container">
-		<p class="float-end mb-1">
-			<a href="#">عد إلى الأعلى</a>
-		</p>
-		<p class="mb-1">مثال الألبوم هو © Bootstrap ، ولكن يرجى تنزيله وتخصيصه لنفسك!</p>
-		<p class="mb-0">جديد على Bootstrap؟ <a href="/"> تفضل بزيارة الصفحة الرئيسية </a> أو اقرأ <a href="../getting-started/introduction/ "> دليل البدء </a>.</p>
-	</div>
-</footer>
+<!--	<div class="container">-->
+<!--		<p class="float-end mb-1">-->
+<!--			<a href="#">عد إلى الأعلى</a>-->
+<!--		</p>-->
+<!--		<p class="mb-1">مثال الألبوم هو © Bootstrap ، ولكن يرجى تنزيله وتخصيصه لنفسك!</p>-->
+<!--		<p class="mb-0">جديد على Bootstrap؟ <a href="/"> تفضل بزيارة الصفحة الرئيسية </a> أو اقرأ <a href="../getting-started/introduction/ "> دليل البدء </a>.</p>-->
+<!--	</div>-->
+<!--</footer>-->
 <script src="./src/main/resources/assets/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

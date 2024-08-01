@@ -1,9 +1,7 @@
 package com.est.cranejob.announcement.controller;
 
-import com.est.cranejob.announcement.dto.AdminUpdateUserRequest;
 import com.est.cranejob.announcement.dto.request.CreateAnnouncementRequest;
 import com.est.cranejob.announcement.dto.request.UpdateAnnouncementRequest;
-import com.est.cranejob.announcement.dto.response.AnnouncementDetailResponse;
 import com.est.cranejob.announcement.dto.response.AnnouncementResponse;
 import com.est.cranejob.announcement.service.AnnouncementService;
 import com.est.cranejob.user.dto.response.UserResponse;
@@ -23,7 +21,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -91,8 +88,8 @@ public class AnnouncementController {
 			return "/post/list";
 		}
 
-		AnnouncementDetailResponse announcementDetailResponse = announcementService.findAnnouncementById(id);
-		model.addAttribute("updateAnnouncementRequest", UpdateAnnouncementRequest.toResponseDto(announcementDetailResponse));
+		AnnouncementResponse announcementResponse = announcementService.findAnnouncementById(id);
+		model.addAttribute("updateAnnouncementRequest", UpdateAnnouncementRequest.toResponseDto(announcementResponse));
 
 		return "/announcement/edit";
 	}

@@ -1,7 +1,6 @@
 package com.est.cranejob.announcement.dto.request;
 
-import com.est.cranejob.announcement.domain.Announcement;
-import com.est.cranejob.announcement.dto.response.AnnouncementDetailResponse;
+import com.est.cranejob.announcement.dto.response.AnnouncementResponse;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -27,12 +26,11 @@ public class UpdateAnnouncementRequest implements Serializable {
     @NotBlank(message = "공지사항의 내용은 빈 값이 들어갈 수 없습니다.")
     private String content;
 
-    public static UpdateAnnouncementRequest toResponseDto(
-        AnnouncementDetailResponse announcementDetailResponse) {
+    public static UpdateAnnouncementRequest toResponseDto(AnnouncementResponse announcementResponse) {
         return UpdateAnnouncementRequest.builder()
-            .id(announcementDetailResponse.getId())
-            .title(announcementDetailResponse.getTitle())
-            .content(announcementDetailResponse.getContent())
+            .id(announcementResponse.getId())
+            .title(announcementResponse.getTitle())
+            .content(announcementResponse.getContent())
             .build();
     }
 }
