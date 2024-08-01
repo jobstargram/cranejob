@@ -54,11 +54,13 @@ public class CommentController {
             log.warn("Authentication object is null");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+
         if (!authentication.isAuthenticated()) {
             log.warn("User is not authenticated");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        if (!(authentication.getPrincipal() instanceof UserDetails)) {
+
+        if (authentication.getPrincipal() == null) {
             log.warn("Principal is not an instance of UserDetails");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -90,7 +92,7 @@ public class CommentController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); // 수정 권한이 없는 경우
         }
 
-        comment.setContent(updateRequest.getContent());
+//        comment.setContent(updateRequest.getContent());
         Comment updatedComment = commentService.updateComment(commentId, comment);
         return ResponseEntity.ok(CommentResponse.toDTO(updatedComment));
     }

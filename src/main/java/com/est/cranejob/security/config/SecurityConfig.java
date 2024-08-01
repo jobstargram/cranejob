@@ -20,10 +20,10 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain userSecurityFilterChain(HttpSecurity http) throws Exception {
 		http
-			.securityMatcher("/", "/user/**", "/user/login", "/user/signup", "/post/**", "/recruit/**")
+			.securityMatcher("/", "/user/**", "/user/login", "/user/signup", "/post/**", "/recruit/**", "api/comment/**")
 			.authorizeHttpRequests(authorize -> authorize
 				.requestMatchers("/css/**", "/images/**", "/js/**", "/favicon.*", "/*/icon-*").permitAll()
-				.requestMatchers("/", "/user/login", "/user/signup", "/post/list","/post/detail/**", "/recruit/**").permitAll()
+				.requestMatchers("/", "/user/login", "/user/signup", "/post/list","/recruit/**").permitAll()
 				.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
 				.anyRequest().authenticated()
 			)
