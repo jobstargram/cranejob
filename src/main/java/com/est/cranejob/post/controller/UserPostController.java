@@ -1,5 +1,8 @@
 package com.est.cranejob.post.controller;
 
+import com.est.cranejob.comment.domain.Comment;
+import com.est.cranejob.comment.dto.response.CommentResponse;
+import com.est.cranejob.comment.service.CommentService;
 import com.est.cranejob.post.dto.request.CreatePostRequest;
 import com.est.cranejob.post.dto.request.UpdatePostRequest;
 import com.est.cranejob.post.dto.response.PostSummaryResponse;
@@ -35,6 +38,7 @@ public class UserPostController {
 
     private final PostService postService;
     private final UserRepository userRepository;
+    private final CommentService commentService;
 
     // 게시글 목록 조회
     @GetMapping("/post/list")
@@ -109,7 +113,9 @@ public class UserPostController {
     public String postDetail(@PathVariable("id") Long id, Model model) {
         log.debug("Fetching details for post ID: {}", id);
         PostUserDetailResponse postUserDetailResponse = postService.findPostById(id);
+        List<Comment> commentResponseList = commentService.getCommentsByPostId(id);
         model.addAttribute("postUserDetailResponse", postUserDetailResponse);
+        model.addAttribute("comments", commentResponseList);
         return "post/userDetail";
     }
 

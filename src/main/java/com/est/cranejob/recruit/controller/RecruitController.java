@@ -37,7 +37,7 @@ public class RecruitController {
 
         // 페이징 처리
         int currentPage = page.orElse(1);
-        int pageSize = size.orElse(9);
+        int pageSize = size.orElse(18);
         String searchKeyword = keyword.orElse("");
 
         Page<RecruitInfo> recruitList =recruitService.getRecruitPaged(PageRequest.of(currentPage-1, pageSize),searchKeyword);
