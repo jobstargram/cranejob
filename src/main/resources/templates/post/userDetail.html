@@ -2,6 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta charset="UTF-8">
     <title>게시글 상세</title>
     <style>
     </style>
@@ -9,6 +12,7 @@
 <body>
 <div th:replace="/layout/header.html :: header"></div>
 <h1>게시글 상세</h1>
+<input type="hidden" id="post-id" th:value="${postUserDetailResponse.id}">
 <table>
     <tr>
         <th>제목</th>
@@ -22,14 +26,6 @@
         <th>작성자</th>
         <td th:text="${postUserDetailResponse.getNickname()}"></td>
     </tr>
-    <!--<tr>
-        <th>작성일</th>
-        <td th:text="${#dates.format(postUserDetailResponse.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-    </tr>
-    <tr>
-        <th>수정일</th>
-        <td th:text="${#dates.format(postUserDetailResponse.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-    </tr>-->
 </table>
 
 <div class="action-buttons">
@@ -39,5 +35,105 @@
     </form>
     <a href="/post/list">목록으로 돌아가기</a>
 </div>
+
+<section id="comment-section">
+    <div class="comment-container">
+        <table class="comment-table">
+            <thead>
+            <tr>
+                <th>댓글</th>
+                <th>작성자</th>
+                <th>작성일</th>
+            </tr>
+            </thead>
+            <tbody id="comment-list">
+            <!-- 댓글 내용이 JavaScript를 통해 여기에 추가됨 -->
+            </tbody>
+        </table>
+    </div>
+    <form id="comment-form">
+        <div class="comment-group">
+            <label for="comment">댓글 추가</label>
+            <textarea class="form-content" id="comment" cols="30" rows="10"></textarea>
+        </div>
+        <button type="button" class="btn btn-primary" id="create-comment-button">댓글 작성</button>
+    </form>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const createCommentButton = document.getElementById('create-comment-button');
+        const postId = document.getElementById('post-id').value;
+        const csrfHeader = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
+        const csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
+
+        createCommentButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            addComment(postId);
+        });
+
+        // 댓글 추가
+        async function addComment(postId) {
+            const commentContent = document.getElementById('comment').value;
+
+            if (!commentContent) {
+                alert('댓글을 입력해주세요.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/comment/${postId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        [csrfHeader]: csrfToken
+                    },
+                    body: JSON.stringify({content: commentContent})
+                });
+
+                if (response.ok) {
+                    document.getElementById('comment').value = ''; // 댓글 입력란 초기화
+                    loadComments(postId); // 댓글 목록 새로고침
+                } else {
+                    console.error('댓글 작성 실패');
+                }
+            } catch (error) {
+                console.error('댓글 작성 중 오류가 발생했습니다:', error);
+            }
+        }
+
+        // 작성된 댓글 불러오기
+        async function loadComments(postId) {
+            try {
+                const response = await fetch(`/api/comment/${postId}`);
+                if (response.ok) {
+                    const commentList = await response.json();
+                    displayComments(commentList);
+                } else {
+                    console.error('댓글을 불러오는데 실패했습니다.');
+                }
+            } catch (error) {
+                console.error('댓글을 불러오는 중 오류가 발생했습니다:', error);
+            }
+        }
+
+        // 작성된 댓글 확인
+        function displayComments(commentList) {
+            const commentsContainer = document.getElementById('comment-list');
+            commentsContainer.innerHTML = '';
+            commentList.forEach(comment => {
+                const commentRow = document.createElement('tr');
+                commentRow.innerHTML = `
+                    <td>${comment.content}</td>
+                    <td>${comment.nickname}</td>
+                    <td>${new Date(comment.createdAt).toLocaleString()}</td>
+                `;
+                commentsContainer.appendChild(commentRow);
+            });
+        }
+
+        loadComments(postId); // 페이지 로드 시 댓글 목록을 불러옴
+    });
+</script>
 </body>
 </html>

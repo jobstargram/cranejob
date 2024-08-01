@@ -1,8 +1,12 @@
 package com.est.cranejob.comment.repository;
 
+import com.est.cranejob.comment.domain.Comment;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface CommentRepository {
+import java.util.List;
 
+@Repository
+public interface CommentRepository extends JpaRepository<Comment, Long> {
+    List<Comment> findByPostId(Long postId);
 }
