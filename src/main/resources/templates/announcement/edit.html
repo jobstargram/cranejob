@@ -41,8 +41,9 @@
 		<div align="right">
 			<input type="submit" class="btn btn-primary" value="수정하기">
 			<input type="button" class="btn btn-secondary" th:onclick="|location.href='@{/announcements}'|" value="취소하기">
+			<input type="button" class="btn btn-danger" th:data-id="${updateAnnouncementRequest.id}" onclick="deleteAnnouncement(this)" value="삭제하기">
 		</div>
-		<button class="w-100 btn btn-danger btn-lg" type="button" th:data-id="${updateAnnouncementRequest.id}" onclick="deleteAnnouncement(this)">삭제하기</button>
+		
 	</form>
 </div>
 
