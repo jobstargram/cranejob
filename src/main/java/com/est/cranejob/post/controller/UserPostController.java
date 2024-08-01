@@ -12,6 +12,7 @@ import com.est.cranejob.user.domain.User;
 import com.est.cranejob.user.dto.response.UserResponse;
 import com.est.cranejob.user.repository.UserRepository;
 import com.est.cranejob.user.service.UserService;
+import com.est.cranejob.user.util.UserStatus;
 import jakarta.validation.Valid;
 import java.security.Principal;
 import java.util.Optional;
@@ -112,6 +113,20 @@ public class UserPostController {
     @GetMapping("/post/detail/{id}")
     public String postDetail(@PathVariable("id") Long id, Model model) {
         log.debug("Fetching details for post ID: {}", id);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated() || authentication.getPrincipal() == null) {
+            log.warn("User not authenticated. Redirecting to login page.");
+            return "redirect:/user/login";
+        }
+
+        UserResponse principal = (UserResponse) authentication.getPrincipal();
+
+        if (principal.getUserStatus().equals(UserStatus.SUSPENDED)) {
+            return "redirect:/";
+        }
+
+
         PostUserDetailResponse postUserDetailResponse = postService.findPostById(id);
         List<Comment> commentResponseList = commentService.getCommentsByPostId(id);
         model.addAttribute("postUserDetailResponse", postUserDetailResponse);

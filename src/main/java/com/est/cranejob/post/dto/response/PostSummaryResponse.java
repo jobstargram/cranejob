@@ -23,6 +23,7 @@ public class PostSummaryResponse implements Serializable {
     private String title; // 게시글 제목
     private LocalDateTime createdAt; // 게시글 생성 일시
     private String nickname; // 게시글 작성자
+    private String type;
 
     public static PostSummaryResponse toDTO(Post post){
         return PostSummaryResponse.builder()
@@ -30,6 +31,7 @@ public class PostSummaryResponse implements Serializable {
                 .title(post.getTitle())
                 .createdAt(post.getCreatedAt())
                 .nickname(post.getUser().getNickname())
+                .type("post")
                 .build();
     }
 
@@ -39,6 +41,7 @@ public class PostSummaryResponse implements Serializable {
             .title(announcement.getTitle())
             .createdAt(announcement.getCreatedAt())
             .nickname(announcement.getUser().getNickname())
+            .type("announcement")
             .build();
     }
 }

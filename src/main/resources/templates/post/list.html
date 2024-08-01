@@ -60,12 +60,15 @@
 		</tr>
 		</thead>
 		<tbody align="center">
-		<tr th:each="post : ${postSummaryResponseList}">
-			<td class="text-start"><a th:href="@{/post/detail/{id}(id=${post.id})}" th:text="${post.id}">게시글 제목</a></td>
-			<td class="text-start"><a th:href="@{/post/detail/{id}(id=${post.id})}" th:text="${post.title}">게시글 제목</a></td>
-			<td class="text-start" th:text="${post.nickname}">작성자</td>
-			<td class="text-start" th:text="${post.createdAt}">작성일</td>
-		</tr>
+			<tr th:each="post, postStat : ${postSummaryResponseList}">
+				<td th:text="${postStat.count}">번호</td>
+				<td>
+					<a th:if="${post.type == 'announcement'}" th:href="@{/announcements/{id}(id=${post.id})}" th:text="${post.title}">공지사항 제목</a>
+					<a th:unless="${post.type == 'announcement'}" th:href="@{/post/detail/{id}(id=${post.id})}" th:text="${post.title}">게시글 제목</a>
+				</td>
+				<td th:text="${post.nickname}">작성자</td>
+				<td th:text="${post.createdAt}">작성일</td>
+			</tr>
 		</tbody>
 	</table>
 	
