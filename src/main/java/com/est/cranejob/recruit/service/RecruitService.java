@@ -54,7 +54,7 @@ public class RecruitService {
                 recruitInfoTemp.setCompanyName(String.valueOf((String)((Map<String,Object>)((Map<String,Object>)map3.get("company")).get("detail")).get("name")
                 ));
                 recruitInfoTemp.setTitle(String.valueOf((String)((Map<String,Object>)map3.get("position")).get("title")));
-                //System.out.println(recruitInfoTemp.toString());
+
                 recruitInfoList.add(recruitInfoTemp);
 
             }
@@ -66,6 +66,7 @@ public class RecruitService {
         }
     }
 
+    //채용정보 보여주는 리스트 표시
     public Page<RecruitInfo> getRecruitPaged(Pageable pageable, String keyword){
 
         int pageSize = pageable.getPageSize(); //한페이지의 사이즈
