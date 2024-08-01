@@ -4,11 +4,77 @@
     <meta charset="UTF-8">
     <title>게시글 상세</title>
     <style>
+        .layout {
+            width: 1000px;
+            margin: 0 auto;
+            margin-top: 40px;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .back-to-list {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 5px 15px 5px 35px;
+            border-radius: 5px;
+            background-color: #1665d4;
+            color: white;
+            text-decoration: none;
+            clip-path: polygon(20% 0%, 100% 0, 100% 100%, 20% 100%, 0% 50%);
+        }
+
+        .back-to-list:hover {
+            background-color: #0c4ea9;
+        }
+
+        .edit {
+            display: inline-block;
+            background: #ffc444;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            padding: 5px 10px ;
+            float : right;
+            margin-top: 20px;
+        }
+        .edit:hover {
+            background: #ffc000;
+        }
+        button[type="submit"] {
+            font-size: 12pt;
+            background: #ff4444;
+            color: #ffffff;
+            border : none;
+            border-radius: 5px;
+            padding: 5px 10px ;
+            float : right;
+            margin-top: 20px;
+            margin-right: 20px;
+        }
+        button[type="submit"]:hover {
+            background: #ff0000;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            width: 10%;
+        }
     </style>
 </head>
 <body>
-<div th:replace="/layout/header.html :: header"></div>
-<h1>게시글 상세</h1>
+<div th:replace="~{/layout/header.html :: header}"></div>
+<div class="layout">
+<h1 style="margin: 40px auto;">게시글 상세</h1>
 <table>
     <tr>
         <th>제목</th>
@@ -33,11 +99,12 @@
 </table>
 
 <div class="action-buttons">
-    <a href="#" th:href="@{/post/edit/{id}(id=${postUserDetailResponse.id})}">수정하기</a>
+    <a href="#" th:href="@{/post/edit/{id}(id=${postUserDetailResponse.id})}" class="edit">수정하기</a>
     <form th:action="@{/post/delete/{id}(id=${postUserDetailResponse.id})}" method="post" style="display: inline;">
         <button type="submit" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제하기</button>
     </form>
-    <a href="/post/list">목록으로 돌아가기</a>
+    <a href="/post/list" class="back-to-list">목록으로 돌아가기</a>
+</div>
 </div>
 </body>
 </html>
