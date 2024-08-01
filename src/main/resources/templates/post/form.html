@@ -10,23 +10,51 @@
         margin: 0 auto;
         margin-top: 40px;
     }
+    button[type="submit"] {
+        background: #4E94F5;
+        color: #ffffff;
+        border : 1px solid #4E94F5;
+        border-radius: 5px;
+        padding: 5px 10px;
+        float : right;
+        margin-top: 20px;
+    }
+    button[type="submit"]:hover {
+        background: #1665d4;
+    }
+
+    .back-to-list {
+        margin-top: 20px;
+        display: inline-block;
+        padding: 5px 15px 5px 35px;
+        border-radius: 5px;
+        background-color: #1665d4;
+        color: white;
+        text-decoration: none;
+        clip-path: polygon(20% 0%, 100% 0, 100% 100%, 20% 100%, 0% 50%);
+    }
+
+    .back-to-list:hover {
+        background-color: #0c4ea9;
+    }
 </style>
 <body>
-<div th:replace="/layout/header.html :: header"></div>
+<div th:replace="~{/layout/header.html :: header}"></div>
 <!-- 게시글 작성 폼-->
-<h1>새 글 작성</h1>
+<div class="layout">
+<h1 style="margin: 40px auto;">새 글 작성</h1>
 <form th:action="@{/post/form}" th:object="${createPostRequest}" th:method="post">
     <div>
         <label for="title">제목</label>
-        <input type="text" id="title" th:field="*{title}" />
+        <input type="text" id="title" th:field="*{title}" class="form-control" style="margin: 20px 0;"/>
     </div>
     <div>
         <label for="content">내용</label>
-        <textarea id="content" th:field="*{content}"></textarea>
+        <textarea id="content" th:field="*{content}" class="form-control" style="margin: 20px 0; height: 400px;" ></textarea>
     </div>
     <button type="submit">저장</button>
 </form>
-<a href="/post/list">목록으로 돌아가기</a>
-
+<a href="/post/list" class="back-to-list">목록으로 돌아가기</a>
+</div>
 </body>
 </html>

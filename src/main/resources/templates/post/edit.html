@@ -10,22 +10,30 @@
         margin: 0 auto;
         margin-top: 40px;
     }
+    button[type="submit"] {
+        background: #4E94F5;
+        color: #ffffff;
+        border : 1px solid #4E94F5;
+    }
+    button[type="submit"]:hover {
+        background: #1665d4;
+    }
 </style>
 <body>
-<div th:replace="/layout/header.html :: header"></div>
+<div th:replace="~{/layout/header.html :: header}"></div>
 <!-- 게시글 수정 폼-->
 <div class="layout">
-    <h1>게시글 수정</h1>
+    <h1 style="margin: 40px auto;">게시글 수정</h1>
     <form th:action="@{/post/edit/{id}(id=${postUserDetailResponse.id})}" method="post">
         <!-- 이 숨겨진 필드를 추가하여 메서드를 PUT으로 설정 -->
         <input type="hidden" name="_method" value="put"/>
         <div>
             <label for="title">제목</label>
-            <input type="text" id="title" th:field="*{updatePostRequest.title}" class="form-control"/>
+            <input type="text" id="title" th:field="*{updatePostRequest.title}" class="form-control"style="margin: 20px 0;"/>
         </div>
         <div>
             <label for="content">내용</label>
-            <textarea id="content" th:field="*{updatePostRequest.content}" class="form-control" rows="10"></textarea>
+            <textarea id="content" th:field="*{updatePostRequest.content}" class="form-control" rows="10" style="margin: 20px 0; height: 400px;"></textarea>
         </div>
         <div style="margin-top: 20px;">
             <button type="submit" class="btn btn-primary">저장</button>
