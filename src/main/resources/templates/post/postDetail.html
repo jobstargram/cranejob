@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>게시글 상세</title>
+    <style>
+        .layout {
+            width: 1000px;
+            margin: 0 auto;
+            margin-top: 40px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .back-to-list {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 5px 15px 5px 35px;
+            border-radius: 5px;
+            background-color: #1665d4;
+            color: white;
+            text-decoration: none;
+            clip-path: polygon(20% 0%, 100% 0, 100% 100%, 20% 100%, 0% 50%);
+        }
+
+        .back-to-list:hover {
+            background-color: #0c4ea9;
+        }
+
+        .edit {
+            display: inline-block;
+            background: #ffc444;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            float: right;
+            margin-top: 20px;
+        }
+
+        .edit:hover {
+            background: #ffc000;
+        }
+
+        button[type="submit"] {
+            font-size: 12pt;
+            background: #ff4444;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            float: right;
+            margin-top: 20px;
+            margin-right: 20px;
+        }
+
+        button[type="submit"]:hover {
+            background: #ff0000;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            width: 10%;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{/layout/header.html :: header}"></div>
+<div class="layout">
+    <h1 style="margin: 40px auto;">게시글 상세</h1>
+    <input type="hidden" id="post-id" th:value="${postUserDetailResponse.id}">
+    <table>
+        <tr>
+            <th>제목</th>
+            <td th:text="${postUserDetailResponse.title}"></td>
+        </tr>
+        <tr>
+            <th>내용</th>
+            <td th:text="${postUserDetailResponse.content}"></td>
+        </tr>
+        <tr>
+            <th>작성자</th>
+            <td th:text="${postUserDetailResponse.getNickname()}"></td>
+        </tr>
+    </table>
+
+    <div class="action-buttons">
+        <a href="#" th:href="@{/post/edit/{id}(id=${postUserDetailResponse.id})}" class="edit">수정하기</a>
+        <form th:action="@{/post/delete/{id}(id=${postUserDetailResponse.id})}" method="post" style="display: inline;">
+            <button type="submit" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제하기</button>
+        </form>
+        <a href="/post/list" class="back-to-list">목록으로 돌아가기</a>
+    </div>
+</div>
+
+<section id="comment-section">
+    <div class="comment-container">
+        <table class="comment-table">
+            <thead>
+            <tr>
+                <th>댓글</th>
+                <th>작성자</th>
+                <th>작성일</th>
+                <th>작업</th>
+            </tr>
+            </thead>
+            <tbody id="comment-list">
+            <!-- 댓글 내용이 JavaScript를 통해 여기에 추가됨 -->
+            </tbody>
+        </table>
+    </div>
+    <form id="comment-form">
+        <div class="comment-group">
+            <label for="comment">댓글 추가</label>
+            <textarea class="form-content" id="comment" cols="30" rows="10"></textarea>
+        </div>
+        <button type="button" class="btn btn-primary" id="create-comment-button">댓글 작성</button>
+    </form>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const createCommentButton = document.getElementById('create-comment-button');
+        const postId = document.getElementById('post-id').value;
+        const csrfHeader = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
+        const csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
+
+        // 댓글 추가 버튼 클릭 시
+        createCommentButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            addComment(postId);
+        });
+
+        // 댓글 추가 함수
+        async function addComment(postId) {
+            const commentContent = document.getElementById('comment').value;
+
+            if (!commentContent) {
+                alert('댓글을 입력해주세요.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/comment/${postId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        [csrfHeader]: csrfToken
+                    },
+                    body: JSON.stringify({ content: commentContent })
+                });
+
+                if (response.ok) {
+                    document.getElementById('comment').value = ''; // 댓글 입력란 초기화
+                    loadComments(postId); // 댓글 목록 새로고침
+                } else {
+                    console.error('댓글 작성 실패');
+                }
+            } catch (error) {
+                console.error('댓글 작성 중 오류가 발생했습니다:', error);
+            }
+        }
+
+        // 댓글 목록 불러오기
+        async function loadComments(postId) {
+            try {
+                const response = await fetch(`/api/comment/${postId}`);
+                if (response.ok) {
+                    const commentList = await response.json();
+                    displayComments(commentList);
+                } else {
+                    console.error('댓글을 불러오는데 실패했습니다.');
+                }
+            } catch (error) {
+                console.error('댓글을 불러오는 중 오류가 발생했습니다:', error);
+            }
+        }
+
+        // 댓글을 화면에 표시
+        function displayComments(commentList) {
+            const commentsContainer = document.getElementById('comment-list');
+            commentsContainer.innerHTML = '';
+            commentList.forEach(comment => {
+                if (!comment.isDeleted) { // 삭제되지 않은 댓글만 표시
+                    const commentRow = document.createElement('tr');
+                    commentRow.innerHTML = `
+                    <td>${comment.content}</td>
+                    <td>${comment.nickname}</td>
+                    <td>${new Date(comment.createdAt).toLocaleString()}</td>
+                    <td class="comment-actions">
+                        <input type="hidden" class="comment-id" value="${comment.id}">
+                        <button class="edit-comment-btn">수정</button>
+                        <button class="delete-comment-btn">삭제</button>
+                    </td>
+                `;
+                    commentsContainer.appendChild(commentRow);
+                }
+            });
+
+            // 댓글 수정 및 삭제 버튼에 이벤트 리스너 추가
+            addCommentActionListeners();
+        }
+
+        // 댓글 수정 및 삭제 버튼에 이벤트 리스너 추가
+        function addCommentActionListeners() {
+            document.querySelectorAll('.edit-comment-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const commentId = this.closest('td').querySelector('.comment-id').value;
+                    const currentContent = this.closest('tr').querySelector('td').textContent.trim();
+                    if (commentId) {
+                        editComment(commentId, currentContent);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.delete-comment-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const commentId = this.closest('td').querySelector('.comment-id').value;
+                    if (commentId) {
+                        if (confirm('정말로 삭제하시겠습니까?')) {
+                            deleteComment(commentId);
+                        }
+                    }
+                });
+            });
+        }
+
+        // 댓글 수정 함수
+        async function editComment(commentId, currentContent) {
+            const newContent = prompt('수정할 댓글 내용을 입력하세요:', currentContent);
+            if (newContent === null || newContent.trim() === '') {
+                alert('내용을 입력해야 합니다.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/comment/${commentId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        [csrfHeader]: csrfToken
+                    },
+                    body: JSON.stringify({ content: newContent })
+                });
+
+                if (response.ok) {
+                    loadComments(postId); // 댓글 목록 새로고침
+                } else {
+                    console.error('댓글 수정 실패');
+                }
+            } catch (error) {
+                console.error('댓글 수정 중 오류가 발생했습니다:', error);
+            }
+        }
+
+        // 댓글 삭제 함수
+        async function deleteComment(commentId) {
+            try {
+                const response = await fetch(`/api/comment/${commentId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        [csrfHeader]: csrfToken
+                    }
+                });
+
+                if (response.ok) {
+                    console.log('댓글 삭제 성공');
+                    loadComments(postId); // 댓글 목록 새로고침
+                } else if (response.status === 403) {
+                    console.error('댓글 삭제 실패: 권한이 없습니다.');
+                } else {
+                    console.error('댓글 삭제 실패');
+                }
+            } catch (error) {
+                console.error('댓글 삭제 중 오류가 발생했습니다:', error);
+            }
+        }
+
+        // 페이지 로드 시 댓글 목록을 불러옴
+        loadComments(postId);
+    });
+</script>
+</body>
+</html>

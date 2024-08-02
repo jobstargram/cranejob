@@ -49,4 +49,13 @@ public class Comment extends BaseEntity {
 	public void setPost(Post post) {
 		this.post = post;
 	}
+
+	public void updateComment(String content){
+		this.content = content;
+	}
+
+	public void deletedComment(){
+		this.isDeleted = true;
+		this.deletedAt = LocalDateTime.now();
+	}
 }

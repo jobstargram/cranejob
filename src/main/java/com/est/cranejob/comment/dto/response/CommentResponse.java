@@ -1,8 +1,7 @@
 package com.est.cranejob.comment.dto.response;
 
 import com.est.cranejob.comment.domain.Comment;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -11,7 +10,10 @@ import java.time.LocalDateTime;
  *  댓글의 내용을 일반 사용자가 볼 수 있는 형태로 응답하는 DTO<br>
  * DTO for {@link com.est.cranejob.comment.domain.Comment}
  */
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class CommentResponse implements Serializable {
 
