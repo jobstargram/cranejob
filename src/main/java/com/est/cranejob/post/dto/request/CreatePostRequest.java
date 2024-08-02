@@ -1,6 +1,7 @@
 package com.est.cranejob.post.dto.request;
 
 import com.est.cranejob.post.domain.Post;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -19,11 +20,11 @@ import java.io.Serializable;
 @Builder
 public class CreatePostRequest implements Serializable {
 
-    @NotNull(message = "제목을 작성해 주세요.")
+    @NotBlank(message = "제목을 작성해 주세요.")
     @Size(max = 50, message = "제목은 50자 내로 작성해 주세요.")
     private String title;
 
-    @NotNull(message = "내용을 작성해 주세요.")
+    @NotBlank(message = "내용을 작성해 주세요.")
     private String content;
 
     // private User user; userId는 서비스 계층에서 관리

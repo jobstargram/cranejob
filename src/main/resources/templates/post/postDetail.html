@@ -77,6 +77,115 @@
         th {
             width: 10%;
         }
+
+        /*댓글 form ~ 댓글 리스트*/
+        #comment-section {
+            margin: 20px 24%;
+        }
+
+        /*댓글 작성폼*/
+        #comment-form {
+            display: flex;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+
+        #comment-form .comment-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #comment-form label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        #comment-form textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: none;
+        }
+
+        #comment-form textarea:focus {
+            outline: none;
+            border-color: #1665d4;
+            box-shadow: 0 0 5px rgba(22, 101, 212, 0.5);
+        }
+
+        /*댓글 작성폼 벨류데이션 에러*/
+        #comment-form .error-message {
+            color: red;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /*댓글 생성 버튼*/
+        #create-comment-button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background-color: #1665d4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        #create-comment-button:hover {
+            background-color: #0c4ea9;
+        }
+
+        /*댓글 리스트*/
+        .comment-container {
+            margin-top: 20px;
+        }
+
+        .comment-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comment-table th, .comment-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .comment-actions button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /*댓글 삭제 및 수정 버튼*/
+        .comment-actions .edit-comment-btn {
+            background-color: #ffc444;
+            color: #ffffff;
+        }
+
+        .comment-actions .edit-comment-btn:hover {
+            background-color: #ffc000;
+        }
+
+        .comment-actions .delete-comment-btn {
+            background-color: #ff4444;
+            color: #ffffff;
+        }
+
+        .comment-actions .delete-comment-btn:hover {
+            background-color: #ff0000;
+        }
     </style>
 </head>
 <body>
@@ -109,6 +218,14 @@
 </div>
 
 <section id="comment-section">
+    <form id="comment-form">
+        <div class="comment-group">
+            <label for="comment">댓글 추가</label>
+            <textarea class="form-content" id="comment" cols="30" rows="10" placeholder="댓글을 작성해 주세요"></textarea>
+            <div id="comment-error" class="error-message" style="color: red; display: none;"></div>
+        </div>
+        <button type="button" class="btn btn-primary" id="create-comment-button">댓글 작성</button>
+    </form>
     <div class="comment-container">
         <table class="comment-table">
             <thead>
@@ -124,13 +241,6 @@
             </tbody>
         </table>
     </div>
-    <form id="comment-form">
-        <div class="comment-group">
-            <label for="comment">댓글 추가</label>
-            <textarea class="form-content" id="comment" cols="30" rows="10"></textarea>
-        </div>
-        <button type="button" class="btn btn-primary" id="create-comment-button">댓글 작성</button>
-    </form>
 </section>
 
 <script>
@@ -149,12 +259,28 @@
         // 댓글 추가 함수
         async function addComment(postId) {
             const commentContent = document.getElementById('comment').value;
+            const errorDiv = document.getElementById('comment-error');
+
+            // 유효성 검사
+            /*if (!commentContent){
+                alert('댓글을 작성해 주세요');
+            } else if (commentContent.length > 10){
+                alert('댓글은 10자 이내로 작성해 주새요.')
+            }*/
 
             if (!commentContent) {
-                alert('댓글을 입력해주세요.');
+                errorDiv.textContent = '댓글을 입력해주세요.';
+                errorDiv.style.display = 'block';
+                document.getElementById('comment').style.borderColor = 'red';
                 return;
+            } else if (commentContent.length > 10) {
+                errorDiv.textContent = '10자 이내로 작성해 주세요';
+                errorDiv.style.display = 'block';
+                document.getElementById('comment').style.borderColor = 'red';
+            } else {
+                errorDiv.style.display = 'none';
+                errorDiv.style.borderColor = 'red';
             }
-
             try {
                 const response = await fetch(`/api/comment/${postId}`, {
                     method: 'POST',
@@ -162,7 +288,7 @@
                         'Content-Type': 'application/json',
                         [csrfHeader]: csrfToken
                     },
-                    body: JSON.stringify({ content: commentContent })
+                    body: JSON.stringify({content: commentContent})
                 });
 
                 if (response.ok) {
@@ -243,9 +369,14 @@
         // 댓글 수정 함수
         async function editComment(commentId, currentContent) {
             const newContent = prompt('수정할 댓글 내용을 입력하세요:', currentContent);
+
+            // 댓글 수정 유효성 검사
             if (newContent === null || newContent.trim() === '') {
                 alert('내용을 입력해야 합니다.');
                 return;
+            }
+            if (newContent.length > 100) {
+                alert('100자 이내로 작성해 주세요')
             }
 
             try {
@@ -255,11 +386,14 @@
                         'Content-Type': 'application/json',
                         [csrfHeader]: csrfToken
                     },
-                    body: JSON.stringify({ content: newContent })
+                    body: JSON.stringify({content: newContent})
                 });
 
                 if (response.ok) {
                     loadComments(postId); // 댓글 목록 새로고침
+                } else if (response.status === 403) {
+                    alert('수정 권한이 없습니다.');
+                    console.error('댓글 수정 실패: 수정 권한이 없습니다.');
                 } else {
                     console.error('댓글 수정 실패');
                 }
@@ -283,6 +417,7 @@
                     console.log('댓글 삭제 성공');
                     loadComments(postId); // 댓글 목록 새로고침
                 } else if (response.status === 403) {
+                    alert('삭제 권한이 없습니다.');
                     console.error('댓글 삭제 실패: 권한이 없습니다.');
                 } else {
                     console.error('댓글 삭제 실패');
