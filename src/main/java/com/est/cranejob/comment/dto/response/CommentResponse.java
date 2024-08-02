@@ -17,12 +17,14 @@ import java.time.LocalDateTime;
 @Builder
 public class CommentResponse implements Serializable {
 
+    private Long id;
     private String content; // 댓글 내용
     private LocalDateTime createdAt; // 댓글 작성일
     private String nickname;
 
     public static CommentResponse toDTO(Comment comment) {
         return CommentResponse.builder()
+                .id(comment.getId())
                 .content(comment.getContent())
                 .createdAt(comment.getCreatedAt())
                 .nickname(comment.getUser().getNickname())

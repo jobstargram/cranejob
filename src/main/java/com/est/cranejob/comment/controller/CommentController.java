@@ -19,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -75,10 +76,22 @@ public class CommentController {
 
     @PutMapping("/comment/{commentId}")
     public ResponseEntity<CommentResponse> updateComment(@PathVariable("commentId") Long commentId,
-                                                         @Valid @RequestBody UpdateCommentRequest updateRequest) {
+                                                         @Valid @RequestBody UpdateCommentRequest updateRequest,
+                                                         Model model) {
         // 현재 로그인한 사용자 확인
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated() || !(authentication.getPrincipal() instanceof UserDetails)) {
+        if (authentication == null) {
+            log.warn("Authentication object is null");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        if (!authentication.isAuthenticated()) {
+            log.warn("User is not authenticated");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        if (authentication.getPrincipal() == null) {
+            log.warn("Principal is not an instance of UserDetails");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
@@ -91,6 +104,8 @@ public class CommentController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); // 수정 권한이 없는 경우
         }
 
+//        model.addAttribute("");
+
         comment.updateComment(updateRequest.getContent());
         Comment updatedComment = commentService.updateComment(commentId, comment);
         return ResponseEntity.ok(CommentResponse.toDTO(updatedComment));
@@ -101,7 +116,18 @@ public class CommentController {
     public ResponseEntity<Void> deleteComment(@PathVariable("commentId") Long commentId) {
         // 현재 로그인한 사용자 확인
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated() || !(authentication.getPrincipal() instanceof UserDetails)) {
+        if (authentication == null) {
+            log.warn("Authentication object is null");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        if (!authentication.isAuthenticated()) {
+            log.warn("User is not authenticated");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        if (authentication.getPrincipal() == null) {
+            log.warn("Principal is not an instance of UserDetails");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
