@@ -37,6 +37,10 @@
     .back-to-list:hover {
         background-color: #0c4ea9;
     }
+    .field-error {
+        border-color: #dc3545;
+        color: #dc3545;
+    }
 </style>
 <body>
 <div th:replace="~{/layout/header.html :: header}"></div>
@@ -46,11 +50,17 @@
 <form th:action="@{/post/form}" th:object="${createPostRequest}" th:method="post">
     <div>
         <label for="title">제목</label>
-        <input type="text" id="title" th:field="*{title}" class="form-control" style="margin: 20px 0;"/>
+        <input type="text" id="title" th:field="*{title}" th:errorclass="field-error" class="form-control" style="margin: 20px 0;" placeholder="제목을 입력해 주세요."/>
+        <div class="field-error" th:errors="*{title}">
+            제목 오류
+        </div>
     </div>
     <div>
         <label for="content">내용</label>
-        <textarea id="content" th:field="*{content}" class="form-control" style="margin: 20px 0; height: 400px;" ></textarea>
+        <textarea id="content" th:field="*{content}" th:errorclass="field-error" class="form-control" style="margin: 20px 0; height: 400px;" placeholder="내용을 입력해 주세요."></textarea>
+        <div class="field-error" th:errors="*{content}">
+            내용 오류
+        </div>
     </div>
     <button type="submit">저장</button>
 </form>
