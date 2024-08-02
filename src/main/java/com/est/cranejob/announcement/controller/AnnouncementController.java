@@ -78,6 +78,14 @@ public class AnnouncementController {
 	}
 
 	@GetMapping("/announcements/{id}")
+	public String announcementDetail(@PathVariable Long id, Model model) {
+		AnnouncementResponse announcementResponse = announcementService.findAnnouncementById(id);
+		model.addAttribute("announcementResponse", announcementResponse);
+
+		return "/announcement/detail";
+	}
+
+	@GetMapping("/announcements/edit/{id}")
 	public String updateAnnouncementForm(@PathVariable Long id, Model model) {
 		UserResponse principal = (UserResponse) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = principal.getUsername();
@@ -94,7 +102,7 @@ public class AnnouncementController {
 		return "/announcement/edit";
 	}
 
-	@PatchMapping("/announcements/{id}")
+	@PatchMapping("/announcements/edit/{id}")
 	public String updateAnnouncement(@PathVariable Long id, @Valid UpdateAnnouncementRequest updateAnnouncementRequest, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
@@ -113,6 +121,8 @@ public class AnnouncementController {
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+
+
 
 
 }

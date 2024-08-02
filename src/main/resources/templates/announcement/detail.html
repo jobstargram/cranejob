@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+	<meta charset="UTF-8">
+	<link href="../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<style>
+	.field-error {
+		border-color: #dc3545;
+		color: #dc3545;
+	}
+</style>
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<body>
+<div th:replace="~{/layout/header.html :: header}"></div>
+<!-- 공지사항 작성 폼-->
+<div class="container">
+	<div class="py-5 text-center">
+		<h2>공지사항 게시글 상세보기</h2>
+	</div>
+	
+	<h4 class="mb-3">공지사항 수정사항 상세보기</h4>
+	
+	<div class="mb-3">
+		<label for="exampleFormControlInput1" class="form-label" th:text="제목">제목</label>
+		<input type="text" class="form-control" name="title" th:field="*{announcementResponse.title}" id="exampleFormControlInput1">
+	</div>
+	<div class="mb-3">
+		<label for="exampleFormControlTextarea1" class="form-label" th:text="내용">내용</label>
+		<textarea class="form-control" name="content" th:field="*{announcementResponse.content}" id="exampleFormControlTextarea1" rows="5"></textarea>
+	</div>
+	
+	<div align="right" sec:authorize="hasRole('ROLE_ADMIN')">
+		<input type="submit" class="btn btn-primary" th:onclick="|location.href='@{/announcements/edit/{id}(id=${announcementResponse.id})}'|" value="수정하기">
+		<input type="button" class="btn btn-secondary" th:onclick="|location.href='@{/announcements}'|" value="취소하기">
+	</div>
+</div>
+</body>
+</html>
