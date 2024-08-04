@@ -5,6 +5,31 @@
 - Java, Spring Boot를 이용하여 블로그 서비스 만들기
 - 블로그의 주제는 자유
 
+### 1.2 기능
+- 자사 콘텐츠와 연계가 가능한 플랫폼
+- 이력 관리가 가능한 플랫폼(Github Open API 활용)
+- 역량별 레벨 관리 시스템 제공(Github Open API 활용, 스터디 그룹 결과물)
+- SW 관련 해커톤이나 워크숍, 세미나, 밋업 등이 자유롭게 공유될 수 있는 플랫폼
+- 타 플랫폼에서도 활용할 수 있는 API Set 제공
+- 각 언어별 로그인 없이 실습이 바로 가능한 환경(google colab의 경우 학생들 이름으로 가입되어 있으면 작동하지 않음)
+
+### 1.3 팀 구성
+- 실제 사진을 업로드 하시길 권합니다.
+<table>
+	<tr>
+		<th>이정석</th>
+		<th>조아라</th>
+		<th>조준호</th>
+		<th>이소정B</th>
+	</tr>
+ 	<tr>
+		<td><img src="my.jpg" width="100%"></td>
+		<td><img src="my.jpg" width="100%"></td>
+		<td><img src="my.jpg" width="100%"></td>
+		<td><img src="my.jpg" width="100%"></td>
+	</tr>
+</table>
+
 ## 2. 개발 환경 
 ### 2.1 개발 환경
 - 개발 언어: HTML, CSS, JavaScript, BootStrap, Java, Spring Boot, MySQL
