@@ -1,10 +1,10 @@
 server:
-  port: ${PORT} #로드밸런싱을 위한 변수 설정
+  port: ${{ secrets.PORT }} #로드밸런싱을 위한 변수 설정
 
 SARAMIN:
-  ApiKey: ${API_KEY} #API 키
-  Job_Mid_Cd: ${IT_CD} #직무 관련 코드 (IT)
-  Count: ${INFO_COUNT} #job 엘리먼트 개수
+  ApiKey: ${{ secrets.API_KEY }} #API 키
+  Job_Mid_Cd: ${{ secrets.IT_CD }} #직무 관련 코드 (IT)
+  Count: ${{ secrets.INFO_COUNT }} #job 엘리먼트 개수
 
 spring:
   application:
@@ -23,10 +23,10 @@ spring:
         enabled: true
 
   datasource:
-    url: ${RDS_DB_URL}
+    url: ${{ secrets.RDS_DB_URL }}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${RDS_DB_USER}
-    password: ${RDS_DB_PW}
+    username: ${{ secrets.RDS_DB_USER }}
+    password: ${{ secrets.RDS_DB_PW }}
 
   jpa:
     hibernate:
