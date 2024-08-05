@@ -1,5 +1,6 @@
 package com.est.cranejob.user.service;
 
+import com.est.cranejob.post.service.PostService;
 import com.est.cranejob.user.domain.User;
 import com.est.cranejob.user.dto.request.CreateUserRequest;
 import com.est.cranejob.user.dto.request.UpdateUserRequest;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
 	private final UserRepository userRepository;
+	private final PostService postService;
 
 	@Transactional
 	public void createUser(CreateUserRequest createUserRequest) {
@@ -52,5 +54,7 @@ public class UserService {
 		user.deleteUser();
 
 		userRepository.save(user);
+		// 상태가 DELETED로 변경된 경우 해당 사용자의 모든 게시글을 논리 삭제
+		postService.deletePostsByUser(user);
 	}
 }

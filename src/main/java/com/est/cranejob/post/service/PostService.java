@@ -118,4 +118,13 @@ public class PostService {
         post.deletedPost();
         postRepository.save(post);
     }
+
+    @Transactional
+    public void deletePostsByUser(User user) {
+        List<Post> posts = postRepository.findAllByUser(user);
+        for (Post post : posts) {
+            post.deletedPost();
+        }
+        postRepository.saveAll(posts); // bulk update
+    }
 }
