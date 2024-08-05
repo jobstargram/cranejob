@@ -1,6 +1,7 @@
 package com.est.cranejob.security.provider;
 
 import com.est.cranejob.user.dto.UserContext;
+import com.est.cranejob.user.util.UserStatus;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -27,6 +28,10 @@ public class FormAuthenticationProvider implements AuthenticationProvider {
 		String loginId = authentication.getName();
 		String password = (String) authentication.getCredentials();
 		UserContext userContext = (UserContext) userDetailsService.loadUserByUsername(loginId);
+
+		if (userContext.getUserResponse().getUserStatus() == UserStatus.SUSPENDED) {
+			throw new BadCredentialsException("User account is suspended");
+		}
 
 		if (!passwordEncoder.matches(password, userContext.getPassword())) {
 			throw new BadCredentialsException("Invalid password");

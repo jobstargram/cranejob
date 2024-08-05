@@ -26,12 +26,8 @@
 	
 	<div th:if="${param.error}">
 		<div class="alert alert-danger" role="alert">
-			<p>아이디 혹은 비밀번호가 일치하지 않습니다.</p>
+			<p th:text="${param.error}">
 		</div>
-	</div>
-	
-	<div th:if="${param.error}">
-		<p style="color: red;">일반 사용자 계정으로는 관리자 페이지에 로그인하실 수 없습니다.</p>
 	</div>
 	
 	<form th:action="@{/admin/login}" method="post">

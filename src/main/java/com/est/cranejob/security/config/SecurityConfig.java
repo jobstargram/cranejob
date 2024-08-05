@@ -1,5 +1,6 @@
 package com.est.cranejob.security.config;
 
+import com.est.cranejob.security.handler.CustomAuthenticationFailureHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +34,7 @@ public class SecurityConfig {
 				.loginPage("/user/login")
 				.loginProcessingUrl("/user/login")  // 사용자 로그인 처리 URL
 				.defaultSuccessUrl("/post/list", true)
+				.failureHandler(authenticationFailureHandler())
 				.permitAll()
 			)
 			.logout(logout -> logout
@@ -60,6 +62,7 @@ public class SecurityConfig {
 				.loginPage("/admin/login")
 				.loginProcessingUrl("/admin/login")  // 관리자 로그인 처리 URL
 				.defaultSuccessUrl("/post/list", true)
+				.failureHandler(authenticationFailureHandler())
 				.permitAll()
 			)
 			.logout(logout -> logout
@@ -70,5 +73,10 @@ public class SecurityConfig {
 			.authenticationProvider(authenticationProvider);
 
 		return http.build();
+	}
+
+	@Bean
+	public AuthenticationFailureHandler authenticationFailureHandler() {
+		return new CustomAuthenticationFailureHandler();
 	}
 }
