@@ -25,10 +25,8 @@
             margin-right: 20px;
         }
 
-        .container-fluid {
-            display: flex;
-            align-items: center;
-            flex-grow: 1;
+        .navbar-brands:first-child {
+            font-size: 24pt;
         }
 
         .left-menu {
@@ -62,7 +60,7 @@
     </style>
     <div class="navbars">
         <div class="left-menu">
-            <a class="navbar-brands" href="/post/list"><img th:src="@{/assets/brand/cranejob-logo-mini.png}" alt="cranejob 로고" width="60"></a>
+            <a class="navbar-brands" href="/post/list"><img th:src="@{/assets/brand/cranejob-logo-mini.png}" alt="cranejob 로고" width="60">CraneJob</a>
             <a class="navbar-brands" href="/recruit">채용공고</a>
             <a class="navbar-brands" href="/post/list">게시판</a>
         </div>
