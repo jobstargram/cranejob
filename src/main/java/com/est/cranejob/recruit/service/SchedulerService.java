@@ -30,7 +30,8 @@ public class SchedulerService {
     String count;
 
     //매일 밤11시 실행
-    @Scheduled(cron = "0 0 23 * * *")
+    //@Scheduled(cron = "0 0 23 * * *")
+    @Scheduled(cron = "0 0/10 9-18 * * *") //매일 9~18시 사이 10분 간격으로 실행
     public void run(){
         //기존 정보 삭제
         recruitRepository.deleteAllInBatch();
