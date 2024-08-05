@@ -114,7 +114,7 @@ public class PostController {
         List<Comment> commentResponseList = commentService.getCommentsByPostId(id);
         model.addAttribute("postUserDetailResponse", postUserDetailResponse);
         model.addAttribute("comments", commentResponseList);
-        return "/post/postDetail";
+        return "post/postDetail";
     }
 
     // 게시글 수정 폼
