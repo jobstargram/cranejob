@@ -26,7 +26,7 @@
 	<h4 class="mb-3">수정할 정보 입력</h4>
 	
 	<!--th:action 값이 없으면 그냥 action만 동작, 즉 action 속성은 지금 없어도 됨-->
-	<form th:action="@{/user/edit}" th:object="${updateUserRequest}" method="post">
+	<form th:action="@{user/edit}" th:object="${updateUserRequest}" method="post">
 		<input type="hidden" name="_method" value="put"/>
 			
 			<div>
