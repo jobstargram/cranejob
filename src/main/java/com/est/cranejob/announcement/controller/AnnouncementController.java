@@ -53,14 +53,14 @@ public class AnnouncementController {
 			model.addAttribute("pageNumbers", pageNumbers);
 		}
 
-		return "/announcement/list";
+		return "announcement/list";
 	}
 
 	@PostMapping("/announcements")
 	public String createAnnouncement(@Valid CreateAnnouncementRequest createAnnouncementRequest, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
-			return "/announcement/form";
+			return "announcement/form";
 		}
 
 		UserResponse principal = (UserResponse) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -74,7 +74,7 @@ public class AnnouncementController {
 	public String createAnnouncementForm(Model model) {
 		model.addAttribute("createAnnouncementRequest", new CreateAnnouncementRequest());
 
-		return "/announcement/form";
+		return "announcement/form";
 	}
 
 	@GetMapping("/announcements/{id}")
@@ -82,7 +82,7 @@ public class AnnouncementController {
 		AnnouncementResponse announcementResponse = announcementService.findAnnouncementById(id);
 		model.addAttribute("announcementResponse", announcementResponse);
 
-		return "/announcement/detail";
+		return "announcement/detail";
 	}
 
 	@GetMapping("/announcements/edit/{id}")
@@ -93,20 +93,20 @@ public class AnnouncementController {
 		UserResponse announcementUser = announcementService.findAnnouncementWriterById(id);
 
 		if (!announcementUser.getUsername().equals(username)) {
-			return "/post/list";
+			return "post/list";
 		}
 
 		AnnouncementResponse announcementResponse = announcementService.findAnnouncementById(id);
 		model.addAttribute("updateAnnouncementRequest", UpdateAnnouncementRequest.toResponseDto(announcementResponse));
 
-		return "/announcement/edit";
+		return "announcement/edit";
 	}
 
 	@PatchMapping("/announcements/edit/{id}")
 	public String updateAnnouncement(@PathVariable Long id, @Valid UpdateAnnouncementRequest updateAnnouncementRequest, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
-			return "/announcement/form";
+			return "announcement/form";
 		}
 
 		announcementService.updateAnnouncement(id, updateAnnouncementRequest.getTitle(), updateAnnouncementRequest.getContent());

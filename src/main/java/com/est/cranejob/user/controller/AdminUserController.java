@@ -39,14 +39,14 @@ public class AdminUserController {
 
 	@GetMapping("/admin/login")
 	public String adminLoginForm() {
-		return "/admin/login";
+		return "admin/login";
 	}
 
 	@GetMapping("/admin/signup")
 	public String adminSignUpForm(Model model) {
 		model.addAttribute("createAdminUserRequest", new CreateAdminUserRequest());
 
-		return "/admin/signup";
+		return "admin/signup";
 	}
 
 	@GetMapping("/admin/edit")
@@ -59,7 +59,7 @@ public class AdminUserController {
 		UserResponse userResponse = adminUserService.findByUsername(username);
 
 		model.addAttribute("updateAdminUserRequest", UpdateAdminUserRequest.toResponseDto(userResponse));
-		return "/admin/edit";
+		return "admin/edit";
 	}
 
 	@PostMapping("/admin/signup")
@@ -75,7 +75,7 @@ public class AdminUserController {
 		}
 
 		if (bindingResult.hasErrors()) {
-			return "/admin/signup";
+			return "admin/signup";
 		}
 
 		createAdminUserRequest.setPassword(passwordEncoder.encode(createAdminUserRequest.getPassword()));
@@ -91,7 +91,7 @@ public class AdminUserController {
 		String username = principal.getUsername();
 
 		if (bindingResult.hasErrors()) {
-			return "/admin/edit";
+			return "admin/edit";
 		}
 
 		updateAdminUserRequest.setPassword(passwordEncoder.encode(updateAdminUserRequest.getPassword()));
@@ -134,7 +134,7 @@ public class AdminUserController {
 			model.addAttribute("pageNumbers", pageNumbers);
 		}
 
-		return "/admin/user-list";
+		return "admin/user-list";
 	}
 
 	@GetMapping("/admin/users/{username}")
@@ -144,7 +144,7 @@ public class AdminUserController {
 
 		model.addAttribute("adminUpdateUserRequest", AdminUpdateUserRequest.toResponseDto(userResponse));
 
-		return "/admin/user-info";
+		return "admin/user-info";
 	}
 
 	@PostMapping("/admin/users/edit")
