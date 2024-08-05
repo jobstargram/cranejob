@@ -25,11 +25,11 @@
 	
 	<div class="mb-3">
 		<label for="exampleFormControlInput1" class="form-label" th:text="제목">제목</label>
-		<input type="text" class="form-control" name="title" th:field="*{announcementResponse.title}" id="exampleFormControlInput1">
+		<input type="text" class="form-control" name="title" th:field="*{announcementResponse.title}" id="exampleFormControlInput1" readonly>
 	</div>
 	<div class="mb-3">
 		<label for="exampleFormControlTextarea1" class="form-label" th:text="내용">내용</label>
-		<textarea class="form-control" name="content" th:field="*{announcementResponse.content}" id="exampleFormControlTextarea1" rows="5"></textarea>
+		<textarea class="form-control" name="content" th:field="*{announcementResponse.content}" id="exampleFormControlTextarea1" rows="5" readonly></textarea>
 	</div>
 	
 	<div align="right" sec:authorize="hasRole('ROLE_ADMIN')">

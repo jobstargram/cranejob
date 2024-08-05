@@ -102,7 +102,7 @@ public class AnnouncementController {
 		return "announcement/edit";
 	}
 
-	@PatchMapping("/announcements/edit/{id}")
+	@PatchMapping("/announcements/{id}")
 	public String updateAnnouncement(@PathVariable Long id, @Valid UpdateAnnouncementRequest updateAnnouncementRequest, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
