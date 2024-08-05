@@ -2,6 +2,8 @@ package com.est.cranejob.post.service;
 
 import com.est.cranejob.announcement.domain.Announcement;
 import com.est.cranejob.announcement.repository.AnnouncementRepository;
+import com.est.cranejob.comment.domain.Comment;
+import com.est.cranejob.comment.service.CommentService;
 import com.est.cranejob.post.domain.Post;
 import com.est.cranejob.post.dto.request.CreatePostRequest;
 import com.est.cranejob.post.dto.request.UpdatePostRequest;
@@ -33,6 +35,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final AnnouncementRepository announcementRepository;
+    private final CommentService commentService;
 
 
     // username(아이디)과 CreatePostRequest에서 작성한 내용을 받아서 Post 엔티티 생성 및 저장
@@ -59,7 +62,8 @@ public class PostService {
         log.debug("Update post details for ID: {}", id);
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다." + id));
-        return PostUserDetailResponse.toDTO(post);
+        List<Comment> comments = commentService.getCommentsByPostId(id);
+        return PostUserDetailResponse.toDTO(post, comments);
     }
 
     // 게시글 업데이트 후 저장

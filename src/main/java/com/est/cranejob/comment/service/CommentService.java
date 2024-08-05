@@ -34,7 +34,7 @@ public class CommentService {
     }
 
     public List<Comment> getCommentsByPostId(Long postId) {
-        return commentRepository.findByPostId(postId);
+        return commentRepository.findByPostIdAndIsDeletedFalse(postId);
     }
 
     public Comment getComment(Long commentId) {
@@ -55,7 +55,14 @@ public class CommentService {
                 .orElseThrow(() -> new IllegalArgumentException(commentId + "번 댓글을 찾을 수 없습니다."));
 
         comment.deletedComment();
-        commentRepository.delete(comment);
+        commentRepository.save(comment); // 수정된 부분
     }
 
+    public void deleteCommentByUser(User user){
+        List<Comment> comments = commentRepository.findAllByUser(user);
+        for (Comment comment : comments) {
+            comment.deletedComment();
+        }
+        commentRepository.saveAll(comments); // bulk update
+    }
 }
