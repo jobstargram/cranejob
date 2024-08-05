@@ -33,6 +33,10 @@ public class FormAuthenticationProvider implements AuthenticationProvider {
 			throw new BadCredentialsException("User account is suspended");
 		}
 
+		if (userContext.getUserResponse().getUserStatus() == UserStatus.DELETED) {
+			throw new BadCredentialsException("User account is deleted");
+		}
+
 		if (!passwordEncoder.matches(password, userContext.getPassword())) {
 			throw new BadCredentialsException("Invalid password");
 		}
