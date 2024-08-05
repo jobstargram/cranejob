@@ -5,7 +5,7 @@ SARAMIN:
   ApiKey: ${{ secrets.API_KEY }} #API 키
   Job_Mid_Cd: ${{ secrets.IT_CD }} #직무 관련 코드 (IT)
   Count: ${{ secrets.INFO_COUNT }} #job 엘리먼트 개수
-#
+
 spring:
   application:
     name: crane
