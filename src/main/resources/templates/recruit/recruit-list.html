@@ -119,15 +119,15 @@
 				<h1 class="fw-light">채용 공고 게시판</h1>
 				<p class="lead text-body-secondary">IT 관련 채용 공고를 제공합니다</p>
 					<div style="width: 300px" class="input-group mx-auto mb-3">
-<!--					< class="row gx-2" th:action="@{/post/list}" method="get">-->
-						<div class="col-auto">
-							<input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="keyword" />
-						</div>
-						<div class="col-auto">
-							<button type="submit" class="btn btn-outline-primary">search</button>
-						</div>
-					</form>
-				</div>
+						<form class="row gx-2" th:action="@{/recruit}" method="get">
+							<div class="col-auto">
+								<input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="keyword" />
+							</div>
+							<div class="col-auto">
+								<button type="submit" class="btn btn-outline-primary">search</button>
+							</div>
+						</form>
+					</div>
 			</div>
 		</div>
 	</section>
