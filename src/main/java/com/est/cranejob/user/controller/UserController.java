@@ -42,7 +42,7 @@ public class UserController {
 	public String userSignUpForm(Model model) {
 		model.addAttribute("createUserRequest", new CreateUserRequest());
 
-		return "/user/signup";
+		return "user/signup";
 	}
 
 	@GetMapping("/user/edit")
@@ -56,7 +56,7 @@ public class UserController {
 
 		model.addAttribute("updateUserRequest", UpdateUserRequest.toResponseDto(userResponse));
 
-		return "/user/edit";
+		return "user/edit";
 	}
 
 
@@ -65,11 +65,11 @@ public class UserController {
 		// 아이디 중복 검사
 		if (!userService.isDuplicate(createUserRequest.getUsername())) {
 			bindingResult.addError(new FieldError("createUserRequest", "username", "이미 존재하는 회원입니다."));
-			return "/user/signup";
+			return "user/signup";
 		}
 
 		if (bindingResult.hasErrors()) {
-			return "/user/signup";
+			return "user/signup";
 		}
 
 		createUserRequest.setPassword(passwordEncoder.encode(createUserRequest.getPassword()));
@@ -84,7 +84,7 @@ public class UserController {
 		String username = principal.getUsername();
 
 		if (bindingResult.hasErrors()) {
-			return "/user/edit";
+			return "user/edit";
 		}
 
 		updateUserRequest.setPassword(passwordEncoder.encode(updateUserRequest.getPassword()));

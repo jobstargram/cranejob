@@ -81,7 +81,7 @@ public class AdminUserController {
 		createAdminUserRequest.setPassword(passwordEncoder.encode(createAdminUserRequest.getPassword()));
 		adminUserService.createAdminUser(createAdminUserRequest);
 
-		return "/admin/login";
+		return "admin/login";
 	}
 
 	@PutMapping("/admin/edit")
