@@ -1,5 +1,6 @@
 package com.est.cranejob.user.service;
 
+import com.est.cranejob.comment.service.CommentService;
 import com.est.cranejob.post.service.PostService;
 import com.est.cranejob.user.domain.User;
 import com.est.cranejob.user.dto.request.CreateUserRequest;
@@ -18,6 +19,7 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	private final PostService postService;
+	private final CommentService commentService;
 
 	@Transactional
 	public void createUser(CreateUserRequest createUserRequest) {
@@ -56,5 +58,6 @@ public class UserService {
 		userRepository.save(user);
 		// 상태가 DELETED로 변경된 경우 해당 사용자의 모든 게시글을 논리 삭제
 		postService.deletePostsByUser(user);
+		commentService.deleteCommentByUser(user);
 	}
 }
