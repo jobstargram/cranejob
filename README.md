@@ -36,6 +36,84 @@
 - 개발 환경: IntelliJ
 - 형상관리: Github
 
+### 2.2 배포 URL
+- https://www.studyin.co.kr/
+- 테스트용 계정
+  ```
+  id : test@test.test
+  pw : test11!!
+  ```
+
+### 2.3 URL 구조(모놀리식)
+### 📝 회원 가입
+
+| 🏷️ Name | ⚙️ Method | 📎 URL | 📑 Description | 🔨 Authority |
+| --- | --- | --- | --- | --- |
+| userSignUpForm | GET | /user/signup | 일반 회원 가입 폼 요청 | ALL |
+| userSignUp | POST | /user/signup | 일반 회원 가입 요청 | ALL |
+| userDelete | PATCH | /user/delete{username} | 회원 탈퇴 요청(RESTful API) | USER |
+| adminSignUpForm | GET | /admin/signup | 관리자 회원가입 폼 요청 | ALL |
+| adminSignUp | POST | /admin/signup | 관리자 회원 가입 요청 | ALL |
+
+### 🔐 로그인
+
+| 🏷️ Name | ⚙️ Method | 📎 URL | 📑 Description | 🔨 Authority |
+| --- | --- | --- | --- | --- |
+| userLoginForm | GET | /user/login | 일반 회원 로그인 폼 요청 | ALL |
+| userLogout | GET | /user/logout | 일반 회원 로그아웃 | USER |
+| adminLoginForm | GET | /user/login | 관리자 로그인 폼 요청 | ALL |
+| adminLogout | GET | /user/logout | 관리자 로그아웃 | ADMIN |
+
+### 🧑 유저 정보
+
+| 🏷️ Name | ⚙️ Method | 📎 URL | 📑 Description | 🔨 Authority |
+| --- | --- | --- | --- | --- |
+| userEditForm | GET | /user/edit | 일반 회원 정보 수정 폼 요청 | USER |
+| userEdit | PUT | /user/edit | 일반 회원 수정 요청 | USER |
+| adminEditForm | GET | /admin/edit | 관리자 회원 정보 수정 폼(일반 회원과 동일) 요청 | ADMIN |
+| adminEdit | PUT | /admin/edit | 관리자 회원 수정(일반 회원과 동일) 요청 | ADMIN |
+| userList | GET | /admin/users | 회원 정보 리스트 조회 | ADMIN |
+| userDetails | GET | /admin/users/{username} | 특정 회원 상세 정보 조회(상태, 권한등) | ADMIN |
+| updateUserRole | POST | /admin/users/edit | 특정 회원 상태 및 권한 정보 수정 | ADMIN |
+
+### 📄 게시글
+
+| 🏷️ Name | ⚙️ Method | 📎 URL | 📑 Description | 🔨 Authority |
+| --- | --- | --- | --- | --- |
+| listPost | GET | /post/list | 게시글 리스트 조회 | ALL |
+| createPostForm | GET | /post/form | 게시글 생성 폼 요청 | USER |
+| createPost | POST | /post/form | 게시글 생성 요청 | USER |
+| postDetail | GET | /post/detail/{id} | 게시글 상세 정보 조회 | USER(작성자) |
+| editPostForm | GET | /post/edit/{id} | 게시글 수정 폼 요청 | USER(작성자) |
+| updatePost | PUT | /post/edit/{id} | 게시글 수정 요청 | USER(작성자) |
+| deletePost | POST | /post/delete/{id} | 게시글 삭제 요청(soft delete) | USER(작성자) |
+
+### 💬 댓글(RESTful API)
+
+| 🏷️ Name | ⚙️ Method | 📎 URL | 📑 Description | 🔨 Authority |
+| --- | --- | --- | --- | --- |
+| getComments | GET | /api/comment/{postId} | 댓글 리스트 조회 | USER |
+| addComment | POST | /api/comment/{postId} | 댓글 작성 요청 | USER |
+| updateComment | PUT | /api/comment/{commentId} | 댓글 수정 요청 | USER(작성자) |
+| deleteComment | DELETE | /api/comment/{commentId} | 댓글 삭제 요청 | USER(작성자) |
+
+### 📢 공지사항
+
+| 🏷️ Name | ⚙️ Method | 📎 URL | 📑 Description | 🔨 Authority |
+| --- | --- | --- | --- | --- |
+| getAnnouncements | GET | /announcements | 공지사항 리스트 조회 | ADMIN |
+| createAnnouncementForm | GET | /announcements/form | 공지사항 생성 폼 요청 | ADMIN |
+| createAnnouncement | POST | /announcements | 공지사항 생성 요청 | ADMIN |
+| announcementDetail | GET | /announcements/{id} | 공지사항 상세 정보 조회 | ADMIN |
+| updateAnnouncementForm | GET | /announcements/edit/{id} | 공지사항 수정 폼 요청 | ADMIN |
+| updateAnnouncement | PATCH | /announcements/{id} | 공지사항 수정 요청 | ADMIN |
+| deleteAnnouncement | Delete | /announcements/{id} | 공지사항 삭제 요청 | ADMIN |
+
+### 📋 채용 공고
+
+| 🏷️ Name | ⚙️ Method | 📎 URL | 📑 Description | 🔨 Authority |
+| --- | --- | --- | --- | --- |
+| recuit | GET | /recuit | 채용 정보 리스트 조회 | ALL |
 
 ## 3. 요구사항 명세
 ### 3.1 요구사항
@@ -220,7 +298,7 @@
 
 ### 4.2 프로젝트 구조에 대한 설명
 
-- **hodu/css**: 각 섹션별로 css 파일
+- **announcement**: 공지사항 구현에 필요한 controller, service, repository, domain
 - **hodu/img**: 레이아웃 구현에 필요한 이미지 파일
 - **hodu/js**: 모달창, show-more 버튼을 위한 JS 파일
 - **hodu/test-factory**: 테스트용 파일
