@@ -439,68 +439,200 @@
 ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜AnnouncementService.java
 ```
 
+- **comment**: 댓글 구현에 필요한 controller, service, repository, domain
+```
+┃ ┃ ┃ ┃ ┃ ┣ 📂comment
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CommentController.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂domain
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜Comment.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂request
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CreateCommentRequest.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UpdateCommentRequest.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂response
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CommentDetailResponse.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CommentResponse.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CreateComment.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UpdateComment.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CommentRepository.java
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CommentService.java
+```
 
-- **comment**: 레이아웃 구현에 필요한 이미지 파일
-- **post**: 모달창, show-more 버튼을 위한 JS 파일
-- **recurit**: 테스트용 파일
-- **security**: 실제 디자인이 완성된 index 파일
-- **user**: 프로젝트 구조와 설명을 포함한 파일
+- **post**: 게시글 구현에 필요한 controller, service, repository, domain
+```
+┃ ┃ ┃ ┃ ┃ ┣ 📂post
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostController.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂domain
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜Post.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂request
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CreatePostRequest.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UpdatePostRequest.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂response
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PostAdminDetailResponse.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PostSummaryResponse.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostUserDetailResponse.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CreatePost.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UpdatePost.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostRepository.java
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostService.java
+```
 
+- **recurit**: 채용공고 구현에 필요한 controller, service, repository, domain
+```
+┃ ┃ ┃ ┃ ┃ ┣ 📂recruit
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜RecruitController.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂domain
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜Recruit.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜RecruitInfo.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜RecruitRepository.java
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜HttpURLConnectionEx.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜RecruitService.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SchedulerService.java
+```
+- **security**: 인증/인가 구현에 필요한 Security 파일
+```
+┃ ┃ ┃ ┃ ┃ ┣ 📂security
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂config
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AuthConfig.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SecurityConfig.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂handler
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CustomAuthenticationFailureHandler.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂provider
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FormAuthenticationProvider.java
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FormUserDetailsService.java
+```
+- **user**: 유저 구현에 필요한 controller, service, repository, domain
+```
+┃ ┃ ┃ ┃ ┃ ┣ 📂user
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AdminUserController.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserController.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂domain
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜User.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂request
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CreateAdminUserRequest.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CreateUserRequest.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginUserRequest.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜UpdateAdminUserRequest.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UpdateUserRequest.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂response
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AdminUserResponse.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserResponse.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserContext.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserRepository.java
+┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂service
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AdminUserService.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserService.java
+┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂util
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜BaseEntity.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Role.java
+┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserStatus.java
+```
 
-### 4.3 와이어프레임
-<img width="912" alt="스크린샷 2024-05-27 오후 1 21 51" src="https://github.com/LeeJeongSeok/ormi-homework/assets/13554850/28fa8500-9721-4e13-9f35-e7a88dc8fae7">
+- **templates/admin**: 관리자용 회원 관리 페이지를 위한 뷰 템플릿
+- **templates/announcement**: 공지사항 페이지를 위한 뷰 템플릿
+- **templates/layout**: 공통 레이아웃 템플릿
+- **templates/post**: 게시물 페이지를 위한 뷰 템플릿
+- **templates/recurit**: 채용공고 페이지를 위한 뷰 템플릿
+- **templates/user**: 일반 회원, 관리자 로그인 회원가입을 위한 뷰 템플릿
 
-
-### 4.3 화면 설계
- 
-<table>
-    <tbody>
-        <tr>
-            <td>헤더</td>
-            <td>메인</td>
-        </tr>
-        <tr>
-            <td>
-		<img width="100%" alt="스크린샷 2024-05-27 오후 1 23 57" src="https://github.com/LeeJeongSeok/ormi-homework/assets/13554850/8635d971-5fdc-4bed-bd66-ab4ac1fc93bb">
-            </td>
-            <td>
-                <img width="100%" alt="스크린샷 2024-05-27 오후 1 27 53" src="https://github.com/LeeJeongSeok/ormi-homework/assets/13554850/9ef12597-511b-473d-94a1-f1a3808e5bba">
-            </td>
-        </tr>
-        <tr>
-            <td>본문</td>
-            <td>본문 갤러리</td>
-        </tr>
-        <tr>
-            <td>
-                <img width="100%" alt="스크린샷 2024-05-27 오후 1 25 40" src="https://github.com/LeeJeongSeok/ormi-homework/assets/13554850/cc8ac302-1bab-4511-91e2-4ab831b1f86e">
-            </td>
-            <td>
-                <img width="100%" alt="스크린샷 2024-05-27 오후 1 26 20" src="https://github.com/LeeJeongSeok/ormi-homework/assets/13554850/7f46a815-f8b0-434a-96b7-239d98152372">
-            </td>
-        </tr>
-        <tr>
-            <td>지도</td>
-            <td>하단영역</td>
-        </tr>
-        <tr>
-            <td>
-                <img width="100%" alt="스크린샷 2024-05-27 오후 1 26 42" src="https://github.com/LeeJeongSeok/ormi-homework/assets/13554850/2b929b38-71ac-492d-a76d-fc2c85cd04bb">
-            </td>
-            <td>
-                <img width="812" alt="스크린샷 2024-05-27 오후 1 27 07" src="https://github.com/LeeJeongSeok/ormi-homework/assets/13554850/f74fbc43-d09f-4c71-9c93-4e11c72572b4">
-            </td>
-        </tr>
-    </tbody>
-</table>
 
 ## 5. 역할 분담
-
 - 팀장 : 이정석
 - BE : 조아라
 - BE : 조준호
 - BE : 이소정
 - 디자인 : 이소정
+
+## 6. 와이어프레임 / UI / BM
+
+### 6.1 와이어프레임
+- 아래 페이지별 상세 설명, 더 큰 이미지로 하나하나씩 설명 필요
+<img src="ui.png" width="60%">
+
+- 와이어 프레임은 디자인을 할 수 있다면 '피그마'를, 디자인을 할 수 없다면 '카카오 오븐'으로 쉽게 만들 수 있습니다.
+
+### 6.2 화면 설계
+- 화면은 gif파일로 업로드해주세요.
+ 
+<table>
+    <tbody>
+        <tr>
+            <td>메인</td>
+            <td>로그인</td>
+        </tr>
+        <tr>
+            <td>
+		<img src="ui1.png" width="100%">
+            </td>
+            <td>
+                <img src="ui2.png" width="100%">
+            </td>
+        </tr>
+        <tr>
+            <td>회원가입</td>
+            <td>정보수정</td>
+        </tr>
+        <tr>
+            <td>
+                <img src="ui3.png" width="100%">
+            </td>
+            <td>
+                <img src="ui3.png" width="100%">
+            </td>
+        </tr>
+        <tr>
+            <td>검색</td>
+            <td>번역</td>
+        </tr>
+        <tr>
+            <td>
+                <img src="ui3.png" width="100%">
+            </td>
+            <td>
+                <img src="ui3.png" width="100%">
+            </td>
+        </tr>
+        <tr>
+            <td>선택삭제</td>
+            <td>글쓰기</td>
+        </tr>
+        <tr>
+            <td>
+	        <img src="ui3.png" width="100%">
+            </td>
+            <td>
+                <img src="ui3.png" width="100%">
+            </td>
+        </tr>
+        <tr>
+            <td>글 상세보기</td>
+            <td>댓글</td>
+        </tr>
+        <tr>
+            <td>
+                <img src="ui3.png" width="100%">
+            </td>
+            <td>
+                <img src="ui3.png" width="100%">
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 ## 8. Architecture
 
