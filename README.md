@@ -42,9 +42,9 @@
 	</tr>
  	<tr>
 		<td><img src="![cranejob-logo-1](https://github.com/user-attachments/assets/55994c4b-18ab-45d1-8d2e-45412a66a9aa)" width="100%"></td>
-		<td><img src="my.jpg" width="100%"></td>
-		<td><img src="my.jpg" width="100%"></td>
-		<td><img src="my.jpg" width="100%"></td>
+		<td><img src="![cranejob-logo-1](https://github.com/user-attachments/assets/55994c4b-18ab-45d1-8d2e-45412a66a9aa)" width="100%"></td>
+		<td><img src="![cranejob-logo-1](https://github.com/user-attachments/assets/55994c4b-18ab-45d1-8d2e-45412a66a9aa)" width="100%"></td>
+		<td><img src="![cranejob-logo-1](https://github.com/user-attachments/assets/55994c4b-18ab-45d1-8d2e-45412a66a9aa)" width="100%"></td>
 	</tr>
 </table>
 
