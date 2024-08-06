@@ -51,20 +51,171 @@
 
 ## 4. 프로젝트 구조와 와이어 프레임 / UI
 ### 4.1 프로젝트 구조
-📦ormi-homework  
-┣ 📂hodu  
-┃ ┣ 📂css  
-┃ ┃ ┣ 📂footer  
-┃ ┃ ┣ 📂header  
-┃ ┃ ┣ 📂modal  
-┃ ┃ ┣ 📂sections  
-┃ ┃ ┣ 📂subscribe  
-┃ ┃ ┣ 📜common.css  
-┃ ┣ 📂img  
-┃ ┣ 📂js  
-┃ ┣ 📂test-factory  
-┃ ┣ 📜index.html  
-┗ 📜README.md
+📦src
+ ┣ 📂main
+ ┃ ┣ 📂java
+ ┃ ┃ ┗ 📂com
+ ┃ ┃ ┃ ┗ 📂est
+ ┃ ┃ ┃ ┃ ┗ 📂cranejob
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂announcement
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜AnnouncementController.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂domain
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜Announcement.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂request
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CreateAnnouncementRequest.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UpdateAnnouncementRequest.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂response
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AnnouncementDetailResponse.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜AnnouncementResponse.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜AdminUpdateUserRequest.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜AnnouncementRepository.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜AnnouncementService.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂comment
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CommentController.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂domain
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜Comment.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂request
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CreateCommentRequest.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UpdateCommentRequest.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂response
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CommentDetailResponse.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CommentResponse.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CreateComment.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UpdateComment.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CommentRepository.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CommentService.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂post
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostController.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂domain
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜Post.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂request
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CreatePostRequest.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UpdatePostRequest.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂response
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PostAdminDetailResponse.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PostSummaryResponse.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostUserDetailResponse.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CreatePost.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UpdatePost.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostRepository.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostService.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂recruit
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜RecruitController.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂domain
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜Recruit.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜RecruitInfo.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜RecruitRepository.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜HttpURLConnectionEx.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜RecruitService.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SchedulerService.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂security
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂config
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AuthConfig.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SecurityConfig.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂handler
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CustomAuthenticationFailureHandler.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂provider
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FormAuthenticationProvider.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FormUserDetailsService.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂user
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AdminUserController.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserController.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂domain
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜User.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂request
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CreateAdminUserRequest.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CreateUserRequest.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginUserRequest.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜UpdateAdminUserRequest.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UpdateUserRequest.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂response
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AdminUserResponse.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserResponse.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserContext.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserRepository.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂service
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AdminUserService.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserService.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂util
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜BaseEntity.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Role.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserStatus.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜CraneJobApplication.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜HomeController.java
+ ┃ ┗ 📂resources
+ ┃ ┃ ┣ 📂static
+ ┃ ┃ ┃ ┣ 📂assets
+ ┃ ┃ ┃ ┃ ┣ 📂brand
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜bootstrap-logo-white.svg
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜bootstrap-logo.svg
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜cranejob-logo-mini.png
+ ┃ ┃ ┃ ┃ ┣ 📂dist
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂css
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜bootstrap.min.css
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜bootstrap.min.css.map
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜bootstrap.rtl.min.css
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜bootstrap.rtl.min.css.map
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜style.css
+ ┃ ┃ ┃ ┃ ┃ ┗ 📂js
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜bootstrap.bundle.min.js
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜bootstrap.bundle.min.js.map
+ ┃ ┃ ┃ ┃ ┗ 📂js
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜color-modes.js
+ ┃ ┃ ┃ ┗ 📂css
+ ┃ ┃ ┃ ┃ ┣ 📜bootstrap.min.css
+ ┃ ┃ ┃ ┃ ┗ 📜style_userlist.css
+ ┃ ┃ ┣ 📂templates
+ ┃ ┃ ┃ ┣ 📂admin
+ ┃ ┃ ┃ ┃ ┣ 📜edit.html
+ ┃ ┃ ┃ ┃ ┣ 📜login.html
+ ┃ ┃ ┃ ┃ ┣ 📜signup.html
+ ┃ ┃ ┃ ┃ ┣ 📜user-info.html
+ ┃ ┃ ┃ ┃ ┗ 📜user-list.html
+ ┃ ┃ ┃ ┣ 📂announcement
+ ┃ ┃ ┃ ┃ ┣ 📜detail.html
+ ┃ ┃ ┃ ┃ ┣ 📜edit.html
+ ┃ ┃ ┃ ┃ ┣ 📜form.html
+ ┃ ┃ ┃ ┃ ┗ 📜list.html
+ ┃ ┃ ┃ ┣ 📂layout
+ ┃ ┃ ┃ ┃ ┗ 📜header.html
+ ┃ ┃ ┃ ┣ 📂post
+ ┃ ┃ ┃ ┃ ┣ 📜edit.html
+ ┃ ┃ ┃ ┃ ┣ 📜form.html
+ ┃ ┃ ┃ ┃ ┣ 📜list.html
+ ┃ ┃ ┃ ┃ ┗ 📜postDetail.html
+ ┃ ┃ ┃ ┣ 📂recruit
+ ┃ ┃ ┃ ┃ ┗ 📜recruit-list.html
+ ┃ ┃ ┃ ┗ 📂user
+ ┃ ┃ ┃ ┃ ┣ 📜edit.html
+ ┃ ┃ ┃ ┃ ┣ 📜login.html
+ ┃ ┃ ┃ ┃ ┗ 📜signup.html
+ ┃ ┃ ┗ 📜application.yml
+ ┗ 📂test
+ ┃ ┗ 📂java
+ ┃ ┃ ┗ 📂com
+ ┃ ┃ ┃ ┗ 📂est
+ ┃ ┃ ┃ ┃ ┗ 📂cranejob
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜CraneJobApplicationTests.java
 
 ### 4.2 프로젝트 구조에 대한 설명
 
