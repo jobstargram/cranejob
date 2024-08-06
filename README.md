@@ -33,7 +33,6 @@
   - 다양한 예외 상황에 대한 처리 로직 설계 및 적용
 
 ### 1.3 팀 구성
-- 실제 사진을 업로드 하시길 권합니다.
 <table>
 	<tr>
 		<th>이정석</th>
@@ -42,7 +41,7 @@
 		<th>이소정B</th>
 	</tr>
  	<tr>
-		<td><img src="my.jpg" width="100%"></td>
+		<td><img src="![cranejob-logo-1](https://github.com/user-attachments/assets/55994c4b-18ab-45d1-8d2e-45412a66a9aa)" width="100%"></td>
 		<td><img src="my.jpg" width="100%"></td>
 		<td><img src="my.jpg" width="100%"></td>
 		<td><img src="my.jpg" width="100%"></td>
