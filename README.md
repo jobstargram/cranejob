@@ -59,12 +59,12 @@
 - 테스트용 계정
   ```
   admin
-  id : test@test.test
-  pw : test11!!
+  id : admin@gmail.com
+  pw : admin123!@#
 
   user
-  id : test@test.test
-  pw : test11!!
+  id : user@gmail.com
+  pw : user123!@#
   ```
   
 ### 2.3 URL 구조(모놀리식)
