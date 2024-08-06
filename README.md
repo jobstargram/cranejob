@@ -567,7 +567,7 @@
 - 와이어 프레임은 디자인을 할 수 있다면 '피그마'를, 디자인을 할 수 없다면 '카카오 오븐'으로 쉽게 만들 수 있습니다.
 
 ### 6.2 화면 설계
-- 화면은 gif파일로 업로드해주세요.
+- 사용자
  
 <table>
     <tbody>
@@ -577,10 +577,10 @@
         </tr>
         <tr>
             <td>
-		<img src="ui1.png" width="100%">
+		<img src="https://github.com/user-attachments/assets/133abba7-6132-4633-94aa-17e7c7c469b9" width="100%">
             </td>
             <td>
-                <img src="ui2.png" width="100%">
+                <img src="https://github.com/user-attachments/assets/133abba7-6132-4633-94aa-17e7c7c469b9" width="100%">
             </td>
         </tr>
         <tr>
@@ -589,46 +589,58 @@
         </tr>
         <tr>
             <td>
-                <img src="ui3.png" width="100%">
+                <img src="https://github.com/user-attachments/assets/33ef5478-0b6a-485c-b0ab-a9e58e85b376" width="100%">
             </td>
             <td>
-                <img src="ui3.png" width="100%">
-            </td>
-        </tr>
-        <tr>
-            <td>검색</td>
-            <td>번역</td>
-        </tr>
-        <tr>
-            <td>
-                <img src="ui3.png" width="100%">
-            </td>
-            <td>
-                <img src="ui3.png" width="100%">
+                <img src="https://github.com/user-attachments/assets/aaff292f-1b92-4d41-83f5-3e953ac8eb09" width="100%">
             </td>
         </tr>
         <tr>
-            <td>선택삭제</td>
-            <td>글쓰기</td>
+            <td>게시판</td>
+            <td>상세보기 및 댓글</td>
         </tr>
         <tr>
             <td>
-	        <img src="ui3.png" width="100%">
+                <img src="https://github.com/user-attachments/assets/415fdc40-f6a3-4ae7-8db9-9b1a857fd4f4" width="100%">
             </td>
             <td>
-                <img src="ui3.png" width="100%">
+                <img src="https://github.com/user-attachments/assets/cb984bde-42ee-4909-8291-e61e52ca70ab" width="100%">
             </td>
         </tr>
         <tr>
-            <td>글 상세보기</td>
-            <td>댓글</td>
+            <td>수정하기</td>
+            <td>작성하기</td>
         </tr>
         <tr>
             <td>
-                <img src="ui3.png" width="100%">
+	        <img src="https://github.com/user-attachments/assets/3340187e-c3fc-4928-8421-6214def1f9bb" width="100%">
             </td>
             <td>
-                <img src="ui3.png" width="100%">
+                <img src="https://github.com/user-attachments/assets/0b2b011a-eab4-4454-84f5-71ce9e325777" width="100%">
+            </td>
+        </tr>
+        <tr>
+            <td>채용공고 게시판</td>
+            <td>공지사항 게시판</td>
+        </tr>
+        <tr>
+            <td>
+                <img src="https://github.com/user-attachments/assets/8ed34210-3bbf-4ba8-9cf1-458015ebfd0f" width="100%">
+            </td>
+            <td>
+                <img src="https://github.com/user-attachments/assets/78287b39-823d-49d1-8129-ad9880d18049" width="100%">
+            </td>
+        </tr>
+        <tr>
+            <td>공지사항 상세보기</td>
+            <td>공지사항 작성하기</td>
+        </tr>
+        <tr>
+            <td>
+                <img src="https://github.com/user-attachments/assets/dc0b60c7-36dd-45a4-a212-cb6a2fb44086" width="100%">
+            </td>
+            <td>
+                <img src="https://github.com/user-attachments/assets/047f744e-baf4-4087-a423-5b4018a3a1ff" width="100%">
             </td>
         </tr>
     </tbody>
