@@ -141,9 +141,6 @@
 | --- | --- | --- | --- | --- |
 | recuit | GET | /recuit | 채용 정보 리스트 조회 | ALL |
 
-<img width="1571" alt="스크린샷 2024-08-06 오후 1 49 22" src="https://github.com/user-attachments/assets/5139ea0b-0a62-4278-88e2-3715e77f6088">
-
-<img width="1546" alt="스크린샷 2024-08-06 오후 1 49 36" src="https://github.com/user-attachments/assets/fdd06cf6-b90d-4581-938a-b33642bb53f5">
 
 ## 3. 요구사항 명세
 ### 3.1 요구사항
