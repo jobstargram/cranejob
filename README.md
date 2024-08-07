@@ -58,17 +58,7 @@
 <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 
 ### 2.2 배포 URL
-- http://3.38.247.239/ 
-- 테스트용 계정
-  ```
-  admin
-  id : admin@gmail.com
-  pw : admin123!@#
-
-  user
-  id : user@gmail.com
-  pw : user123!@#
-  ```
+- 발표용으로 만든 서버이기 때문에 현재는 접속할 수 없습니다.
   
 ### 2.3 URL 구조(모놀리식)
 ### 📝 회원 가입
