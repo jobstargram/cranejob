@@ -50,9 +50,12 @@
 
 ## 2. 개발 환경 
 ### 2.1 개발 환경
-- 개발 언어: HTML, CSS, JavaScript, BootStrap, Java, Spring Boot, MySQL
-- 개발 환경: IntelliJ
-- 형상관리: Github
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
+<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 
 ### 2.2 배포 URL
 - http://3.38.247.239/ 
