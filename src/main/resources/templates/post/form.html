@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <link href="../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<style>
+    .layout {
+        width: 1000px;
+        margin: 0 auto;
+        margin-top: 40px;
+    }
+    button[type="submit"] {
+        background: #4E94F5;
+        color: #ffffff;
+        border : 1px solid #4E94F5;
+        border-radius: 5px;
+        padding: 5px 10px;
+        float : right;
+        margin-top: 20px;
+    }
+    button[type="submit"]:hover {
+        background: #1665d4;
+    }
+
+    .back-to-list {
+        margin-top: 20px;
+        display: inline-block;
+        padding: 5px 15px 5px 35px;
+        border-radius: 5px;
+        background-color: #1665d4;
+        color: white;
+        text-decoration: none;
+        clip-path: polygon(20% 0%, 100% 0, 100% 100%, 20% 100%, 0% 50%);
+    }
+
+    .back-to-list:hover {
+        background-color: #0c4ea9;
+    }
+    .field-error {
+        border-color: #dc3545;
+        color: #dc3545;
+    }
+</style>
+<body>
+<div th:replace="~{layout/header.html :: header}"></div>
+<!-- 게시글 작성 폼-->
+<div class="layout">
+<h1 style="margin: 40px auto;">새 글 작성</h1>
+<form th:action="@{/post/form}" th:object="${createPostRequest}" th:method="post">
+    <div>
+        <label for="title">제목</label>
+        <input type="text" id="title" th:field="*{title}" th:errorclass="field-error" class="form-control" style="margin: 20px 0;" placeholder="제목을 입력해 주세요."/>
+        <div class="field-error" th:errors="*{title}">
+            제목 오류
+        </div>
+    </div>
+    <div>
+        <label for="content">내용</label>
+        <textarea id="content" th:field="*{content}" th:errorclass="field-error" class="form-control" style="margin: 20px 0; height: 400px;" placeholder="내용을 입력해 주세요."></textarea>
+        <div class="field-error" th:errors="*{content}">
+            내용 오류
+        </div>
+    </div>
+    <button type="submit">저장</button>
+</form>
+<a href="/post/list" class="back-to-list">목록으로 돌아가기</a>
+</div>
+</body>
+</html>

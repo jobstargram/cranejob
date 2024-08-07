@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link href="../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+	<style>
+		.container {
+			max-width: 560px;
+		}
+		
+		.field-error {
+			border-color: #dc3545;
+			color: #dc3545;
+		}
+	</style>
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+<div th:replace="~{layout/header.html :: header}"></div>
+<div class="container">
+	<div class="py-5 text-center">
+		<h2>내 정보 수정</h2>
+	</div>
+	
+	<h4 class="mb-3">수정할 정보 입력</h4>
+	
+	<!--th:action 값이 없으면 그냥 action만 동작, 즉 action 속성은 지금 없어도 됨-->
+	<form th:action="@{user/edit}" th:object="${updateUserRequest}" method="post">
+		<input type="hidden" name="_method" value="put"/>
+			
+			<div>
+				<label for="password">새 비밀번호</label>
+				<input type="password" id="password" name="password" th:field="*{password}" th:errorclass="field-error" class="form-control" placeholder="비밀번호를 입력해주세요">
+				<div class="field-error" th:errors="*{password}">
+					비밀번호 오류
+				</div>
+			</div>
+			<div>
+				<label for="nickname">이름</label>
+				<input type="text" id="nickname" name="nickname" th:field="*{nickname}" class="form-control" placeholder="이름을 입력해주세요">
+				<div class="field-error" th:errors="*{nickname}">
+					이름 오류
+				</div>
+			</div>
+		
+		<hr class="my-4">
+		<div class="row">
+			<div class="col">
+				<button class="w-100 btn btn-primary btn-lg" type="submit">내 정보 수정</button>
+			</div>
+			<div class="col">
+				<button class="w-100 btn btn-secondary btn-lg" onclick="location.href='items.html'" th:onclick="|location.href='@{/}'|" type="button">취소</button>
+			</div>
+		</div>
+		
+		<hr class="my-4">
+		<div class="row">
+			<div class="col">
+				<button class="w-100 btn btn-danger btn-lg" type="button" th:data-username="${updateUserRequest.username}" onclick="deleteUser(this)">탈퇴하기</button>
+			</div>
+		</div>
+	</form>
+</div> <!-- /container -->
+
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		var passwordField = document.getElementById("password");
+		passwordField.value = "**********";
+	});
+	
+	function deleteUser(button) {
+		var username = button.getAttribute('data-username');
+		var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
+		var csrfHeader = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
+		
+		if (confirm("정말로 탈퇴하시겠습니까?")) {
+			fetch('/user/delete/' + username, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+					[csrfHeader]: csrfToken // CSRF 토큰 추가
+				}
+			}).then(response => {
+				if (response.ok) {
+					window.location.href = '/';
+				} else {
+					alert('사용자 탈퇴에 실패했습니다.');
+				}
+			}).catch(error => {
+				console.error('Error:', error);
+				alert('사용자 탈퇴에 실패했습니다.');
+			});
+		}
+	}
+</script>
+</body>
+</html>

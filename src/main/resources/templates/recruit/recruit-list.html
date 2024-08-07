@@ -1,0 +1,206 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko" dir="ltr" data-bs-theme="auto">
+<head><script src="/assets/js/color-modes.js"></script>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+	<meta name="generator" content="Hugo 0.122.0">
+	<title>채용공고페이지</title>
+
+	<link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/album-rtl/">
+
+
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+
+	<link href="/assets/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+	<link href="/assets/dist/css/style.css" rel="stylesheet">
+
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+
+		.b-example-divider {
+			width: 100%;
+			height: 3rem;
+			background-color: rgba(0, 0, 0, .1);
+			border: solid rgba(0, 0, 0, .15);
+			border-width: 1px 0;
+			box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+		}
+
+		.b-example-vr {
+			flex-shrink: 0;
+			width: 1.5rem;
+			height: 100vh;
+		}
+
+		.bi {
+			vertical-align: -.125em;
+			fill: currentColor;
+		}
+
+		.nav-scroller {
+			position: relative;
+			z-index: 2;
+			height: 2.75rem;
+			overflow-y: hidden;
+		}
+
+		.nav-scroller .nav {
+			display: flex;
+			flex-wrap: nowrap;
+			padding-bottom: 1rem;
+			margin-top: -1px;
+			overflow-x: auto;
+			text-align: center;
+			white-space: nowrap;
+			-webkit-overflow-scrolling: touch;
+		}
+
+		.btn-bd-primary {
+			--bd-violet-bg: #712cf9;
+			--bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+			--bs-btn-font-weight: 600;
+			--bs-btn-color: var(--bs-white);
+			--bs-btn-bg: var(--bd-violet-bg);
+			--bs-btn-border-color: var(--bd-violet-bg);
+			--bs-btn-hover-color: var(--bs-white);
+			--bs-btn-hover-bg: #6528e0;
+			--bs-btn-hover-border-color: #6528e0;
+			--bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+			--bs-btn-active-color: var(--bs-btn-hover-color);
+			--bs-btn-active-bg: #5a23c8;
+			--bs-btn-active-border-color: #5a23c8;
+		}
+
+		.bd-mode-toggle {
+			z-index: 1500;
+		}
+
+		.bd-mode-toggle .dropdown-menu .active .bi {
+			display: block !important;
+		}
+
+		/* 새로 추가된 스타일 */
+		.full-width-bg {
+			width: 100%;
+			background-color: rgba(78, 148, 245, 0.2);
+		}
+	</style>
+
+
+</head>
+<body>
+
+<header>
+	<div th:replace="~{layout/header.html :: header}"></div>
+</header>
+<main>
+
+	<section class = "py-5 text-center full-width-bg">
+		<div class="row py-lg-5">
+			<div class="col-lg-6 col-md-8 mx-auto">
+				<h1 class="fw-light">채용 공고 게시판</h1>
+				<p class="lead text-body-secondary">IT 관련 채용 공고를 제공합니다</p>
+					<div style="width: 300px" class="input-group mx-auto mb-3">
+						<form class="row gx-2" th:action="@{/recruit}" method="get">
+							<div class="col-auto">
+								<input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="keyword" />
+							</div>
+							<div class="col-auto">
+								<button type="submit" class="btn btn-outline-primary">search</button>
+							</div>
+						</form>
+					</div>
+			</div>
+		</div>
+	</section>
+
+	<div class="album py-5 bg-body-tertiary">
+		<div class="container">
+
+			<ul class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 no_dot">
+<!--				<ul>-->
+				<li th:each="info : ${recruitList}" class="col">
+					<div class="card shadow-sm">
+<!--						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>-->
+						<div class="card-body">
+							<p th:text="${info.companyName}" class="card-text">회사이름</p>
+							<p th:text="${info.title}" class="card-text">채용타이틀</p>
+							<div class="d-flex justify-content-between align-items-center">
+<!--								<div class="btn-group">-->
+<!--									<button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>-->
+<!--								</div>-->
+								<div class="btn-group">
+									<a th:href="${info.url}" class="btn btn-sm btn-outline-secondary">상세보기</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+
+			<nav aria-label="Page navigation">
+				<!--표에 사용될 변수값 초기화 -->
+				<ul class="pagination justify-content-center" th:with="start=${T(java.lang.Math).floor(recruitList.number / 10) * 10 + 1}, last=(${start + 9 < recruitList.totalPages ? start + 9 : recruitList.totalPages})">
+					<th:block th:with="
+            firstAddr=@{/recruit(page=1)},
+            prevAddr=@{/recruit(page=${recruitList.number})},
+            nextAddr=@{/recruit(page=${recruitList.number + 2})},
+            lastAddr=@{/recruit(page=${recruitList.totalPages})}">
+						<li class="page-item">
+							<a class="page-link" th:href="${firstAddr}" aria-label="First">
+								<span aria-hidden="true"> << </span>
+							</a>
+						</li>
+						<!-- 이전 페이지로 가기 버튼 -->
+						<li class="page-item" th:class="${recruitList.first} ? 'disabled'">
+							<a class="page-link" th:href="${recruitList.first} ? '#' :${prevAddr}"
+							   aria-label="Previous">
+								<span aria-hidden="true">&lt;</span>
+							</a>
+						</li>
+						<!--1,2,3,4,.. 등 페이지-->
+						<li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
+							th:class="${page == recruitList.number + 1} ? 'active'">
+							<a class="page-link" th:text="${page}" th:href="@{/recruit(page=${page})}"></a>
+						</li>
+						<!--다음 페이지로 -->
+						<li class="page-item" th:class="${recruitList.last} ? 'disabled'">
+							<a class="page-link" th:href="${recruitList.last} ? '#' : ${nextAddr}"
+							   aria-label="Next">
+								<span aria-hidden="true">&gt;</span>
+							</a>
+						</li>
+						<!--맨 마지막 페이지로 이동 -->
+						<li class="page-item">
+							<a class="page-link" th:href="${lastAddr}" aria-label="Last">
+								<span aria-hidden="true"> >> </span>
+							</a>
+						</li>
+					</th:block>
+				</ul>
+			</nav>
+		</div>
+	</div>
+
+</main>
+<script src="./src/main/resources/assets/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

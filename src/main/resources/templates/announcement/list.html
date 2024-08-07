@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link href="../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<style>
+	table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+	th, td {
+		border: 1px solid #ddd;
+		padding: 8px;
+	}
+	th {
+		background-color: #f2f2f2;
+	}
+	tr:hover {
+		background-color: #f5f5f5;
+	}
+	h2 {
+		margin: 40px 0 20px 0;
+	}
+	#write {
+		margin: 20px 0;
+		background: #4E94F5;
+		border-color : #4E94F5;
+	}
+	#write:hover {
+		background: #1665d4;
+	}
+	.col-auto {
+		margin: 20px 0;
+	}
+</style>
+<body>
+<!-- 네비게이션 바 위치 -->
+<div th:replace="~{layout/header.html :: header}"></div>
+<div class="container">
+	<h2 align="center">공지사항 리스트</h2>
+	
+	<div style="width: 300px" class="input-group mx-auto mb-3">
+		<form class="row gx-2" th:action="@{/announcements}" method="get">
+			<div class="col-auto">
+				<input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="keyword" />
+			</div>
+			<div class="col-auto">
+				<button type="submit" class="btn btn-outline-primary">search</button>
+			</div>
+		</form>
+	</div>
+	<table class="table-primary">
+		<thead>
+		<tr>
+			<th>NO</th>
+			<th width="60%">제목</th>
+			<th>작성자</th>
+			<th>작성일</th>
+		</tr>
+		</thead>
+		<tbody align="center">
+		<tr th:each="announcement : ${announcementResponses}">
+			<td class="text-start"><a th:href="@{/announcements/{id}(id=${announcement.id})}" th:text="${announcement.id}">공지사항 제목</a></td>
+			<td class="text-start"><a th:href="@{/announcements/{id}(id=${announcement.id})}" th:text="${announcement.title}">공지사항 제목</a></td>
+			<td class="text-start" th:text="${announcement.user.getNickname()}">작성자</td>
+			<td class="text-start" th:text="${announcement.createdAt}">작성일</td>
+		</tr>
+		</tbody>
+	</table>
+	
+	<div align="right">
+		<button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/announcements/form}'|" id="write">공지사항 쓰기</button>
+	</div>
+	
+	<nav aria-label="Page navigation">
+		<!--표에 사용될 변수값 초기화 -->
+		<ul class="pagination justify-content-center" th:with="start=${T(java.lang.Math).floor(announcementResponses.number / 10) * 10 + 1}, last=(${start + 9 < announcementResponses.totalPages ? start + 9 : announcementResponses.totalPages})">
+			<th:block th:with="
+            firstAddr=@{/announcements(page=1)},
+            prevAddr=@{/announcements(page=${announcementResponses.number})},
+            nextAddr=@{/announcements(page=${announcementResponses.number + 2})},
+            lastAddr=@{/announcements(page=${announcementResponses.totalPages})}">
+				<li class="page-item">
+					<a class="page-link" th:href="${firstAddr}" aria-label="First">
+						<span aria-hidden="true"> << </span>
+					</a>
+				</li>
+				<!-- 이전 페이지로 가기 버튼 -->
+				<li class="page-item" th:class="${announcementResponses.first} ? 'disabled'">
+					<a class="page-link" th:href="${announcementResponses.first} ? '#' :${prevAddr}"
+					   aria-label="Previous">
+						<span aria-hidden="true">&lt;</span>
+					</a>
+				</li>
+				<!--1,2,3,4,.. 등 페이지-->
+				<li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
+				    th:class="${page == announcementResponses.number + 1} ? 'active'">
+					<a class="page-link" th:text="${page}" th:href="@{/announcements(page=${page})}"></a>
+				</li>
+				<!--다음 페이지로 -->
+				<li class="page-item" th:class="${announcementResponses.last} ? 'disabled'">
+					<a class="page-link" th:href="${announcementResponses.last} ? '#' : ${nextAddr}"
+					   aria-label="Next">
+						<span aria-hidden="true">&gt;</span>
+					</a>
+				</li>
+				<!--맨 마지막 페이지로 이동 -->
+				<li class="page-item">
+					<a class="page-link" th:href="${lastAddr}" aria-label="Last">
+						<span aria-hidden="true"> >> </span>
+					</a>
+				</li>
+			</th:block>
+		</ul>
+	</nav>
+</div>
+
+</body>
+</html>

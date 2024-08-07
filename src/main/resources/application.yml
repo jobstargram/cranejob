@@ -1,0 +1,38 @@
+server:
+  port: 8080 #로드밸런싱을 위한 변수 설정
+
+SARAMIN:
+  ApiKey: OGvfdhi5liDBRnhwW4RoyjDFs1wG6RzZGF8oGPrCSaIGQ1pC #API 키
+  Job_Mid_Cd: 2 #직무 관련 코드 (IT)
+  Count: 200 #job 엘리먼트 개수
+
+spring:
+  application:
+    name: crane
+
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+
+  mvc:
+    hidden-method:
+      filter:
+        enabled: true
+
+  datasource:
+    url: jdbc:mysql://mymysql.cjee2s48u8zx.ap-northeast-2.rds.amazonaws.com/crane?serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: admin
+    password: manbochuchu
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
